@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Adventure ⭐</title>
+  <style>
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #a78bfa;
+      --success: #059669;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --bg: #f5f3ff;
+      --card: #ffffff;
+      --text: #1e1b4b;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; direction: rtl; }
+    .screen { display: none; min-height: 100vh; padding: 20px; max-width: 480px; margin: 0 auto; flex-direction: column; gap: 16px; }
+    .screen.active { display: flex; }
+
+    /* ===== BUTTONS ===== */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: #6d28d9; transform: translateY(-1px); }
+    .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); }
+    .btn-secondary:hover { background: var(--bg); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-muted { background: var(--border); color: var(--muted); }
+    .btn-sm { padding: 8px 14px; font-size: 14px; width: auto; }
+    .btn-icon { width: 44px; height: 44px; padding: 0; border-radius: 50%; font-size: 20px; }
+
+    /* ===== CARDS ===== */
+    .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: 0 2px 12px rgba(124,58,237,0.08); }
+    .card-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+
+    /* ===== HEADER ===== */
+    .header { display: flex; align-items: center; gap: 12px; padding-bottom: 4px; }
+    .back-btn { background: white; border: 2px solid var(--border); border-radius: 10px; padding: 8px 12px; cursor: pointer; font-size: 18px; }
+
+    /* ===== HOME ===== */
+    .home-hero { text-align: center; padding: 32px 0 16px; }
+    .home-hero .emoji { font-size: 72px; }
+    .home-hero h1 { font-size: 28px; color: var(--primary); margin: 8px 0 4px; }
+    .home-hero p { color: var(--muted); font-size: 15px; }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stat-box { background: var(--card); border-radius: 12px; padding: 14px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .stat-box .num { font-size: 28px; font-weight: 700; color: var(--primary); }
+    .stat-box .lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ===== GAME ===== */
+    .progress-bar { background: var(--border); border-radius: 8px; height: 8px; overflow: hidden; }
+    .progress-fill { background: linear-gradient(90deg, var(--primary), var(--primary-light)); height: 100%; border-radius: 8px; transition: width 0.4s; }
+    .progress-info { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .question-card { background: linear-gradient(135deg, var(--primary), #4f46e5); color: white; border-radius: 20px; padding: 32px 24px; text-align: center; box-shadow: 0 8px 24px rgba(124,58,237,0.3); }
+    .question-label { font-size: 12px; opacity: 0.8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+    .question-word { font-size: 36px; font-weight: 700; margin-bottom: 16px; line-height: 1.2; }
+    .question-sub { font-size: 14px; opacity: 0.75; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .choice-btn { background: white; border: 2px solid var(--border); border-radius: 14px; padding: 16px 12px; font-size: 17px; font-weight: 600; cursor: pointer; transition: all 0.2s; color: var(--text); }
+    .choice-btn:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(124,58,237,0.15); }
+    .choice-btn.correct { background: #d1fae5; border-color: var(--success); color: var(--success); }
+    .choice-btn.wrong { background: #fee2e2; border-color: var(--danger); color: var(--danger); }
+    .choice-btn:disabled { cursor: default; transform: none; }
+    .audio-row { display: flex; justify-content: center; gap: 10px; }
+    .mode-badge { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 14px; font-size: 12px; display: inline-block; }
+
+    /* ===== SUMMARY ===== */
+    .score-circle { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #4f46e5); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 8px 24px rgba(124,58,237,0.3); }
+    .score-circle .pct { font-size: 32px; font-weight: 700; color: white; }
+    .score-circle .lbl { font-size: 12px; color: rgba(255,255,255,0.8); }
+    .stars { text-align: center; font-size: 36px; letter-spacing: 4px; }
+    .words-review { max-height: 220px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+    .word-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; font-size: 14px; }
+    .word-row.ok { background: #d1fae5; }
+    .word-row.fail { background: #fee2e2; }
+
+    /* ===== PARENT ===== */
+    .sessions-list { display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; }
+    .session-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg); border-radius: 10px; font-size: 14px; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .badge-green { background: #d1fae5; color: var(--success); }
+    .badge-red { background: #fee2e2; color: var(--danger); }
+    .badge-yellow { background: #fef3c7; color: var(--warning); }
+
+    /* ===== WORDS ===== */
+    .word-list { display: flex; flex-direction: column; gap: 6px; max-height: 400px; overflow-y: auto; }
+    .word-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg); border-radius: 10px; }
+    .word-item .pair { font-size: 15px; font-weight: 600; }
+    .word-item .pair span { color: var(--muted); font-weight: 400; font-size: 13px; }
+    .word-item .actions { display: flex; gap: 6px; }
+    .icon-btn { background: none; border: none; cursor: pointer; font-size: 18px; padding: 4px; border-radius: 6px; }
+    .icon-btn:hover { background: var(--border); }
+
+    /* ===== FORM ===== */
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .form-group input, .form-group select { padding: 12px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 16px; outline: none; direction: auto; background: #ffffff; color: #1e1b4b; -webkit-text-fill-color: #1e1b4b; }
+    .form-group input:focus { border-color: var(--primary); }
+    .form-group input:-webkit-autofill, .form-group input:-webkit-autofill:hover, .form-group input:-webkit-autofill:focus { -webkit-text-fill-color: #1e1b4b; -webkit-box-shadow: 0 0 0 100px #ffffff inset; }
+    .form-group input::placeholder { color: #aaa; }
+
+    /* ===== REPORT ===== */
+    .report-header { text-align: center; }
+    .report-header h2 { font-size: 22px; color: var(--primary); }
+    .report-header p { color: var(--muted); font-size: 14px; }
+    .report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .report-stat { background: var(--bg); border-radius: 10px; padding: 14px; text-align: center; }
+    .report-stat .n { font-size: 26px; font-weight: 700; color: var(--primary); }
+    .report-stat .l { font-size: 12px; color: var(--muted); }
+    .session-detail { border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+    .session-detail h4 { font-size: 14px; margin-bottom: 8px; color: var(--muted); }
+    .word-detail-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; border-bottom: 1px solid var(--border); }
+    .word-detail-row:last-child { border: none; }
+
+    /* ===== UTILS ===== */
+    .text-center { text-align: center; }
+    .text-muted { color: var(--muted); font-size: 14px; }
+    h2 { font-size: 20px; }
+    .divider { height: 1px; background: var(--border); }
+    .empty { text-align: center; padding: 32px; color: var(--muted); }
+    .empty .icon { font-size: 48px; }
+
+    @keyframes pop { 0%{transform:scale(0.8);opacity:0} 60%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+    .pop { animation: pop 0.3s ease forwards; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+    .shake { animation: shake 0.3s ease; }
+  </style>
+</head>
+<body>
+
+<!-- ===== SCREEN: LOGIN ===== -->
+<div id="screen-login" class="screen">
+  <div class="home-hero">
+    <div class="emoji">🌟</div>
+    <h1>English Adventure</h1>
+    <p>ברוכים הבאים!</p>
+  </div>
+  <div class="card" style="gap:14px;display:flex;flex-direction:column">
+    <div class="form-group">
+      <label>שם משתמש</label>
+      <input type="text" id="login-username" placeholder="הכנס שם משתמש" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label>סיסמא</label>
+      <input type="password" id="login-password" placeholder="הכנס סיסמא" autocomplete="current-password"
+        onkeydown="if(event.key==='Enter') doLogin()">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">כניסה ▶</button>
+    <div id="login-error" style="color:var(--danger);text-align:center;font-size:14px;display:none">שם משתמש או סיסמא שגויים</div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: FIRST-TIME SETUP ===== -->
+<div id="screen-setup" class="screen">
+  <div class="home-hero" style="padding-top:16px">
+    <div class="emoji">👋</div>
+    <h1>הגדרה ראשונה</h1>
+    <p>בואו נגדיר את החשבונות</p>
+  </div>
+  <div class="card" style="gap:14px;display:flex;flex-direction:column">
+    <div style="font-weight:700;color:var(--primary)">👧 חשבון ילד/ה</div>
+    <div class="form-group">
+      <label>שם</label>
+      <input type="text" id="setup-child-name" placeholder="שם הילד/ה">
+    </div>
+    <div class="form-group">
+      <label>שם משתמש</label>
+      <input type="text" id="setup-child-username" placeholder="לדוגמה: ayelet" dir="ltr" style="direction:ltr;text-align:left">
+    </div>
+    <div class="form-group">
+      <label>סיסמא</label>
+      <input type="password" id="setup-child-password" placeholder="בחרי סיסמא">
+    </div>
+    <div class="divider"></div>
+    <div style="font-weight:700;color:var(--primary)">👩 חשבון הורה</div>
+    <div class="form-group">
+      <label>שם משתמש</label>
+      <input type="text" id="setup-parent-username" placeholder="לדוגמה: ima" dir="ltr" style="direction:ltr;text-align:left">
+    </div>
+    <div class="form-group">
+      <label>סיסמא</label>
+      <input type="password" id="setup-parent-password" placeholder="בחרי סיסמא">
+    </div>
+    <div id="setup-error" style="color:var(--danger);font-size:14px;display:none">יש למלא את כל השדות</div>
+  </div>
+  <button class="btn btn-primary" onclick="doSetup()">התחל! 🚀</button>
+</div>
+
+<!-- ===== SCREEN: HOME ===== -->
+<div id="screen-home" class="screen">
+  <div class="home-hero">
+    <div class="emoji">🌟</div>
+    <h1>English Adventure</h1>
+    <p id="home-greeting">בואי ללמוד אנגלית!</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="num" id="home-today-words">0</div>
+      <div class="lbl">מילים היום</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="home-today-score">-</div>
+      <div class="lbl">אחוז הצלחה</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="home-total-words">0</div>
+      <div class="lbl">סה"כ מילים</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="home-streak">0</div>
+      <div class="lbl">ימים ברצף 🔥</div>
+    </div>
+  </div>
+
+  <!-- Daily Goals Progress -->
+  <div class="card" id="home-goals-card" style="display:none">
+    <div class="card-title">🎯 יעד יומי</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="position:relative;flex-shrink:0">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="var(--border)" stroke-width="8"/>
+          <circle id="goal-ring" cx="45" cy="45" r="36" fill="none" stroke="#4f46e5" stroke-width="8"
+            stroke-dasharray="226" stroke-dashoffset="226" stroke-linecap="round"
+            transform="rotate(-90 45 45)" style="transition:stroke-dashoffset 0.8s ease"/>
+        </svg>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center">
+          <div style="font-size:17px;font-weight:800;color:var(--primary)" id="goal-pct-text">0%</div>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px" id="goal-details"></div>
+    </div>
+  </div>
+
+  <div id="home-new-words-banner" class="card" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:white;text-align:center;display:none">
+    <div style="font-size:24px">🎉</div>
+    <div style="font-weight:700;margin:4px 0" id="home-new-count">5 מילים חדשות!</div>
+    <div style="font-size:13px;opacity:0.85">נוספו היום למאגר שלך</div>
+  </div>
+
+  <button class="btn btn-primary" style="font-size:20px;padding:18px" onclick="startGame()">
+    ⭐ מילים
+  </button>
+  <button class="btn btn-secondary" style="font-size:18px;padding:14px" onclick="startPS('present')">
+    ✏️ Present Simple
+  </button>
+  <button class="btn btn-secondary" style="font-size:18px;padding:14px" onclick="startPS('past')">
+    📖 Past Simple
+  </button>
+  <button class="btn btn-secondary" style="font-size:18px;padding:14px" onclick="startPS('mixed')">
+    🔀 ערבוב Present + Past
+  </button>
+  <button class="btn btn-secondary" style="font-size:18px;padding:14px" onclick="startUnseen()">
+    📄 Unseen (כיתה ח)
+  </button>
+  <button class="btn btn-secondary" style="font-size:18px;padding:14px" onclick="startWriting()">
+    ✍️ Writing — כתיבת פיסקה
+  </button>
+  <button class="btn btn-muted" onclick="logout()">
+    🚪 יציאה
+  </button>
+</div>
+
+
+<!-- ===== SCREEN: GAME ===== -->
+<div id="screen-game" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="confirmQuitGame()">←</button>
+    <div style="flex:1">
+      <div class="progress-bar"><div class="progress-fill" id="game-progress"></div></div>
+      <div class="progress-info">
+        <span id="game-counter">1/10</span>
+        <span id="game-score">✅ 0 | ❌ 0</span>
+        <span id="game-timer" style="display:none;font-weight:700;font-size:14px"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card pop" id="question-card">
+    <div class="question-label" id="q-label">תרגמי לאנגלית</div>
+    <div class="audio-row" id="audio-row" style="display:none">
+      <button class="btn btn-sm" style="background:rgba(255,255,255,0.25);color:white;width:auto;border:none" onclick="speakWord()">🔊 שמעי</button>
+    </div>
+    <div class="question-word" id="q-word">כלב</div>
+    <div class="question-sub" id="q-sub"></div>
+  </div>
+
+  <!-- Word timer bar -->
+  <div id="word-timer-wrap" style="display:none;margin-top:-4px">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px">
+      <span>⏱ זמן לתשובה</span>
+      <span id="word-timer-secs" style="font-weight:700">30</span>
+    </div>
+    <div style="background:var(--border);border-radius:8px;height:8px;overflow:hidden">
+      <div id="word-timer-bar" style="height:100%;border-radius:8px;background:#4f46e5;transition:width 1s linear;width:100%"></div>
+    </div>
+  </div>
+
+  <div class="choices" id="choices-grid"></div>
+  <div id="game-feedback" style="display:none;text-align:center;padding:10px;border-radius:12px;font-size:15px;font-weight:600"></div>
+</div>
+
+<!-- ===== SCREEN: SESSION COMPLETE ===== -->
+<div id="screen-complete" class="screen">
+  <div class="text-center" style="padding-top:16px">
+    <div class="stars" id="complete-stars">⭐⭐⭐</div>
+    <div style="height:16px"></div>
+    <div class="score-circle pop">
+      <div class="pct" id="complete-pct">80%</div>
+      <div class="lbl">הצלחה</div>
+    </div>
+    <div style="height:12px"></div>
+    <div style="font-size:18px;font-weight:700" id="complete-msg">כל הכבוד! 🎉</div>
+    <div style="color:var(--muted);font-size:14px;margin-top:4px" id="complete-sub"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">סיכום מילים</div>
+    <div class="words-review" id="words-review-list"></div>
+  </div>
+
+  <button class="btn btn-primary" id="btn-next-session" onclick="startNextSession()">🎮 סשן נוסף (<span id="next-countdown">5</span>)</button>
+  <button class="btn btn-secondary" onclick="cancelNextSession(); showScreen('screen-home')">🏠 חזרה הבית</button>
+</div>
+
+<!-- ===== SCREEN: PRESENT SIMPLE ===== -->
+<div id="screen-ps" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="quitPS()">←</button>
+    <div style="flex:1">
+      <div class="progress-bar"><div class="progress-fill" id="ps-progress"></div></div>
+      <div class="progress-info">
+        <span id="ps-counter">1/10</span>
+        <span id="ps-score">✅ 0 | ❌ 0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card pop" id="ps-card">
+    <div class="question-label" id="ps-label">✏️ Present Simple — השלימי את הפועל</div>
+    <div class="question-word" id="ps-sentence" style="font-size:19px;line-height:1.7;direction:ltr;text-align:left"></div>
+    <div style="color:rgba(255,255,255,0.75);font-size:13px;margin-top:8px;direction:rtl" id="ps-he"></div>
+    <div style="color:rgba(255,255,255,0.65);font-size:12px;margin-top:4px;direction:ltr">hint: (<span id="ps-hint"></span>)</div>
+  </div>
+
+  <div class="form-group">
+    <input type="text" id="ps-input" dir="ltr"
+      style="direction:ltr;text-align:left;background:white;color:#1e1b4b;-webkit-text-fill-color:#1e1b4b;font-size:18px"
+      placeholder="Type the verb..."
+      onkeydown="if(event.key==='Enter') checkPS()">
+  </div>
+  <button class="btn btn-primary" onclick="checkPS()">✓ בדקי</button>
+  <div id="ps-feedback" style="display:none;text-align:center;padding:10px;border-radius:12px;font-size:15px;font-weight:600"></div>
+</div>
+
+<!-- ===== SCREEN: WRITING ===== -->
+<div id="screen-writing" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="quitWriting()">←</button>
+    <h2>✍️ Writing</h2>
+  </div>
+
+  <div class="card" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:white;gap:6px;display:flex;flex-direction:column">
+    <div style="font-size:12px;opacity:0.75" id="writing-topic-he"></div>
+    <div style="font-size:20px;font-weight:700" id="writing-topic"></div>
+    <div style="font-size:13px;opacity:0.88;line-height:1.6;margin-top:4px" id="writing-prompt"></div>
+  </div>
+
+  <div class="card" style="gap:10px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:13px;color:var(--muted)">כתבי פיסקה באנגלית</span>
+      <span id="writing-word-count" style="font-size:14px;font-weight:700;color:var(--primary)">0 / 80 מילים</span>
+    </div>
+    <textarea id="writing-textarea"
+      style="min-height:190px;border:2px solid var(--border);border-radius:10px;padding:12px;font-size:15px;line-height:1.75;direction:ltr;text-align:left;resize:vertical;background:white;color:#1e1b4b;-webkit-text-fill-color:#1e1b4b;outline:none;font-family:inherit"
+      placeholder="Start writing here..."
+      oninput="updateWordCount()"></textarea>
+    <div style="font-size:12px;color:var(--muted)">💡 כתבי לפחות 40 מילים, עד 80 מילים</div>
+  </div>
+
+  <button class="btn btn-primary" onclick="submitWriting()">📊 בדקי את הפיסקה</button>
+  <button class="btn btn-secondary" onclick="newWritingTopic()">🔄 נושא אחר</button>
+</div>
+
+<!-- ===== SCREEN: WRITING RESULTS ===== -->
+<div id="screen-writing-result" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+    <h2>📊 תוצאות כתיבה</h2>
+  </div>
+
+  <div class="text-center" style="padding:16px 0">
+    <div class="score-circle pop">
+      <div class="pct" id="wr-score">75</div>
+      <div class="lbl">ניקוד</div>
+    </div>
+    <div style="font-size:26px;margin:10px 0" id="wr-stars">⭐⭐</div>
+    <div style="font-size:17px;font-weight:700" id="wr-msg">עבודה טובה!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">פירוט ניקוד</div>
+    <div id="wr-breakdown"></div>
+  </div>
+
+  <div class="card" style="direction:ltr;text-align:left;font-size:14px;line-height:1.75;color:#374151" id="wr-text-display"></div>
+
+  <button class="btn btn-primary" onclick="showScreen('screen-writing')">✍️ כתבי שוב — אותו נושא</button>
+  <button class="btn btn-secondary" onclick="newWritingTopic(); showScreen('screen-writing')">🔄 נושא חדש</button>
+  <button class="btn btn-muted" onclick="showScreen('screen-home')">🏠 בית</button>
+</div>
+
+<!-- ===== SCREEN: UNSEEN ===== -->
+<div id="screen-unseen" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="quitUnseen()">←</button>
+    <div style="flex:1">
+      <div class="progress-bar"><div class="progress-fill" id="un-progress"></div></div>
+      <div class="progress-info">
+        <span id="un-counter">1/6</span>
+        <span id="un-score">✅ 0 | ❌ 0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="un-text-card" style="max-height:220px;overflow-y:auto;font-size:14px;line-height:1.8;direction:ltr;text-align:left">
+    <div style="font-size:12px;color:var(--primary);font-weight:700;margin-bottom:6px" id="un-title"></div>
+    <div id="un-text"></div>
+  </div>
+
+  <div class="question-card pop" id="un-card">
+    <div class="question-label">❓ ענה על השאלה</div>
+    <div class="question-word" id="un-question" style="font-size:17px;line-height:1.6;direction:ltr;text-align:left"></div>
+  </div>
+
+  <div class="choices" id="un-choices"></div>
+  <div id="un-feedback" style="display:none;text-align:center;padding:10px;border-radius:12px;font-size:15px;font-weight:600"></div>
+</div>
+
+<!-- ===== SCREEN: PARENT HOME ===== -->
+<div id="screen-parent" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="logout()">🚪</button>
+    <h2>לוח הורה</h2>
+    <button class="btn-sm btn btn-muted" style="width:auto;margin-right:auto" onclick="showScreen('screen-settings')">⚙️</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">היום — <span id="parent-today-date"></span></div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="num" id="p-sessions">0</div><div class="lbl">סשנים</div></div>
+      <div class="stat-box"><div class="num" id="p-words">0</div><div class="lbl">מילים</div></div>
+      <div class="stat-box"><div class="num" id="p-correct">0</div><div class="lbl">נכון</div></div>
+      <div class="stat-box"><div class="num" id="p-score">-</div><div class="lbl">הצלחה</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">סשנים היום</div>
+    <div class="sessions-list" id="parent-sessions-list">
+      <div class="empty"><div class="icon">📭</div><div>אין סשנים היום עדיין</div></div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" onclick="showReport(todayStr())">📊 דו"ח יומי מלא</button>
+  <button class="btn btn-secondary" onclick="showScreen('screen-words')">📚 ניהול מילים</button>
+  <button class="btn btn-secondary" onclick="showScreen('screen-settings')">⚙️ הגדרות</button>
+</div>
+
+<!-- ===== SCREEN: DAILY REPORT ===== -->
+<div id="screen-report" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('screen-parent')">←</button>
+    <h2>דו"ח יומי</h2>
+    <button class="btn-sm btn btn-primary" style="width:auto;margin-right:auto" onclick="exportCSV()">⬇️ CSV</button>
+  </div>
+
+  <div class="card report-header">
+    <h2 id="report-date-title"></h2>
+    <p id="report-date-sub"></p>
+  </div>
+
+  <div class="report-grid" id="report-grid"></div>
+
+  <div id="report-sessions"></div>
+</div>
+
+<!-- ===== SCREEN: WORDS ===== -->
+<div id="screen-words" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('screen-parent')">←</button>
+    <h2>ניהול מילים</h2>
+    <button class="btn btn-sm btn-primary" style="width:auto;margin-right:auto" onclick="showAddWord()">+ הוסף</button>
+  </div>
+
+  <div class="card" style="padding:10px 14px">
+    <input type="search" id="word-search" placeholder="🔍 חיפוש..." style="width:100%;border:none;outline:none;font-size:15px;background:transparent" oninput="renderWords()">
+  </div>
+
+  <div style="font-size:13px;color:var(--muted);padding:0 4px" id="words-count"></div>
+
+  <div class="word-list" id="words-list"></div>
+</div>
+
+<!-- ===== SCREEN: ADD/EDIT WORD ===== -->
+<div id="screen-add-word" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('screen-words')">←</button>
+    <h2 id="add-word-title">הוסף מילה</h2>
+  </div>
+
+  <div class="card" style="gap:14px;display:flex;flex-direction:column">
+    <div class="form-group">
+      <label>מילה בעברית</label>
+      <input type="text" id="word-hebrew" placeholder="כלב" dir="rtl" style="direction:rtl;text-align:right" oninput="onHebrewInput()">
+    </div>
+    <div class="form-group">
+      <label>מילה באנגלית <span id="translate-status" style="font-weight:400;color:var(--muted);font-size:12px"></span></label>
+      <input type="text" id="word-english" placeholder="dog" dir="ltr" style="direction:ltr;text-align:left">
+    </div>
+    <div class="form-group">
+      <label>קטגוריה (אופציונלי)</label>
+      <input type="text" id="word-category" placeholder="בעלי חיים">
+    </div>
+  </div>
+
+  <div id="word-duplicate-error" style="display:none;background:#fee2e2;color:#dc2626;border-radius:10px;padding:10px 14px;font-size:14px;text-align:center"></div>
+  <button class="btn btn-primary" onclick="saveWord()">שמור</button>
+  <div id="edit-word-id" style="display:none"></div>
+</div>
+
+<!-- ===== SCREEN: SETTINGS ===== -->
+<div id="screen-settings" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('screen-parent')">←</button>
+    <h2>הגדרות</h2>
+  </div>
+
+  <div class="card" style="gap:14px;display:flex;flex-direction:column">
+    <div class="form-group">
+      <label>מילים חדשות לכל יום</label>
+      <input type="number" id="setting-daily-new" min="1" max="20" value="5">
+    </div>
+    <div class="form-group">
+      <label>מילים לכל סשן</label>
+      <input type="number" id="setting-session-len" min="5" max="20" value="10">
+    </div>
+    <div class="form-group">
+      <label>הגבלת זמן לסשן</label>
+      <select id="setting-time-limit">
+        <option value="0">ללא הגבלה</option>
+        <option value="1">דקה אחת</option>
+        <option value="2">2 דקות</option>
+        <option value="3">3 דקות</option>
+        <option value="5">5 דקות</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>זמן לכל מילה (שניות)</label>
+      <select id="setting-word-time">
+        <option value="0">ללא הגבלה</option>
+        <option value="15">15 שניות</option>
+        <option value="20">20 שניות</option>
+        <option value="30" selected>30 שניות (מומלץ)</option>
+        <option value="45">45 שניות</option>
+        <option value="60">דקה</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card" style="gap:12px;display:flex;flex-direction:column">
+    <div class="card-title">🎯 יעדים יומיים לכל טאב <span style="font-weight:400;font-size:11px;color:var(--muted)">(0 = ללא יעד)</span></div>
+    <div class="form-group"><label>⭐ מילים — מספר מילים ביום</label><input type="number" id="goal-words" min="0" max="300" value="20"></div>
+    <div class="form-group"><label>✏️ Present Simple — סשנים ביום</label><input type="number" id="goal-present" min="0" max="20" value="1"></div>
+    <div class="form-group"><label>📖 Past Simple — סשנים ביום</label><input type="number" id="goal-past" min="0" max="20" value="1"></div>
+    <div class="form-group"><label>🔀 ערבוב Present+Past — סשנים ביום</label><input type="number" id="goal-mixed" min="0" max="20" value="0"></div>
+    <div class="form-group"><label>📄 Unseen — טקסטים ביום</label><input type="number" id="goal-unseen" min="0" max="10" value="1"></div>
+    <div class="form-group"><label>✍️ Writing — פיסקאות ביום</label><input type="number" id="goal-writing" min="0" max="10" value="1"></div>
+  </div>
+
+  <div class="card" style="gap:14px;display:flex;flex-direction:column">
+    <div class="form-group">
+      <label>שם הילד/ה</label>
+      <input type="text" id="setting-name" placeholder="שם">
+    </div>
+    <div class="form-group">
+      <label>קוד הורה חדש</label>
+      <input type="password" id="setting-pin" placeholder="4 ספרות" maxlength="4" inputmode="numeric">
+    </div>
+  </div>
+
+  <button class="btn btn-primary" onclick="saveSettings()">שמור הגדרות</button>
+
+  <div class="card" style="gap:12px;display:flex;flex-direction:column">
+    <div class="card-title">📦 גיבוי ושחזור — להעברה למחשב אחר</div>
+    <button class="btn btn-secondary" onclick="exportBackup()">⬇️ ייצא גיבוי (backup.json)</button>
+    <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">⬆️ ייבא גיבוי</button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importBackup(event)">
+    <div id="import-status" style="font-size:13px;text-align:center;display:none"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
+
+<script>
+// ═══════════════════════════════════════════
+//  FIREBASE
+// ═══════════════════════════════════════════
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC-4y9fnxHY5FAFM3-DzH0qAKCn1UKr63M",
+  authDomain: "ai-present-5f8b5.firebaseapp.com",
+  databaseURL: "https://ai-present-5f8b5-default-rtdb.firebaseio.com",
+  projectId: "ai-present-5f8b5",
+  storageBucket: "ai-present-5f8b5.firebasestorage.app",
+  messagingSenderId: "630770819059",
+  appId: "1:630770819059:web:6773d53005e3f97d107c86"
+};
+
+firebase.initializeApp(firebaseConfig);
+const fbDb = firebase.database();
+
+function syncToFirebase(key, val) {
+  fbDb.ref('gameData/' + key).set(val).catch(e => console.warn('Firebase sync error:', e));
+}
+
+async function loadFromFirebase() {
+  try {
+    const snap = await fbDb.ref('gameData').once('value');
+    if (snap.exists()) {
+      const data = snap.val();
+      Object.keys(data).forEach(k => localStorage.setItem(k, JSON.stringify(data[k])));
+    }
+  } catch(e) {
+    console.warn('Firebase load error (using local data):', e);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  DATA LAYER
+// ═══════════════════════════════════════════
+
+const KEYS = {
+  WORDS: 'eg_words',
+  SESSIONS: 'eg_sessions',
+  WORD_STATS: 'eg_word_stats',
+  SETTINGS: 'eg_settings',
+  STREAK: 'eg_streak',
+  USERS: 'eg_users',
+  DAILY_ACT: 'eg_daily_act',
+};
+
+let currentUser = null; // { id, username, role, name }
+
+function getUsers() { return load(KEYS.USERS, []); }
+function saveUsersData(u) { save(KEYS.USERS, u); }
+
+function doLogin() {
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+  const users = getUsers();
+  const user = users.find(u => u.username === username && u.password === password);
+  if (user) {
+    currentUser = user;
+    localStorage.setItem('eg_remembered', JSON.stringify({ username, password }));
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    document.getElementById('login-error').style.display = 'none';
+    initWords();
+    if (user.role === 'parent') {
+      renderParentDashboard();
+      showScreen('screen-parent');
+    } else {
+      showScreen('screen-home');
+    }
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+
+function doSetup() {
+  const childName = document.getElementById('setup-child-name').value.trim();
+  const childUsername = document.getElementById('setup-child-username').value.trim();
+  const childPassword = document.getElementById('setup-child-password').value;
+  const parentUsername = document.getElementById('setup-parent-username').value.trim();
+  const parentPassword = document.getElementById('setup-parent-password').value;
+
+  if (!childName || !childUsername || !childPassword || !parentUsername || !parentPassword) {
+    document.getElementById('setup-error').style.display = 'block';
+    return;
+  }
+  document.getElementById('setup-error').style.display = 'none';
+
+  saveUsersData([
+    { id: 'child_1', username: childUsername, password: childPassword, role: 'child', name: childName },
+    { id: 'parent_1', username: parentUsername, password: parentPassword, role: 'parent', name: 'הורה' },
+  ]);
+
+  const s = getSettings();
+  s.name = childName;
+  save(KEYS.SETTINGS, s);
+
+  showScreen('screen-login');
+}
+
+function logout() {
+  currentUser = null;
+  showScreen('screen-login');
+}
+
+function load(key, def) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? def; } catch { return def; }
+}
+function save(key, val) {
+  localStorage.setItem(key, JSON.stringify(val));
+  syncToFirebase(key, val);
+}
+
+function getWords() { return load(KEYS.WORDS, []); }
+function getSessions() { return load(KEYS.SESSIONS, []); }
+function getWordStats() { return load(KEYS.WORD_STATS, {}); }
+function getSettings() {
+  return Object.assign({ dailyNew: 5, sessionLen: 10, timeLimit: 0, wordTime: 30, goalWords: 20, goalPresent: 1, goalPast: 1, goalMixed: 0, goalUnseen: 1, goalWriting: 1, name: 'אחלה', pin: '1234', appStart: todayStr() }, load(KEYS.SETTINGS, {}));
+}
+
+function saveWords(w) { save(KEYS.WORDS, w); }
+function saveSessions(s) { save(KEYS.SESSIONS, s); }
+function saveWordStats(s) { save(KEYS.WORD_STATS, s); }
+
+function getDailyAct() {
+  const today = todayStr();
+  const d = load(KEYS.DAILY_ACT, {});
+  if (d.date !== today) return { date: today, words: 0, present: 0, past: 0, mixed: 0, unseen: 0, writing: 0 };
+  return d;
+}
+function incDailyAct(mode, amount = 1) {
+  const d = getDailyAct();
+  d[mode] = (d[mode] || 0) + amount;
+  save(KEYS.DAILY_ACT, d);
+}
+function saveSettings(s) { save(KEYS.SETTINGS, s); }
+
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function formatDate(str) {
+  const d = new Date(str + 'T12:00:00');
+  return d.toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+// ═══════════════════════════════════════════
+//  PRESENT SIMPLE SENTENCES
+// ═══════════════════════════════════════════
+
+const PS_SENTENCES = [
+  { text: "She ___ to school every day.", answer: "goes", hint: "go", he: "היא הולכת לבית ספר כל יום" },
+  { text: "He ___ football on Sundays.", answer: "plays", hint: "play", he: "הוא משחק כדורגל בימי ראשון" },
+  { text: "They ___ their homework after dinner.", answer: "do", hint: "do", he: "הם עושים שיעורים אחרי ארוחת ערב" },
+  { text: "I ___ breakfast every morning.", answer: "eat", hint: "eat", he: "אני אוכלת ארוחת בוקר כל בוקר" },
+  { text: "She ___ a book before bed.", answer: "reads", hint: "read", he: "היא קוראת ספר לפני השינה" },
+  { text: "He ___ to music on his phone.", answer: "listens", hint: "listen", he: "הוא מאזין למוזיקה בטלפון שלו" },
+  { text: "We ___ in a big house.", answer: "live", hint: "live", he: "אנחנו גרים בבית גדול" },
+  { text: "She ___ English at school.", answer: "studies", hint: "study", he: "היא לומדת אנגלית בבית ספר" },
+  { text: "He ___ up early every morning.", answer: "wakes", hint: "wake", he: "הוא קם מוקדם כל בוקר" },
+  { text: "She ___ her room every week.", answer: "cleans", hint: "clean", he: "היא מנקה את החדר שלה כל שבוע" },
+  { text: "He ___ to work by bus.", answer: "goes", hint: "go", he: "הוא הולך לעבודה באוטובוס" },
+  { text: "She ___ tea every morning.", answer: "drinks", hint: "drink", he: "היא שותה תה כל בוקר" },
+  { text: "He ___ basketball after school.", answer: "plays", hint: "play", he: "הוא משחק כדורסל אחרי בית ספר" },
+  { text: "They ___ Hebrew and English.", answer: "speak", hint: "speak", he: "הם מדברים עברית ואנגלית" },
+  { text: "She ___ in the pool on Sundays.", answer: "swims", hint: "swim", he: "היא שוחה בבריכה בימי ראשון" },
+  { text: "He ___ TV after dinner.", answer: "watches", hint: "watch", he: "הוא צופה בטלוויזיה אחרי ארוחת ערב" },
+  { text: "I ___ my dog every evening.", answer: "walk", hint: "walk", he: "אני מטיילת עם הכלב שלי כל ערב" },
+  { text: "She ___ a cat and two dogs.", answer: "has", hint: "have", he: "יש לה חתול ושני כלבים" },
+  { text: "He ___ at a big hospital.", answer: "works", hint: "work", he: "הוא עובד בבית חולים גדול" },
+  { text: "They ___ the bus to school.", answer: "take", hint: "take", he: "הם לוקחים אוטובוס לבית ספר" },
+  { text: "She ___ chocolate ice cream.", answer: "likes", hint: "like", he: "היא אוהבת גלידת שוקולד" },
+  { text: "He ___ his teeth twice a day.", answer: "brushes", hint: "brush", he: "הוא מצחצח שיניים פעמיים ביום" },
+  { text: "I ___ to school by bike.", answer: "go", hint: "go", he: "אני הולכת לבית ספר באופניים" },
+  { text: "She ___ her mom every Sunday.", answer: "calls", hint: "call", he: "היא מתקשרת לאמא שלה כל ראשון" },
+  { text: "They ___ to the park every Saturday.", answer: "go", hint: "go", he: "הם הולכים לפארק כל שבת" },
+  { text: "He ___ his bike to the store.", answer: "rides", hint: "ride", he: "הוא רוכב על האופניים לחנות" },
+  { text: "She ___ dinner for the family.", answer: "cooks", hint: "cook", he: "היא מבשלת ארוחת ערב למשפחה" },
+  { text: "I ___ my hands before eating.", answer: "wash", hint: "wash", he: "אני שוטפת ידיים לפני האוכל" },
+  { text: "He ___ to bed at 10 o'clock.", answer: "goes", hint: "go", he: "הוא הולך לישון בשעה 10" },
+  { text: "They ___ games on the computer.", answer: "play", hint: "play", he: "הם משחקים משחקים במחשב" },
+];
+
+const PAST_SENTENCES = [
+  { text: "She ___ to school yesterday.", answer: "went", hint: "go", he: "היא הלכה לבית ספר אתמול" },
+  { text: "He ___ football last Sunday.", answer: "played", hint: "play", he: "הוא שיחק כדורגל ביום ראשון שעבר" },
+  { text: "They ___ their homework after dinner.", answer: "did", hint: "do", he: "הם עשו שיעורים אחרי ארוחת ערב" },
+  { text: "I ___ breakfast at 7 o'clock.", answer: "ate", hint: "eat", he: "אכלתי ארוחת בוקר בשעה 7" },
+  { text: "She ___ a book last night.", answer: "read", hint: "read", he: "היא קראה ספר אמש" },
+  { text: "He ___ to music yesterday.", answer: "listened", hint: "listen", he: "הוא הקשיב למוזיקה אתמול" },
+  { text: "We ___ in a big house last year.", answer: "lived", hint: "live", he: "גרנו בבית גדול בשנה שעברה" },
+  { text: "She ___ English at school.", answer: "studied", hint: "study", he: "היא למדה אנגלית בבית ספר" },
+  { text: "He ___ up early yesterday.", answer: "woke", hint: "wake", he: "הוא קם מוקדם אתמול" },
+  { text: "She ___ her room last Saturday.", answer: "cleaned", hint: "clean", he: "היא ניקתה את החדר שלה בשבת שעברה" },
+  { text: "He ___ to work by bus yesterday.", answer: "went", hint: "go", he: "הוא הלך לעבודה באוטובוס אתמול" },
+  { text: "She ___ tea this morning.", answer: "drank", hint: "drink", he: "היא שתתה תה הבוקר" },
+  { text: "He ___ basketball after school.", answer: "played", hint: "play", he: "הוא שיחק כדורסל אחרי בית ספר" },
+  { text: "They ___ Hebrew and English.", answer: "spoke", hint: "speak", he: "הם דיברו עברית ואנגלית" },
+  { text: "She ___ in the pool last Sunday.", answer: "swam", hint: "swim", he: "היא שחתה בבריכה ביום ראשון שעבר" },
+  { text: "He ___ TV after dinner.", answer: "watched", hint: "watch", he: "הוא צפה בטלוויזיה אחרי ארוחת ערב" },
+  { text: "I ___ my dog yesterday evening.", answer: "walked", hint: "walk", he: "טיילתי עם הכלב שלי אתמול בערב" },
+  { text: "She ___ two dogs last year.", answer: "had", hint: "have", he: "היו לה שני כלבים בשנה שעברה" },
+  { text: "He ___ at a big hospital.", answer: "worked", hint: "work", he: "הוא עבד בבית חולים גדול" },
+  { text: "They ___ the bus to school.", answer: "took", hint: "take", he: "הם לקחו אוטובוס לבית ספר" },
+  { text: "She ___ chocolate ice cream yesterday.", answer: "ate", hint: "eat", he: "היא אכלה גלידת שוקולד אתמול" },
+  { text: "He ___ his teeth this morning.", answer: "brushed", hint: "brush", he: "הוא צחצח שיניים הבוקר" },
+  { text: "I ___ to school by bike.", answer: "went", hint: "go", he: "הלכתי לבית ספר באופניים" },
+  { text: "She ___ her mom last Sunday.", answer: "called", hint: "call", he: "היא התקשרה לאמא שלה ביום ראשון שעבר" },
+  { text: "They ___ to the park last Saturday.", answer: "went", hint: "go", he: "הם הלכו לפארק בשבת שעברה" },
+  { text: "He ___ his bike to the store.", answer: "rode", hint: "ride", he: "הוא רכב על האופניים לחנות" },
+  { text: "She ___ dinner for the family.", answer: "cooked", hint: "cook", he: "היא בישלה ארוחת ערב למשפחה" },
+  { text: "I ___ my hands before eating.", answer: "washed", hint: "wash", he: "שטפתי ידיים לפני האוכל" },
+  { text: "He ___ to bed at 10 o'clock.", answer: "went", hint: "go", he: "הוא הלך לישון בשעה 10" },
+  { text: "They ___ games on the computer.", answer: "played", hint: "play", he: "הם שיחקו משחקים במחשב" },
+];
+
+// ═══════════════════════════════════════════
+//  WRITING TOPICS
+// ═══════════════════════════════════════════
+
+const WRITING_TOPICS = [
+  {
+    topic: "My Favorite Hobby",
+    he: "התחביב האהוב עליי",
+    prompt: "Write about your favorite hobby. What is it? Why do you enjoy it? How often do you do it? How did you start?",
+    keywords: ["hobby","enjoy","love","like","free","practice","play","learn","week","favorite","fun","interesting","time","often","started"]
+  },
+  {
+    topic: "My School",
+    he: "בית הספר שלי",
+    prompt: "Write about your school. What do you like about it? What subjects do you study? Tell about your teachers or friends.",
+    keywords: ["school","class","subject","teacher","friend","study","learn","lesson","homework","like","enjoy","grade","math","english","recess"]
+  },
+  {
+    topic: "A Memorable Day",
+    he: "יום בלתי נשכח",
+    prompt: "Write about a day you will never forget. What happened? Where were you? Why was it special?",
+    keywords: ["day","remember","special","happened","went","felt","saw","family","friend","excited","happy","never","forget","amazing","first"]
+  },
+  {
+    topic: "My Future Dreams",
+    he: "החלומות שלי לעתיד",
+    prompt: "Write about your dreams for the future. What do you want to be? Where do you want to live? What do you hope to achieve?",
+    keywords: ["future","dream","want","hope","become","work","live","study","job","career","someday","plan","wish","important","achieve"]
+  },
+  {
+    topic: "Technology in My Life",
+    he: "טכנולוגיה בחיי",
+    prompt: "Write about technology in your daily life. What devices do you use? How does it help you? What are the disadvantages?",
+    keywords: ["phone","computer","internet","social","media","use","technology","app","game","online","screen","watch","time","helpful","device"]
+  },
+  {
+    topic: "My Favorite Season",
+    he: "העונה האהובה עליי",
+    prompt: "Write about your favorite season of the year. What do you like about it? What activities do you do in that season?",
+    keywords: ["summer","winter","spring","autumn","season","weather","hot","cold","rain","sun","beach","snow","enjoy","love","outside"]
+  },
+  {
+    topic: "An Animal I Love",
+    he: "חיה שאני אוהב/ת",
+    prompt: "Write about an animal you love. What does it look like? Where does it live? Why do you find it interesting?",
+    keywords: ["animal","live","eat","beautiful","interesting","wild","pet","fur","size","nature","love","fascinating","habitat","species","protect"]
+  },
+  {
+    topic: "My Ideal Weekend",
+    he: "סוף שבוע אידיאלי",
+    prompt: "Write about your perfect weekend. What would you do? Who would you spend time with? Where would you go?",
+    keywords: ["weekend","morning","friend","family","relax","fun","go","eat","watch","play","sleep","enjoy","happy","free","afternoon"]
+  },
+  {
+    topic: "A Person I Admire",
+    he: "אדם שאני מעריך/ה",
+    prompt: "Write about a person you admire. Who is this person? What makes them special? How do they inspire you?",
+    keywords: ["admire","person","special","inspire","kind","smart","brave","strong","help","people","work","dedicated","important","believe","example"]
+  },
+  {
+    topic: "My Neighborhood",
+    he: "השכונה שלי",
+    prompt: "Write about the neighborhood where you live. What is it like? What do you like or dislike about it?",
+    keywords: ["neighborhood","street","house","park","store","live","near","walk","quiet","busy","like","people","community","place","area"]
+  },
+];
+
+// ═══════════════════════════════════════════
+//  BUILT-IN WORD LIST
+// ═══════════════════════════════════════════
+
+const BUILTIN = [
+  { h: 'כלב', e: 'dog', c: 'בעלי חיים' },
+  { h: 'חתול', e: 'cat', c: 'בעלי חיים' },
+  { h: 'סוס', e: 'horse', c: 'בעלי חיים' },
+  { h: 'ציפור', e: 'bird', c: 'בעלי חיים' },
+  { h: 'דג', e: 'fish', c: 'בעלי חיים' },
+  { h: 'בית', e: 'house', c: 'מקומות' },
+  { h: 'בית ספר', e: 'school', c: 'מקומות' },
+  { h: 'חנות', e: 'store', c: 'מקומות' },
+  { h: 'פארק', e: 'park', c: 'מקומות' },
+  { h: 'ים', e: 'sea', c: 'טבע' },
+  { h: 'שמש', e: 'sun', c: 'טבע' },
+  { h: 'ירח', e: 'moon', c: 'טבע' },
+  { h: 'עץ', e: 'tree', c: 'טבע' },
+  { h: 'פרח', e: 'flower', c: 'טבע' },
+  { h: 'תפוח', e: 'apple', c: 'אוכל' },
+  { h: 'בננה', e: 'banana', c: 'אוכל' },
+  { h: 'תות', e: 'strawberry', c: 'אוכל' },
+  { h: 'לחם', e: 'bread', c: 'אוכל' },
+  { h: 'מים', e: 'water', c: 'אוכל' },
+  { h: 'ספר', e: 'book', c: 'חפצים' },
+  { h: 'כיסא', e: 'chair', c: 'חפצים' },
+  { h: 'שולחן', e: 'table', c: 'חפצים' },
+  { h: 'דלת', e: 'door', c: 'חפצים' },
+  { h: 'חלון', e: 'window', c: 'חפצים' },
+  { h: 'ילד', e: 'boy', c: 'אנשים' },
+  { h: 'ילדה', e: 'girl', c: 'אנשים' },
+  { h: 'אמא', e: 'mom', c: 'אנשים' },
+  { h: 'אבא', e: 'dad', c: 'אנשים' },
+  { h: 'מורה', e: 'teacher', c: 'אנשים' },
+  { h: 'חבר', e: 'friend', c: 'אנשים' },
+  { h: 'אדום', e: 'red', c: 'צבעים' },
+  { h: 'כחול', e: 'blue', c: 'צבעים' },
+  { h: 'ירוק', e: 'green', c: 'צבעים' },
+  { h: 'צהוב', e: 'yellow', c: 'צבעים' },
+  { h: 'לבן', e: 'white', c: 'צבעים' },
+  { h: 'שחור', e: 'black', c: 'צבעים' },
+  { h: 'גדול', e: 'big', c: 'תארים' },
+  { h: 'קטן', e: 'small', c: 'תארים' },
+  { h: 'יפה', e: 'beautiful', c: 'תארים' },
+  { h: 'מהיר', e: 'fast', c: 'תארים' },
+  { h: 'לאכול', e: 'to eat', c: 'פעלים' },
+  { h: 'לשתות', e: 'to drink', c: 'פעלים' },
+  { h: 'לישון', e: 'to sleep', c: 'פעלים' },
+  { h: 'לרוץ', e: 'to run', c: 'פעלים' },
+  { h: 'לשחק', e: 'to play', c: 'פעלים' },
+  { h: 'אחד', e: 'one', c: 'מספרים' },
+  { h: 'שניים', e: 'two', c: 'מספרים' },
+  { h: 'שלושה', e: 'three', c: 'מספרים' },
+  { h: 'ארבעה', e: 'four', c: 'מספרים' },
+  { h: 'חמישה', e: 'five', c: 'מספרים' },
+];
+
+function initWords() {
+  let words = getWords();
+  if (words.length === 0) {
+    words = BUILTIN.map((w, i) => ({
+      id: 'w' + i,
+      hebrew: w.h,
+      english: w.e,
+      category: w.c,
+      addedDate: todayStr(),
+    }));
+    saveWords(words);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  DAILY WORD UNLOCK SYSTEM
+// ═══════════════════════════════════════════
+
+function getDayIndex() {
+  const s = getSettings();
+  const start = new Date(s.appStart + 'T12:00:00');
+  const now = new Date(todayStr() + 'T12:00:00');
+  return Math.floor((now - start) / 86400000);
+}
+
+function getUnlockedWords() {
+  const s = getSettings();
+  const dayIdx = getDayIndex();
+  const words = getWords();
+  const unlockCount = Math.min(words.length, (dayIdx + 1) * s.dailyNew);
+  return words.slice(0, unlockCount);
+}
+
+function getNewWordsToday() {
+  const s = getSettings();
+  const dayIdx = getDayIndex();
+  const words = getWords();
+  const start = dayIdx * s.dailyNew;
+  const end = Math.min(words.length, start + s.dailyNew);
+  return words.slice(start, end);
+}
+
+// ═══════════════════════════════════════════
+//  GAME SESSION LOGIC
+// ═══════════════════════════════════════════
+
+let currentSession = null;
+
+function selectSessionWords() {
+  const s = getSettings();
+  const unlocked = getUnlockedWords();
+  const stats = getWordStats();
+  if (unlocked.length === 0) return [];
+
+  // Score each word: lower = higher priority to practice
+  const scored = unlocked.map(w => {
+    const st = stats[w.id] || { correct: 0, total: 0, lastDate: null };
+    const rate = st.total > 0 ? st.correct / st.total : 0;
+    const daysSince = st.lastDate
+      ? Math.floor((Date.now() - new Date(st.lastDate).getTime()) / 86400000)
+      : 999;
+    let priority = (1 - rate) * 2 + Math.min(daysSince, 7) * 0.3;
+    // Penalize words from the previous session so we get variety
+    if (lastSessionWordIds.includes(w.id)) priority -= 3;
+    return { word: w, priority };
+  });
+
+  scored.sort((a, b) => b.priority - a.priority);
+
+  const len = Math.min(s.sessionLen, unlocked.length);
+  const top = scored.slice(0, Math.min(len * 2, scored.length));
+  const selected = [];
+
+  // Ensure variety: shuffle top candidates
+  const pool = shuffle([...top]);
+  for (let i = 0; i < len && i < pool.length; i++) selected.push(pool[i].word);
+
+  return shuffle(selected);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function getDistractors(correctWord, allWords, n = 3) {
+  const others = allWords.filter(w => w.id !== correctWord.id);
+  return shuffle(others).slice(0, n);
+}
+
+// ═══════════════════════════════════════════
+//  GAME UI
+// ═══════════════════════════════════════════
+
+// Session timer
+let sessionTimer = null;
+let sessionTimeLeft = 0;
+
+// Per-word timer
+let wordTimerInterval = null;
+let wordTimeLeft = 0;
+let wordTimerTotal = 30;
+
+function startWordTimer(seconds) {
+  clearInterval(wordTimerInterval);
+  wordTimerTotal = seconds;
+  wordTimeLeft = seconds;
+  const wrap = document.getElementById('word-timer-wrap');
+  if (wrap) wrap.style.display = 'block';
+  updateWordTimerDisplay();
+  wordTimerInterval = setInterval(() => {
+    wordTimeLeft--;
+    updateWordTimerDisplay();
+    if (wordTimeLeft <= 0) {
+      clearInterval(wordTimerInterval);
+      // Time's up — auto-mark wrong
+      const word = gameWords[gameIdx];
+      if (word) {
+        document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+        updateWordStat(word.id, false);
+        gameWrong++;
+        gameResults.push({ wordId: word.id, correct: false });
+        const fb = document.getElementById('game-feedback');
+        fb.style.display = 'block';
+        fb.style.background = '#fee2e2'; fb.style.color = '#dc2626';
+        fb.textContent = `⏱ נגמר הזמן! התשובה: ${gameModeIsHeEn ? word.english : word.hebrew}`;
+        document.querySelectorAll('.choice-btn').forEach(b => {
+          const correct = gameModeIsHeEn ? word.english : word.hebrew;
+          if (b.textContent === correct) b.classList.add('correct');
+        });
+        document.getElementById('game-score').textContent = `✅ ${gameCorrect} | ❌ ${gameWrong}`;
+        setTimeout(() => { gameIdx++; renderQuestion(); }, 1500);
+      }
+    }
+  }, 1000);
+}
+
+function stopWordTimer() {
+  clearInterval(wordTimerInterval);
+  wordTimerInterval = null;
+  const wrap = document.getElementById('word-timer-wrap');
+  if (wrap) wrap.style.display = 'none';
+}
+
+function updateWordTimerDisplay() {
+  const secsEl = document.getElementById('word-timer-secs');
+  const bar = document.getElementById('word-timer-bar');
+  if (!secsEl || !bar) return;
+  secsEl.textContent = wordTimeLeft;
+  const pct = (wordTimeLeft / wordTimerTotal) * 100;
+  bar.style.width = pct + '%';
+  bar.style.background = wordTimeLeft <= 5 ? '#dc2626' : wordTimeLeft <= 10 ? '#f59e0b' : '#4f46e5';
+}
+
+function startSessionTimer(seconds) {
+  clearInterval(sessionTimer);
+  sessionTimeLeft = seconds;
+  const el = document.getElementById('game-timer');
+  if (el) el.style.display = 'inline';
+  updateTimerDisplay();
+  sessionTimer = setInterval(() => {
+    sessionTimeLeft--;
+    updateTimerDisplay();
+    if (sessionTimeLeft <= 0) { clearInterval(sessionTimer); endSession(); }
+  }, 1000);
+}
+
+function stopSessionTimer() {
+  clearInterval(sessionTimer);
+  sessionTimer = null;
+  const el = document.getElementById('game-timer');
+  if (el) el.style.display = 'none';
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('game-timer');
+  if (!el) return;
+  const m = Math.floor(sessionTimeLeft / 60);
+  const s = sessionTimeLeft % 60;
+  el.textContent = `⏱ ${m}:${s.toString().padStart(2, '0')}`;
+  el.style.color = sessionTimeLeft <= 10 ? '#dc2626' : '#4f46e5';
+}
+
+// PS game
+let lastGameMode = 'words';
+let psWords = [];
+let psIdx = 0;
+let psCorrect = 0;
+let psWrong = 0;
+let psResults = [];
+let psAnswered = false;
+
+function startPS(mode = 'present') {
+  lastGameMode = mode;
+  const sentences = mode === 'past' ? PAST_SENTENCES : mode === 'mixed' ? [...PS_SENTENCES, ...PAST_SENTENCES] : PS_SENTENCES;
+  psWords = shuffle([...sentences]);
+  psIdx = 0; psCorrect = 0; psWrong = 0; psResults = []; psAnswered = false;
+  showScreen('screen-ps');
+  renderPS();
+}
+
+function renderPS() {
+  if (psIdx >= psWords.length) { endPS(); return; }
+  const q = psWords[psIdx];
+  const pct = (psIdx / psWords.length * 100).toFixed(0);
+  document.getElementById('ps-progress').style.width = pct + '%';
+  document.getElementById('ps-counter').textContent = `${psIdx + 1}/${psWords.length}`;
+  document.getElementById('ps-score').textContent = `✅ ${psCorrect} | ❌ ${psWrong}`;
+  const sentence = q.text.replace('___', '<span style="background:rgba(255,255,255,0.35);padding:2px 10px;border-radius:4px;font-weight:700">___</span>');
+  const labels = { past: '📖 Past Simple — השלימי את הפועל', mixed: '🔀 Present / Past — השלימי את הפועל', present: '✏️ Present Simple — השלימי את הפועל' };
+  document.getElementById('ps-label').textContent = labels[lastGameMode] || labels.present;
+  document.getElementById('ps-sentence').innerHTML = sentence;
+  document.getElementById('ps-he').textContent = q.he;
+  document.getElementById('ps-hint').textContent = q.hint;
+  const input = document.getElementById('ps-input');
+  input.value = ''; input.disabled = false;
+  document.getElementById('ps-feedback').style.display = 'none';
+  psAnswered = false;
+  const card = document.getElementById('ps-card');
+  card.classList.remove('pop'); void card.offsetWidth; card.classList.add('pop');
+  setTimeout(() => input.focus(), 100);
+}
+
+function checkPS() {
+  if (psAnswered) { psIdx++; renderPS(); return; }
+  const q = psWords[psIdx];
+  const input = document.getElementById('ps-input');
+  const answer = input.value.trim().toLowerCase();
+  if (!answer) return;
+  const isCorrect = answer === q.answer.toLowerCase();
+  psAnswered = true;
+  input.disabled = true;
+  psResults.push({ q, userAnswer: answer, correct: isCorrect });
+  const feedback = document.getElementById('ps-feedback');
+  if (isCorrect) {
+    psCorrect++;
+    feedback.style.background = '#d1fae5'; feedback.style.color = '#059669';
+    feedback.textContent = randomPraise() + ' ✔ ' + q.answer;
+    speakText(q.text.replace('___', q.answer));
+  } else {
+    psWrong++;
+    feedback.style.background = '#fee2e2'; feedback.style.color = '#dc2626';
+    feedback.textContent = `❌ לא נכון — התשובה: "${q.answer}"`;
+  }
+  feedback.style.display = 'block';
+  setTimeout(() => { psIdx++; renderPS(); }, 1600);
+}
+
+function endPS() {
+  incDailyAct(lastGameMode); // 'present', 'past', or 'mixed'
+  const total = psCorrect + psWrong;
+  const pct = total > 0 ? Math.round(psCorrect / total * 100) : 0;
+  showScreen('screen-complete');
+  document.getElementById('complete-pct').textContent = pct + '%';
+  document.getElementById('complete-stars').textContent = pct >= 90 ? '⭐⭐⭐' : pct >= 70 ? '⭐⭐' : '⭐';
+  const msgs = pct >= 90 ? ['וואו! מדהים! 🎉', 'פשוט מושלם! 🌟'] :
+               pct >= 70 ? ['עבודה טובה! 👏', 'מצוין! 🎊'] : ['נסי שוב! 💡', 'אל תוותרי! 💪'];
+  document.getElementById('complete-msg').textContent = msgs[Math.floor(Math.random() * msgs.length)];
+  document.getElementById('complete-sub').textContent = `${psCorrect} נכון מתוך ${total} משפטים`;
+  const list = document.getElementById('words-review-list');
+  list.innerHTML = '';
+  psResults.forEach(r => {
+    const row = document.createElement('div');
+    row.className = 'word-row ' + (r.correct ? 'ok' : 'fail');
+    row.innerHTML = `<span style="direction:ltr;text-align:left;flex:1">${r.q.text.replace('___', '<b>' + r.q.answer + '</b>')}</span><span>${r.correct ? '✅' : '❌ ' + r.userAnswer}</span>`;
+    list.appendChild(row);
+  });
+  scheduleNextSession();
+}
+
+function quitPS() {
+  if (confirm('לצאת מהמשחק?')) showScreen('screen-home');
+}
+
+let gameWords = [];
+let lastSessionWordIds = [];
+let gameIdx = 0;
+let gameCorrect = 0;
+let gameWrong = 0;
+let gameResults = [];
+let gameStartTime = 0;
+let gameModeIsHeEn = true; // alternates per question
+
+function startGame() {
+  initWords();
+  const words = selectSessionWords();
+  if (words.length === 0) {
+    alert('אין מילים זמינות עדיין. בקש/י מהורה להוסיף מילים!');
+    return;
+  }
+  lastGameMode = 'words';
+  lastSessionWordIds = gameWords.map(w => w.id);
+  gameWords = words;
+  gameIdx = 0;
+  gameCorrect = 0;
+  gameWrong = 0;
+  gameResults = [];
+  gameStartTime = Date.now();
+  showScreen('screen-game');
+  const s = getSettings();
+  if (s.timeLimit > 0) startSessionTimer(s.timeLimit * 60);
+  else stopSessionTimer();
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if (gameIdx >= gameWords.length) { endSession(); return; }
+  const word = gameWords[gameIdx];
+  const allUnlocked = getUnlockedWords();
+  const pct = ((gameIdx) / gameWords.length * 100).toFixed(0);
+  document.getElementById('game-progress').style.width = pct + '%';
+  document.getElementById('game-counter').textContent = `${gameIdx + 1}/${gameWords.length}`;
+  document.getElementById('game-score').textContent = `✅ ${gameCorrect} | ❌ ${gameWrong}`;
+
+  // Alternate mode
+  gameModeIsHeEn = gameIdx % 2 === 0;
+
+  const card = document.getElementById('question-card');
+  card.classList.remove('pop');
+  void card.offsetWidth;
+  card.classList.add('pop');
+
+  const audioRow = document.getElementById('audio-row');
+  const qLabel = document.getElementById('q-label');
+  const qWord = document.getElementById('q-word');
+  const qSub = document.getElementById('q-sub');
+
+  if (gameModeIsHeEn) {
+    qLabel.textContent = '🇮🇱 תרגמי לאנגלית';
+    qWord.textContent = word.hebrew;
+    qSub.textContent = '';
+    audioRow.style.display = 'none';
+  } else {
+    qLabel.textContent = '🇬🇧 תרגמי לעברית';
+    qWord.textContent = word.english;
+    qSub.textContent = '';
+    audioRow.style.display = 'flex';
+    // Auto-speak in En→He mode
+    setTimeout(() => speakText(word.english), 400);
+  }
+
+  // Build choices
+  const distractors = getDistractors(word, allUnlocked, 3);
+  const choices = shuffle([word, ...distractors]);
+  const grid = document.getElementById('choices-grid');
+  grid.innerHTML = '';
+  choices.forEach(w => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = gameModeIsHeEn ? w.english : w.hebrew;
+    btn.onclick = () => handleAnswer(w.id === word.id, btn, word);
+    grid.appendChild(btn);
+  });
+
+  document.getElementById('game-feedback').style.display = 'none';
+
+  // Start word timer
+  const s = getSettings();
+  if (s.wordTime > 0) startWordTimer(s.wordTime);
+  else stopWordTimer();
+}
+
+function handleAnswer(isCorrect, btn, word) {
+  stopWordTimer();
+  // Disable all choices
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+
+  const feedback = document.getElementById('game-feedback');
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    gameCorrect++;
+    feedback.style.display = 'block';
+    feedback.style.background = '#d1fae5';
+    feedback.style.color = '#059669';
+    feedback.textContent = randomPraise();
+    updateWordStat(word.id, true);
+    gameResults.push({ wordId: word.id, correct: true });
+    speakText('Correct!');
+    setTimeout(() => { gameIdx++; renderQuestion(); }, 900);
+  } else {
+    btn.classList.add('wrong');
+    btn.classList.add('shake');
+    gameWrong++;
+    feedback.style.display = 'block';
+    feedback.style.background = '#fee2e2';
+    feedback.style.color = '#dc2626';
+    feedback.textContent = `${gameModeIsHeEn ? word.english : word.hebrew} — נסי שוב!`;
+    updateWordStat(word.id, false);
+    gameResults.push({ wordId: word.id, correct: false });
+    // Highlight correct answer
+    document.querySelectorAll('.choice-btn').forEach(b => {
+      const text = b.textContent;
+      const correct = gameModeIsHeEn ? word.english : word.hebrew;
+      if (text === correct) b.classList.add('correct');
+    });
+    setTimeout(() => { gameIdx++; renderQuestion(); }, 1500);
+  }
+}
+
+function updateWordStat(wordId, correct) {
+  const stats = getWordStats();
+  if (!stats[wordId]) stats[wordId] = { correct: 0, total: 0, lastDate: null };
+  stats[wordId].total++;
+  if (correct) stats[wordId].correct++;
+  stats[wordId].lastDate = todayStr();
+  saveWordStats(stats);
+}
+
+function endSession() {
+  const duration = Math.floor((Date.now() - gameStartTime) / 1000);
+  const session = {
+    id: 'sess_' + Date.now(),
+    date: todayStr(),
+    timestamp: Date.now(),
+    duration,
+    results: gameResults,
+  };
+  const sessions = getSessions();
+  sessions.push(session);
+  saveSessions(sessions);
+
+  stopSessionTimer();
+  stopWordTimer();
+  incDailyAct('words', gameResults.length);
+  updateStreak();
+  showComplete();
+}
+
+function updateStreak() {
+  const streak = load(KEYS.STREAK, { lastDate: null, count: 0 });
+  const today = todayStr();
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (streak.lastDate === today) { return; }
+  if (streak.lastDate === yesterday) {
+    streak.count++;
+  } else {
+    streak.count = 1;
+  }
+  streak.lastDate = today;
+  save(KEYS.STREAK, streak);
+}
+
+function showComplete() {
+  showScreen('screen-complete');
+  const total = gameCorrect + gameWrong;
+  const pct = total > 0 ? Math.round(gameCorrect / total * 100) : 0;
+  document.getElementById('complete-pct').textContent = pct + '%';
+
+  const stars = pct >= 90 ? '⭐⭐⭐' : pct >= 70 ? '⭐⭐' : '⭐';
+  document.getElementById('complete-stars').textContent = stars;
+
+  const msgs = pct >= 90 ? ['וואו! מדהים! 🎉', 'פשוט מושלם! 🌟', 'אחלה אחלה! 🏆'] :
+               pct >= 70 ? ['עבודה טובה! 👏', 'כמעט מושלם! 💪', 'מצוין! 🎊'] :
+                           ['נסי שוב! 💡', 'תוכלי לעשות יותר טוב! 😊', 'אל תוותרי! 💪'];
+  document.getElementById('complete-msg').textContent = msgs[Math.floor(Math.random() * msgs.length)];
+  document.getElementById('complete-sub').textContent = `${gameCorrect} נכון מתוך ${total} מילים`;
+
+  scheduleNextSession();
+
+  // Words review list
+  const words = getWords();
+  const list = document.getElementById('words-review-list');
+  list.innerHTML = '';
+  gameResults.forEach(r => {
+    const word = words.find(w => w.id === r.wordId);
+    if (!word) return;
+    const row = document.createElement('div');
+    row.className = 'word-row ' + (r.correct ? 'ok' : 'fail');
+    row.innerHTML = `<span>${word.hebrew}</span><span>${word.english}</span><span>${r.correct ? '✅' : '❌'}</span>`;
+    list.appendChild(row);
+  });
+}
+
+let nextSessionTimer = null;
+
+function startNextSession() {
+  cancelNextSession();
+  if (['present','past','mixed'].includes(lastGameMode)) startPS(lastGameMode);
+  else if (lastGameMode === 'unseen') startUnseen();
+  else startGame();
+}
+
+function cancelNextSession() {
+  if (nextSessionTimer) { clearInterval(nextSessionTimer); nextSessionTimer = null; }
+  const el = document.getElementById('next-countdown');
+  if (el) el.textContent = '5';
+}
+
+function scheduleNextSession() {
+  cancelNextSession();
+  let secs = 5;
+  const el = document.getElementById('next-countdown');
+  nextSessionTimer = setInterval(() => {
+    secs--;
+    if (el) el.textContent = secs;
+    if (secs <= 0) {
+      cancelNextSession();
+      if (['present','past','mixed'].includes(lastGameMode)) startPS(lastGameMode);
+      else if (lastGameMode === 'unseen') startUnseen();
+      else startGame();
+    }
+  }, 1000);
+}
+
+function confirmQuitGame() {
+  if (confirm('לצאת מהמשחק?')) { stopSessionTimer(); stopWordTimer(); showScreen('screen-home'); }
+}
+
+function randomPraise() {
+  const p = ['כל הכבוד! 🌟', 'מצוין! ⭐', 'נהדר! 🎉', 'שאפו! 👏', 'יופי! 🌈', 'אחלה! 🔥'];
+  return p[Math.floor(Math.random() * p.length)];
+}
+
+// ═══════════════════════════════════════════
+//  AUDIO (Web Speech API)
+// ═══════════════════════════════════════════
+
+let currentEnglishWord = '';
+
+function speakWord() {
+  const word = gameWords[gameIdx];
+  if (word) speakText(word.english);
+}
+
+function speakText(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'en-US';
+  utt.rate = 0.9;
+  window.speechSynthesis.speak(utt);
+}
+
+
+// ═══════════════════════════════════════════
+//  PARENT DASHBOARD
+// ═══════════════════════════════════════════
+
+function renderParentDashboard() {
+  const today = todayStr();
+  document.getElementById('parent-today-date').textContent = formatDate(today);
+
+  const sessions = getSessions().filter(s => s.date === today);
+  const totalWords = sessions.reduce((n, s) => n + s.results.length, 0);
+  const totalCorrect = sessions.reduce((n, s) => n + s.results.filter(r => r.correct).length, 0);
+  const avgPct = totalWords > 0 ? Math.round(totalCorrect / totalWords * 100) : null;
+
+  document.getElementById('p-sessions').textContent = sessions.length;
+  document.getElementById('p-words').textContent = totalWords;
+  document.getElementById('p-correct').textContent = totalCorrect;
+  document.getElementById('p-score').textContent = avgPct !== null ? avgPct + '%' : '-';
+
+  const list = document.getElementById('parent-sessions-list');
+  if (sessions.length === 0) {
+    list.innerHTML = '<div class="empty"><div class="icon">📭</div><div>אין סשנים היום עדיין</div></div>';
+    return;
+  }
+  list.innerHTML = '';
+  sessions.forEach((sess, i) => {
+    const words = sess.results.length;
+    const correct = sess.results.filter(r => r.correct).length;
+    const pct = words > 0 ? Math.round(correct / words * 100) : 0;
+    const t = new Date(sess.timestamp).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+    const cls = pct >= 80 ? 'badge-green' : pct >= 60 ? 'badge-yellow' : 'badge-red';
+    const div = document.createElement('div');
+    div.className = 'session-item';
+    div.innerHTML = `<span>סשן ${i + 1} — ${t}</span><span>${words} מילים</span><span class="badge ${cls}">${pct}%</span>`;
+    list.appendChild(div);
+  });
+}
+
+// ═══════════════════════════════════════════
+//  DAILY REPORT
+// ═══════════════════════════════════════════
+
+let reportDate = '';
+
+function showReport(dateStr) {
+  reportDate = dateStr;
+  const sessions = getSessions().filter(s => s.date === dateStr);
+  const words = getWords();
+  const wordsMap = Object.fromEntries(words.map(w => [w.id, w]));
+
+  document.getElementById('report-date-title').textContent = formatDate(dateStr);
+  const totalWords = sessions.reduce((n, s) => n + s.results.length, 0);
+  const totalCorrect = sessions.reduce((n, s) => n + s.results.filter(r => r.correct).length, 0);
+  const avgPct = totalWords > 0 ? Math.round(totalCorrect / totalWords * 100) : 0;
+  const totalTime = sessions.reduce((n, s) => n + (s.duration || 0), 0);
+
+  document.getElementById('report-date-sub').textContent =
+    sessions.length + ' סשנים | ' + Math.floor(totalTime / 60) + ' דקות';
+
+  document.getElementById('report-grid').innerHTML = `
+    <div class="report-stat"><div class="n">${sessions.length}</div><div class="l">סשנים</div></div>
+    <div class="report-stat"><div class="n">${totalWords}</div><div class="l">ניסיונות</div></div>
+    <div class="report-stat"><div class="n">${totalCorrect}</div><div class="l">תשובות נכונות</div></div>
+    <div class="report-stat"><div class="n">${avgPct}%</div><div class="l">ממוצע הצלחה</div></div>
+  `;
+
+  const cont = document.getElementById('report-sessions');
+  cont.innerHTML = '';
+  sessions.forEach((sess, i) => {
+    const t = new Date(sess.timestamp).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+    const pct = sess.results.length > 0
+      ? Math.round(sess.results.filter(r => r.correct).length / sess.results.length * 100) : 0;
+    const div = document.createElement('div');
+    div.className = 'card session-detail';
+    let rows = sess.results.map(r => {
+      const w = wordsMap[r.wordId];
+      if (!w) return '';
+      return `<div class="word-detail-row"><span>${w.hebrew}</span><span>${w.english}</span><span>${r.correct ? '✅' : '❌'}</span></div>`;
+    }).join('');
+    div.innerHTML = `<h4>סשן ${i + 1} — ${t} | ${pct}% הצלחה | ${Math.floor((sess.duration || 0) / 60)} דק'</h4>${rows}`;
+    cont.appendChild(div);
+  });
+
+  showScreen('screen-report');
+}
+
+function exportCSV() {
+  const sessions = getSessions().filter(s => s.date === reportDate);
+  const words = getWords();
+  const wordsMap = Object.fromEntries(words.map(w => [w.id, w]));
+  const rows = [['תאריך', 'סשן', 'שעה', 'עברית', 'אנגלית', 'נכון/לא נכון', '% הצלחה']];
+
+  sessions.forEach((sess, si) => {
+    const t = new Date(sess.timestamp).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+    const pct = sess.results.length > 0
+      ? Math.round(sess.results.filter(r => r.correct).length / sess.results.length * 100) : 0;
+    sess.results.forEach(r => {
+      const w = wordsMap[r.wordId];
+      if (!w) return;
+      rows.push([reportDate, si + 1, t, w.hebrew, w.english, r.correct ? 'נכון' : 'שגוי', pct + '%']);
+    });
+  });
+
+  const csv = '\uFEFF' + rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `english_report_${reportDate}.csv`;
+  a.click();
+}
+
+// ═══════════════════════════════════════════
+//  WORD MANAGEMENT
+// ═══════════════════════════════════════════
+
+function renderWords() {
+  const query = (document.getElementById('word-search')?.value || '').toLowerCase();
+  let words = getWords();
+  if (query) words = words.filter(w => w.hebrew.includes(query) || w.english.toLowerCase().includes(query));
+  const stats = getWordStats();
+
+  document.getElementById('words-count').textContent = `${words.length} מילים`;
+
+  const list = document.getElementById('words-list');
+  list.innerHTML = '';
+  words.forEach(w => {
+    const st = stats[w.id] || { correct: 0, total: 0 };
+    const pct = st.total > 0 ? Math.round(st.correct / st.total * 100) : null;
+    const div = document.createElement('div');
+    div.className = 'word-item';
+    div.innerHTML = `
+      <div>
+        <div class="pair">${w.hebrew} <span>→ ${w.english}</span></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">${w.category || ''} ${pct !== null ? '| ' + pct + '% הצלחה (' + st.total + ' ניסיונות)' : '| טרם תורגל'}</div>
+      </div>
+      <div class="actions">
+        <button class="icon-btn" onclick="editWord('${w.id}')" title="ערוך">✏️</button>
+        <button class="icon-btn" onclick="deleteWord('${w.id}')" title="מחק">🗑️</button>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+function showAddWord() {
+  document.getElementById('add-word-title').textContent = 'הוסף מילה';
+  document.getElementById('word-hebrew').value = '';
+  document.getElementById('word-english').value = '';
+  document.getElementById('word-category').value = '';
+  document.getElementById('edit-word-id').textContent = '';
+  document.getElementById('translate-status').textContent = '';
+  document.getElementById('word-duplicate-error').style.display = 'none';
+  showScreen('screen-add-word');
+}
+
+function editWord(id) {
+  const words = getWords();
+  const w = words.find(x => x.id === id);
+  if (!w) return;
+  document.getElementById('add-word-title').textContent = 'ערוך מילה';
+  document.getElementById('word-hebrew').value = w.hebrew;
+  document.getElementById('word-english').value = w.english;
+  document.getElementById('word-category').value = w.category || '';
+  document.getElementById('edit-word-id').textContent = id;
+  showScreen('screen-add-word');
+}
+
+function saveWord() {
+  const h = document.getElementById('word-hebrew').value.trim();
+  const e = document.getElementById('word-english').value.trim();
+  const c = document.getElementById('word-category').value.trim();
+  const errEl = document.getElementById('word-duplicate-error');
+  errEl.style.display = 'none';
+
+  if (!h || !e) { errEl.textContent = 'יש למלא עברית ואנגלית'; errEl.style.display = 'block'; return; }
+
+  const words = getWords();
+  const editId = document.getElementById('edit-word-id').textContent;
+
+  // Check for duplicates (skip current word when editing)
+  const duplicate = words.find(w => {
+    if (editId && w.id === editId) return false;
+    return w.hebrew === h || w.english.toLowerCase() === e.toLowerCase();
+  });
+
+  if (duplicate) {
+    errEl.textContent = `המילה כבר קיימת: "${duplicate.hebrew}" = "${duplicate.english}"`;
+    errEl.style.display = 'block';
+    return;
+  }
+
+  if (editId) {
+    const idx = words.findIndex(w => w.id === editId);
+    if (idx >= 0) { words[idx].hebrew = h; words[idx].english = e; words[idx].category = c; }
+  } else {
+    words.push({ id: 'w_' + Date.now(), hebrew: h, english: e, category: c, addedDate: todayStr() });
+  }
+  saveWords(words);
+  renderWords();
+  showScreen('screen-words');
+}
+
+// ═══════════════════════════════════════════
+//  AUTO-TRANSLATE
+// ═══════════════════════════════════════════
+
+let _translateTimer = null;
+
+function onHebrewInput() {
+  const val = document.getElementById('word-hebrew').value.trim();
+  clearTimeout(_translateTimer);
+  if (!val) {
+    document.getElementById('translate-status').textContent = '';
+    return;
+  }
+  document.getElementById('translate-status').textContent = '...';
+  _translateTimer = setTimeout(() => autoTranslate(val), 700);
+}
+
+async function autoTranslate(text) {
+  const status = document.getElementById('translate-status');
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=he&tl=en&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const translated = data?.[0]?.[0]?.[0];
+    if (translated) {
+      const englishField = document.getElementById('word-english');
+      englishField.value = translated.toLowerCase();
+      status.textContent = '✓ תורגם';
+      setTimeout(() => { status.textContent = ''; }, 2000);
+    } else {
+      status.textContent = '⚠ לא נמצא';
+    }
+  } catch {
+    status.textContent = '⚠ אין אינטרנט';
+    setTimeout(() => { status.textContent = ''; }, 2000);
+  }
+}
+
+// ═══════════════════════════════════════════
+//  BACKUP & RESTORE
+// ═══════════════════════════════════════════
+
+function exportBackup() {
+  const backup = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    words: getWords(),
+    sessions: getSessions(),
+    wordStats: getWordStats(),
+    settings: getSettings(),
+    users: getUsers(),
+    streak: load(KEYS.STREAK, {}),
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `english_backup_${todayStr()}.json`;
+  a.click();
+}
+
+function importBackup(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const status = document.getElementById('import-status');
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+      if (!backup.words || !backup.users) throw new Error('קובץ לא תקין');
+      if (backup.words)    saveWords(backup.words);
+      if (backup.sessions) saveSessions(backup.sessions);
+      if (backup.wordStats) saveWordStats(backup.wordStats);
+      if (backup.settings) save(KEYS.SETTINGS, backup.settings);
+      if (backup.users)    saveUsersData(backup.users);
+      if (backup.streak)   save(KEYS.STREAK, backup.streak);
+      status.style.color = 'var(--success)';
+      status.textContent = '✅ הגיבוי יובא בהצלחה! רענן את הדף.';
+      status.style.display = 'block';
+      document.getElementById('import-file').value = '';
+    } catch {
+      status.style.color = 'var(--danger)';
+      status.textContent = '❌ קובץ שגוי — בחר קובץ גיבוי תקין';
+      status.style.display = 'block';
+    }
+  };
+  reader.readAsText(file);
+}
+
+function deleteWord(id) {
+  if (!confirm('למחוק מילה זו?')) return;
+  let words = getWords().filter(w => w.id !== id);
+  saveWords(words);
+  renderWords();
+}
+
+// ═══════════════════════════════════════════
+//  SETTINGS
+// ═══════════════════════════════════════════
+
+function renderSettingsScreen() {
+  const s = getSettings();
+  document.getElementById('setting-daily-new').value = s.dailyNew;
+  document.getElementById('setting-session-len').value = s.sessionLen;
+  document.getElementById('setting-time-limit').value = s.timeLimit || 0;
+  document.getElementById('setting-word-time').value = s.wordTime ?? 30;
+  document.getElementById('goal-words').value = s.goalWords ?? 20;
+  document.getElementById('goal-present').value = s.goalPresent ?? 1;
+  document.getElementById('goal-past').value = s.goalPast ?? 1;
+  document.getElementById('goal-mixed').value = s.goalMixed ?? 0;
+  document.getElementById('goal-unseen').value = s.goalUnseen ?? 1;
+  document.getElementById('goal-writing').value = s.goalWriting ?? 1;
+  document.getElementById('setting-name').value = s.name;
+  document.getElementById('setting-pin').value = '';
+}
+
+function saveSettings() {
+  const s = getSettings();
+  s.dailyNew = parseInt(document.getElementById('setting-daily-new').value) || 5;
+  s.sessionLen = parseInt(document.getElementById('setting-session-len').value) || 10;
+  s.timeLimit = parseInt(document.getElementById('setting-time-limit').value) || 0;
+  s.wordTime = parseInt(document.getElementById('setting-word-time').value) || 0;
+  s.goalWords   = parseInt(document.getElementById('goal-words').value)   || 0;
+  s.goalPresent = parseInt(document.getElementById('goal-present').value) || 0;
+  s.goalPast    = parseInt(document.getElementById('goal-past').value)    || 0;
+  s.goalMixed   = parseInt(document.getElementById('goal-mixed').value)   || 0;
+  s.goalUnseen  = parseInt(document.getElementById('goal-unseen').value)  || 0;
+  s.goalWriting = parseInt(document.getElementById('goal-writing').value) || 0;
+  s.name = document.getElementById('setting-name').value.trim() || s.name;
+  const newPin = document.getElementById('setting-pin').value;
+  if (newPin.length === 4 && /^\d+$/.test(newPin)) s.pin = newPin;
+  save(KEYS.SETTINGS, s);
+  alert('הגדרות נשמרו!');
+  showScreen('screen-parent');
+}
+
+// ═══════════════════════════════════════════
+//  UNSEEN
+// ═══════════════════════════════════════════
+
+const UNSEEN_TEXTS = [
+  {
+    title: "Tom's Daily Routine",
+    text: "Tom is a 14-year-old boy who lives in New York City. Every morning, he wakes up at 7 o'clock and eats breakfast with his family before going to school. Tom loves science and math, but his favorite subject is history. After school, he usually plays basketball with his friends in the park. In the evening, he does his homework and reads books. Last summer, Tom visited his grandparents in California. He swam in the ocean every day and learned to surf. Tom says that was the best vacation of his life.",
+    questions: [
+      { q: "How old is Tom?", type: "mc", options: ["12", "13", "14", "15"], answer: "14" },
+      { q: "What time does Tom wake up?", type: "mc", options: ["6 o'clock", "7 o'clock", "8 o'clock", "9 o'clock"], answer: "7 o'clock" },
+      { q: "What is Tom's favorite subject?", type: "mc", options: ["Science", "Math", "History", "English"], answer: "History" },
+      { q: "Tom plays basketball with his friends.", type: "tf", answer: "True" },
+      { q: "Tom visited his grandparents in Florida.", type: "tf", answer: "False" },
+      { q: "What did Tom learn to do last summer?", type: "mc", options: ["ski", "surf", "dive", "sail"], answer: "surf" },
+    ]
+  },
+  {
+    title: "The School Project",
+    text: "Last week, Emma and her classmates got an important school project. They had to write about an endangered animal. Emma chose the sea turtle. She went to the library and read many books about sea turtles. She also watched videos online and took notes. Emma learned that sea turtles swim thousands of miles every year and that people eat their eggs, which is very dangerous for them. Emma wrote five pages and made beautiful drawings. When she presented her project, all her friends were impressed. Her teacher gave her a grade of 95.",
+    questions: [
+      { q: "What animal did Emma choose?", type: "mc", options: ["dolphin", "sea turtle", "shark", "whale"], answer: "sea turtle" },
+      { q: "Emma went to the library to do research.", type: "tf", answer: "True" },
+      { q: "Emma wrote ten pages.", type: "tf", answer: "False" },
+      { q: "What grade did Emma receive?", type: "mc", options: ["85", "90", "95", "100"], answer: "95" },
+      { q: "Why are sea turtles in danger?", type: "mc", options: ["people hunt them for sport", "people eat their eggs", "they cannot swim fast", "they eat plastic"], answer: "people eat their eggs" },
+      { q: "How did the class react to Emma's project?", type: "mc", options: ["they were bored", "they were confused", "they were impressed", "they were angry"], answer: "they were impressed" },
+    ]
+  },
+  {
+    title: "A Visit to London",
+    text: "Last year, Sarah's family went on a vacation to London, England. They stayed there for one week. Every day, they visited a different place. On the first day, they went to the Tower of London. On the second day, they saw Buckingham Palace, where the king lives. Sarah loved the museums most. She visited the Natural History Museum and saw dinosaur bones. The food in London was different from what Sarah usually eats at home. She tried fish and chips for the first time and thought it was delicious. On the last day, it rained all day, but the family still had fun. Sarah wants to go back to London one day.",
+    questions: [
+      { q: "How long did the family stay in London?", type: "mc", options: ["3 days", "5 days", "one week", "two weeks"], answer: "one week" },
+      { q: "What did Sarah see at the Natural History Museum?", type: "mc", options: ["art paintings", "dinosaur bones", "space rockets", "ancient coins"], answer: "dinosaur bones" },
+      { q: "Sarah's favorite places were the museums.", type: "tf", answer: "True" },
+      { q: "The weather was sunny every day.", type: "tf", answer: "False" },
+      { q: "What food did Sarah try for the first time?", type: "mc", options: ["pizza", "sushi", "fish and chips", "hamburger"], answer: "fish and chips" },
+      { q: "Who lives in Buckingham Palace?", type: "mc", options: ["the queen", "the king", "the prime minister", "the president"], answer: "the king" },
+    ]
+  },
+  {
+    title: "Social Media and Teenagers",
+    text: "Today, most teenagers use social media every day. They share photos, videos, and messages with their friends online. Social media can be a great way to connect with people, but it also has problems. Many teenagers spend too much time on their phones and do not sleep enough. Some studies show that students who use social media a lot get lower grades at school. However, social media also has benefits. Students can use it to study together and share information. Some young people use it to show their art, music, or writing to the world. Experts say that the key is balance — teenagers should enjoy social media but also spend time outside, exercise, and talk to people face to face.",
+    questions: [
+      { q: "Social media has no benefits for students.", type: "tf", answer: "False" },
+      { q: "Students who use social media a lot get higher grades.", type: "tf", answer: "False" },
+      { q: "What do experts say is the key?", type: "mc", options: ["stop using social media", "balance", "use social media more", "study more"], answer: "balance" },
+      { q: "How can students use social media positively?", type: "mc", options: ["to watch movies", "to play games", "to study together and share information", "to shop online"], answer: "to study together and share information" },
+      { q: "What problem does social media cause for teenagers?", type: "mc", options: ["they travel less", "they don't sleep enough", "they eat too much", "they forget how to read"], answer: "they don't sleep enough" },
+      { q: "What do experts say teenagers should do?", type: "mc", options: ["delete social media", "exercise and talk to people face to face", "read more books", "watch less TV"], answer: "exercise and talk to people face to face" },
+    ]
+  },
+  {
+    title: "The Mystery of Sleep",
+    text: "Scientists say that sleep is one of the most important things for our health. When we sleep, our brain stores the information we learned during the day. That is why students who sleep well usually remember things better and get higher grades. Most teenagers need between 8 and 10 hours of sleep every night. However, many teenagers go to bed very late because of homework, social media, or watching TV. Lack of sleep can cause problems like difficulty concentrating, bad mood, and weak immune system. Experts recommend turning off screens at least one hour before bed. They also suggest keeping a regular sleep schedule — going to sleep and waking up at the same time every day.",
+    questions: [
+      { q: "What does the brain do when we sleep?", type: "mc", options: ["it stops working", "it stores information we learned", "it grows bigger", "it creates dreams only"], answer: "it stores information we learned" },
+      { q: "How many hours of sleep do teenagers need?", type: "mc", options: ["6-7 hours", "7-8 hours", "8-10 hours", "10-12 hours"], answer: "8-10 hours" },
+      { q: "Students who sleep well get higher grades.", type: "tf", answer: "True" },
+      { q: "Experts say to turn off screens one hour before bed.", type: "tf", answer: "True" },
+      { q: "What is NOT mentioned as a cause of late bedtime?", type: "mc", options: ["homework", "social media", "watching TV", "eating too much"], answer: "eating too much" },
+      { q: "What is one result of not sleeping enough?", type: "mc", options: ["feeling happy", "difficulty concentrating", "better memory", "stronger immune system"], answer: "difficulty concentrating" },
+    ]
+  },
+];
+
+let unTexts = [];
+let unIdx = 0;
+let unCorrect = 0;
+let unWrong = 0;
+let unAnswered = false;
+let unCurrentText = null;
+
+function startUnseen() {
+  lastGameMode = 'unseen';
+  unTexts = shuffle([...UNSEEN_TEXTS]);
+  unCurrentText = unTexts[0];
+  unIdx = 0; unCorrect = 0; unWrong = 0; unAnswered = false;
+  showScreen('screen-unseen');
+  renderUnseen();
+}
+
+function renderUnseen() {
+  const allQs = unCurrentText.questions;
+  if (unIdx >= allQs.length) { endUnseen(); return; }
+  const q = allQs[unIdx];
+  const pct = (unIdx / allQs.length * 100).toFixed(0);
+  document.getElementById('un-progress').style.width = pct + '%';
+  document.getElementById('un-counter').textContent = `${unIdx + 1}/${allQs.length}`;
+  document.getElementById('un-score').textContent = `✅ ${unCorrect} | ❌ ${unWrong}`;
+  document.getElementById('un-title').textContent = unCurrentText.title;
+  document.getElementById('un-text').textContent = unCurrentText.text;
+  document.getElementById('un-question').textContent = q.q;
+  document.getElementById('un-feedback').style.display = 'none';
+  unAnswered = false;
+
+  const card = document.getElementById('un-card');
+  card.classList.remove('pop'); void card.offsetWidth; card.classList.add('pop');
+
+  const choices = document.getElementById('un-choices');
+  choices.innerHTML = '';
+  const opts = q.type === 'tf' ? ['True', 'False'] : q.options;
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = opt;
+    btn.onclick = () => handleUnseenAnswer(opt === q.answer, btn, q.answer);
+    choices.appendChild(btn);
+  });
+}
+
+function handleUnseenAnswer(isCorrect, btn, correctAnswer) {
+  if (unAnswered) return;
+  unAnswered = true;
+  document.querySelectorAll('#un-choices .choice-btn').forEach(b => b.disabled = true);
+  const feedback = document.getElementById('un-feedback');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    unCorrect++;
+    feedback.style.background = '#d1fae5'; feedback.style.color = '#059669';
+    feedback.textContent = randomPraise();
+  } else {
+    btn.classList.add('wrong');
+    unWrong++;
+    feedback.style.background = '#fee2e2'; feedback.style.color = '#dc2626';
+    feedback.textContent = `❌ התשובה הנכונה: "${correctAnswer}"`;
+    document.querySelectorAll('#un-choices .choice-btn').forEach(b => {
+      if (b.textContent === correctAnswer) b.classList.add('correct');
+    });
+  }
+  feedback.style.display = 'block';
+  setTimeout(() => { unIdx++; renderUnseen(); }, 1600);
+}
+
+function endUnseen() {
+  incDailyAct('unseen');
+  const total = unCorrect + unWrong;
+  const pct = total > 0 ? Math.round(unCorrect / total * 100) : 0;
+  showScreen('screen-complete');
+  document.getElementById('complete-pct').textContent = pct + '%';
+  document.getElementById('complete-stars').textContent = pct >= 90 ? '⭐⭐⭐' : pct >= 70 ? '⭐⭐' : '⭐';
+  const msgs = pct >= 90 ? ['מדהים! 🎉', 'פשוט מושלם! 🌟'] :
+               pct >= 70 ? ['עבודה טובה! 👏', 'מצוין! 🎊'] : ['נסי שוב! 💡', 'אל תוותרי! 💪'];
+  document.getElementById('complete-msg').textContent = msgs[Math.floor(Math.random() * msgs.length)];
+  document.getElementById('complete-sub').textContent = `${unCorrect} נכון מתוך ${total} שאלות — "${unCurrentText.title}"`;
+  const list = document.getElementById('words-review-list');
+  list.innerHTML = '';
+  unCurrentText.questions.forEach((q, i) => {
+    if (i >= unCorrect + unWrong) return;
+    const row = document.createElement('div');
+    row.className = 'word-row';
+    row.innerHTML = `<span style="direction:ltr;text-align:left;flex:1;font-size:13px">${q.q}</span><span style="color:var(--success);font-size:12px">${q.answer}</span>`;
+    list.appendChild(row);
+  });
+  scheduleNextSession();
+}
+
+function quitUnseen() {
+  if (confirm('לצאת מהמשחק?')) showScreen('screen-home');
+}
+
+// ═══════════════════════════════════════════
+//  WRITING
+// ═══════════════════════════════════════════
+
+let currentWritingTopic = null;
+
+function startWriting() {
+  newWritingTopic();
+  showScreen('screen-writing');
+}
+
+function newWritingTopic() {
+  currentWritingTopic = WRITING_TOPICS[Math.floor(Math.random() * WRITING_TOPICS.length)];
+  document.getElementById('writing-topic').textContent = currentWritingTopic.topic;
+  document.getElementById('writing-topic-he').textContent = currentWritingTopic.he;
+  document.getElementById('writing-prompt').textContent = currentWritingTopic.prompt;
+  const ta = document.getElementById('writing-textarea');
+  if (ta) { ta.value = ''; }
+  const wc = document.getElementById('writing-word-count');
+  if (wc) { wc.textContent = '0 / 80 מילים'; wc.style.color = 'var(--primary)'; }
+}
+
+function updateWordCount() {
+  const text = document.getElementById('writing-textarea').value;
+  const count = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+  const el = document.getElementById('writing-word-count');
+  el.textContent = `${count} / 80 מילים`;
+  el.style.color = count > 80 ? '#dc2626' : count >= 40 ? '#059669' : 'var(--primary)';
+}
+
+function submitWriting() {
+  const text = document.getElementById('writing-textarea').value.trim();
+  const wordCount = text === '' ? 0 : text.split(/\s+/).length;
+  if (wordCount < 15) { alert('כתבי לפחות 15 מילים לפני שליחה'); return; }
+  const result = scoreWriting(text, currentWritingTopic);
+  showWritingResult(result, text);
+}
+
+function scoreWriting(text, topic) {
+  const words = text.trim().split(/\s+/).filter(w => w.length > 0);
+  const wordCount = words.length;
+
+  // 1. Length (25 pts)
+  let lengthScore = wordCount >= 70 ? 25 : wordCount >= 55 ? 20 : wordCount >= 40 ? 15 : wordCount >= 25 ? 10 : 5;
+
+  // 2. Vocabulary variety (25 pts)
+  const clean = words.map(w => w.toLowerCase().replace(/[^a-z]/g, '')).filter(w => w.length > 1);
+  const uniqueWords = new Set(clean).size;
+  const varietyRatio = clean.length > 0 ? uniqueWords / clean.length : 0;
+  let varietyScore = varietyRatio >= 0.75 ? 25 : varietyRatio >= 0.60 ? 20 : varietyRatio >= 0.45 ? 15 : varietyRatio >= 0.30 ? 10 : 5;
+
+  // 3. Sentence structure (25 pts)
+  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 3);
+  const sentenceCount = sentences.length;
+  let sentenceScore = sentenceCount >= 5 ? 25 : sentenceCount >= 4 ? 20 : sentenceCount >= 3 ? 15 : sentenceCount >= 2 ? 10 : 5;
+
+  // 4. Topic relevance (25 pts)
+  const textLower = text.toLowerCase();
+  const keywordsFound = topic.keywords.filter(kw => textLower.includes(kw)).length;
+  const topicRatio = keywordsFound / topic.keywords.length;
+  let topicScore = topicRatio >= 0.30 ? 25 : topicRatio >= 0.20 ? 20 : topicRatio >= 0.12 ? 15 : 10;
+
+  return {
+    total: lengthScore + varietyScore + sentenceScore + topicScore,
+    breakdown: [
+      { label: 'אורך פיסקה', score: lengthScore, max: 25, detail: `${wordCount} מילים` },
+      { label: 'גיוון מילים', score: varietyScore, max: 25, detail: `${uniqueWords} מילים שונות מתוך ${wordCount}` },
+      { label: 'מבנה משפטים', score: sentenceScore, max: 25, detail: `${sentenceCount} משפטים` },
+      { label: 'רלוונטיות לנושא', score: topicScore, max: 25, detail: `${keywordsFound} מילות מפתח מהנושא` },
+    ]
+  };
+}
+
+function showWritingResult(result, text) {
+  incDailyAct('writing');
+  showScreen('screen-writing-result');
+  const pct = result.total;
+  document.getElementById('wr-score').textContent = pct;
+  document.getElementById('wr-stars').textContent = pct >= 90 ? '⭐⭐⭐' : pct >= 70 ? '⭐⭐' : '⭐';
+  document.getElementById('wr-msg').textContent =
+    pct >= 90 ? 'מדהים! כתיבה מצוינת! 🎉' :
+    pct >= 70 ? 'עבודה טובה! כמעט מושלם 👏' :
+    pct >= 50 ? 'לא רע! נסי לכתוב יותר ולגוון מילים 💪' :
+    'המשיכי להתאמן! כתבי משפטים ארוכים יותר 💡';
+
+  document.getElementById('wr-breakdown').innerHTML = result.breakdown.map(b => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div>
+        <div style="font-weight:600;font-size:14px">${b.label}</div>
+        <div style="font-size:12px;color:var(--muted)">${b.detail}</div>
+      </div>
+      <div style="text-align:center;min-width:48px">
+        <div style="font-size:20px;font-weight:700;color:${b.score >= 20 ? '#059669' : b.score >= 15 ? '#f59e0b' : '#dc2626'}">${b.score}</div>
+        <div style="font-size:11px;color:var(--muted)">/ ${b.max}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('wr-text-display').innerHTML =
+    `<div style="font-size:12px;color:var(--primary);font-weight:700;margin-bottom:8px">הפיסקה שלך — ${currentWritingTopic.topic}:</div><div>${text}</div>`;
+}
+
+function quitWriting() {
+  if (confirm('לצאת?')) showScreen('screen-home');
+}
+
+// ═══════════════════════════════════════════
+//  SCREEN MANAGEMENT
+// ═══════════════════════════════════════════
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('active');
+    el.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }
+  if (id === 'screen-home') renderHome();
+  if (id === 'screen-words') renderWords();
+  if (id === 'screen-settings') renderSettingsScreen();
+}
+
+// ═══════════════════════════════════════════
+//  HOME SCREEN
+// ═══════════════════════════════════════════
+
+function renderHome() {
+  const today = todayStr();
+  const s = getSettings();
+  const sessions = getSessions().filter(s => s.date === today);
+  const totalWords = sessions.reduce((n, s) => n + s.results.length, 0);
+  const totalCorrect = sessions.reduce((n, s) => n + s.results.filter(r => r.correct).length, 0);
+  const avgPct = totalWords > 0 ? Math.round(totalCorrect / totalWords * 100) : null;
+  const streak = load(KEYS.STREAK, { count: 0 });
+  const unlocked = getUnlockedWords();
+
+  document.getElementById('home-greeting').textContent = `שלום, ${s.name}! 👋`;
+  document.getElementById('home-today-words').textContent = totalWords;
+  document.getElementById('home-today-score').textContent = avgPct !== null ? avgPct + '%' : '-';
+  document.getElementById('home-total-words').textContent = unlocked.length;
+  document.getElementById('home-streak').textContent = streak.count;
+
+  const newToday = getNewWordsToday();
+  const banner = document.getElementById('home-new-words-banner');
+  const stats = getWordStats();
+  const newUnseen = newToday.filter(w => !stats[w.id]);
+  if (newUnseen.length > 0) {
+    banner.style.display = 'block';
+    document.getElementById('home-new-count').textContent = newUnseen.length + ' מילים חדשות היום!';
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // Daily goals progress
+  const goalsCard = document.getElementById('home-goals-card');
+  const act = getDailyAct();
+  const tabs = [
+    { key: 'words',   label: 'מילים',          emoji: '⭐', done: act.words,   goal: s.goalWords   || 0 },
+    { key: 'present', label: 'Present Simple',  emoji: '✏️', done: act.present, goal: s.goalPresent || 0 },
+    { key: 'past',    label: 'Past Simple',     emoji: '📖', done: act.past,    goal: s.goalPast    || 0 },
+    { key: 'mixed',   label: 'ערבוב',           emoji: '🔀', done: act.mixed,   goal: s.goalMixed   || 0 },
+    { key: 'unseen',  label: 'Unseen',          emoji: '📄', done: act.unseen,  goal: s.goalUnseen  || 0 },
+    { key: 'writing', label: 'Writing',         emoji: '✍️', done: act.writing, goal: s.goalWriting || 0 },
+  ].filter(t => t.goal > 0);
+
+  if (tabs.length > 0) {
+    goalsCard.style.display = 'block';
+    const progArr = tabs.map(t => Math.min(t.done / t.goal, 1));
+    const overallPct = Math.round(progArr.reduce((a, b) => a + b, 0) / tabs.length * 100);
+
+    const circ = 226;
+    const ring = document.getElementById('goal-ring');
+    ring.style.strokeDashoffset = circ - (overallPct / 100) * circ;
+    ring.style.stroke = overallPct >= 100 ? '#059669' : overallPct >= 50 ? '#f59e0b' : '#4f46e5';
+    document.getElementById('goal-pct-text').textContent = overallPct + '%';
+
+    const details = document.getElementById('goal-details');
+    details.innerHTML = tabs.map(t => {
+      const p = Math.min(Math.round(t.done / t.goal * 100), 100);
+      const color = p >= 100 ? '#059669' : p >= 50 ? '#f59e0b' : '#dc2626';
+      return `<div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px">
+          <span>${t.emoji} ${t.label}</span>
+          <span style="font-weight:700;color:${color}">${t.done}/${t.goal} (${p}%)</span>
+        </div>
+        <div style="background:var(--border);border-radius:4px;height:6px">
+          <div style="width:${p}%;background:${color};height:100%;border-radius:4px;transition:width 0.6s ease"></div>
+        </div>
+      </div>`;
+    }).join('');
+
+    if (overallPct >= 100) {
+      details.innerHTML += `<div style="text-align:center;font-size:14px;font-weight:700;color:#059669;margin-top:6px">🎉 השגת את כל היעדים היומיים!</div>`;
+    } else {
+      const missing = tabs.filter(t => t.done < t.goal).map(t => `${t.emoji} ${t.goal - t.done} ${t.key === 'words' ? 'מילים' : 'עוד'}`);
+      if (missing.length) details.innerHTML += `<div style="font-size:12px;color:var(--muted);margin-top:4px">נשאר: ${missing.join(' · ')}</div>`;
+    }
+  } else {
+    goalsCard.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════
+
+async function init() {
+  // Show loading overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'sync-loading';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#f5f3ff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:14px';
+  overlay.innerHTML = '<div style="font-size:40px">☁️</div><div style="color:#4f46e5;font-weight:700;font-size:18px">מסנכרן נתונים...</div>';
+  document.body.appendChild(overlay);
+
+  await loadFromFirebase();
+
+  overlay.remove();
+
+  const _users = getUsers();
+  if (_users.length === 0) {
+    showScreen('screen-setup');
+  } else {
+    try {
+      const rem = JSON.parse(localStorage.getItem('eg_remembered'));
+      if (rem) {
+        document.getElementById('login-username').value = rem.username;
+        document.getElementById('login-password').value = rem.password;
+      }
+    } catch {}
+    showScreen('screen-login');
+  }
+}
+
+init();
+</script>
+</body>
+</html>
