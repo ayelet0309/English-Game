@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>English Adventure 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sky: #4FC3F7; --sun: #FFD54F; --grass: #66BB6A;
+  --coral: #FF7043; --purple: #AB47BC; --bg: #FFF9F0;
+  --text: #2C2C54; --muted: #90A4AE;
+  --radius: 24px; --radius-sm: 14px;
+  --shadow: 0 8px 32px rgba(79,195,247,.18);
+  --shadow-lg: 0 16px 48px rgba(44,44,84,.14);
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Nunito','Arial',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+.screen { display:none; min-height:100vh; flex-direction:column; }
+.screen.active { display:flex; animation:screenIn .35s cubic-bezier(.22,1,.36,1); }
+@keyframes screenIn { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+/* WELCOME */
+#screen-welcome {
+  background:linear-gradient(160deg,#84D8FF 0%,#C4F0FF 40%,#FFF6E0 100%);
+  align-items:center; justify-content:center; text-align:center;
+  padding:40px 20px; position:relative; overflow:hidden;
+}
+.clouds { position:absolute; top:0;left:0;width:100%;height:100%; pointer-events:none; }
+.cloud { position:absolute; background:white; border-radius:50px; opacity:.6; animation:drift linear infinite; }
+@keyframes drift { from{transform:translateX(-200px)} to{transform:translateX(110vw)} }
+.welcome-star { font-size:100px; animation:bounce-slow 3s ease-in-out infinite; display:block; }
+@keyframes bounce-slow { 0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-22px) rotate(5deg)} }
+.welcome-title { font-family:'Fredoka One',cursive; font-size:clamp(42px,10vw,72px); color:#2C2C54; text-shadow:0 4px 0 rgba(79,195,247,.3); line-height:1.1; margin:16px 0 6px; }
+.welcome-sub { font-size:clamp(16px,4vw,22px); color:#546E7A; font-weight:700; margin-bottom:44px; }
+.welcome-btns { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+
+.btn-welcome-child {
+  background:linear-gradient(135deg,#66BB6A,#43A047); color:white; border:none; border-radius:50px;
+  padding:18px 36px; font-size:22px; font-weight:800; cursor:pointer;
+  box-shadow:0 6px 0 #2E7D32,0 10px 24px rgba(76,175,80,.3); transition:all .15s;
+  font-family:'Nunito',sans-serif; display:flex; align-items:center; gap:10px;
+}
+.btn-welcome-child:hover  { transform:translateY(-3px); box-shadow:0 9px 0 #2E7D32; }
+.btn-welcome-child:active { transform:translateY(3px); box-shadow:0 3px 0 #2E7D32; }
+
+.btn-welcome-parent {
+  background:linear-gradient(135deg,#AB47BC,#7B1FA2); color:white; border:none; border-radius:50px;
+  padding:18px 36px; font-size:20px; font-weight:800; cursor:pointer;
+  box-shadow:0 6px 0 #4A148C,0 10px 24px rgba(171,71,188,.3); transition:all .15s;
+  font-family:'Nunito',sans-serif; display:flex; align-items:center; gap:10px;
+}
+.btn-welcome-parent:hover  { transform:translateY(-3px); }
+.btn-welcome-parent:active { transform:translateY(3px); box-shadow:0 3px 0 #4A148C; }
+
+/* COMMON */
+.top-bar { padding:20px 20px 0; display:flex; align-items:center; justify-content:space-between; }
+.page-title { font-family:'Fredoka One',cursive; font-size:28px; color:var(--text); }
+.btn-back {
+  background:white; border:2px solid #E0E0E0; border-radius:14px;
+  padding:10px 18px; font-size:15px; font-weight:700; cursor:pointer; color:var(--text);
+  transition:all .15s; font-family:'Nunito',sans-serif;
+}
+.btn-back:hover { background:#f5f5f5; border-color:var(--sky); }
+
+/* LOGIN CARD (shared) */
+.login-screen { background:linear-gradient(160deg,#1A237E,#303F9F); align-items:center; justify-content:center; padding:20px; }
+.login-card {
+  background:white; border-radius:28px; padding:38px 30px;
+  width:100%; max-width:340px; box-shadow:0 24px 64px rgba(0,0,0,.4); text-align:center;
+}
+.login-lock  { font-size:52px; display:block; margin-bottom:10px; }
+.login-title { font-family:'Fredoka One',cursive; font-size:24px; margin-bottom:22px; }
+.form-label  { display:block; font-size:12px; font-weight:800; color:var(--muted); text-align:right; margin-bottom:6px; }
+.form-input  {
+  width:100%; padding:13px 15px; border:2px solid #E0E0E0; border-radius:13px;
+  font-size:16px; font-family:'Nunito',sans-serif; outline:none; transition:border-color .2s; text-align:right;
+}
+.form-input:focus { border-color:var(--purple); }
+.login-error { color:#C62828; font-size:13px; font-weight:700; margin:8px 0; min-height:18px; }
+.btn-login {
+  width:100%; background:linear-gradient(135deg,#66BB6A,#43A047); color:white;
+  border:none; border-radius:13px; padding:15px; font-size:16px; font-weight:800;
+  cursor:pointer; margin-top:6px; font-family:'Nunito',sans-serif;
+  box-shadow:0 5px 0 #2E7D32; transition:all .15s;
+}
+.btn-login:hover  { transform:translateY(-2px); }
+.btn-login:active { transform:translateY(2px); box-shadow:0 2px 0 #2E7D32; }
+.btn-login-back { width:100%; background:none; border:none; color:var(--muted); font-size:14px; font-weight:700; cursor:pointer; margin-top:12px; font-family:'Nunito',sans-serif; padding:8px; }
+
+/* CHILD MAIN */
+#screen-child-main { background:linear-gradient(180deg,#E8F5E9,#FFF9F0); padding-bottom:30px; }
+.child-header {
+  background:linear-gradient(135deg,#66BB6A,#43A047); padding:24px 20px 28px; color:white;
+  display:flex; align-items:flex-start; justify-content:space-between;
+}
+.child-header-name { font-family:'Fredoka One',cursive; font-size:26px; margin-bottom:4px; }
+.streak-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.25); border-radius:50px; padding:6px 14px; font-size:13px; font-weight:800; margin-top:8px; }
+
+.daily-card { margin:16px 16px 0; background:white; border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); }
+.daily-card-title { font-size:15px; font-weight:800; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.progress-track { background:#F0F0F0; border-radius:50px; height:12px; overflow:hidden; }
+.progress-fill  { height:100%; border-radius:50px; background:linear-gradient(90deg,#66BB6A,#FFD54F); transition:width .6s cubic-bezier(.22,1,.36,1); }
+.progress-label { display:flex; justify-content:space-between; font-size:13px; color:var(--muted); font-weight:700; margin-top:6px; }
+.stars-row { display:flex; gap:3px; margin-top:12px; flex-wrap:wrap; }
+.star-icon { font-size:20px; line-height:1; }
+
+.tasks-section { padding:14px 16px 0; }
+.section-label { font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:10px; }
+
+.task-card {
+  background:white; border-radius:var(--radius); padding:14px 16px; margin-bottom:10px;
+  display:flex; align-items:center; gap:12px; cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.06); border:3px solid transparent; transition:all .2s;
+}
+.task-card:hover { transform:translateX(-4px); border-color:var(--sky); }
+.task-card.done  { border-color:var(--grass); background:linear-gradient(135deg,#fff,#F1F8E9); }
+.task-card-icon  { font-size:42px; flex-shrink:0; }
+.task-card-body  { flex:1; min-width:0; }
+.task-card-name  { font-size:15px; font-weight:800; margin-bottom:2px; }
+.task-card-desc  { font-size:11px; color:var(--muted); font-weight:600; margin-bottom:7px; }
+.task-prog-track { background:#F0F0F0; border-radius:50px; height:7px; overflow:hidden; }
+.task-prog-fill  { height:100%; border-radius:50px; background:linear-gradient(90deg,#4FC3F7,#AB47BC); transition:width .5s; }
+.task-pct        { font-size:18px; font-weight:900; color:var(--sky); flex-shrink:0; }
+
+/* TASK SCREENS */
+.task-screen { background:linear-gradient(160deg,#E3F2FD,#FFF9F0); align-items:center; padding:0 16px 30px; }
+.task-top-bar { width:100%; display:flex; align-items:center; justify-content:space-between; padding:18px 0 0; margin-bottom:10px; }
+.task-title-pill { background:white; border-radius:50px; padding:8px 16px; font-size:13px; font-weight:800; color:var(--text); box-shadow:0 2px 8px rgba(0,0,0,.08); }
+.timer-pill { background:white; border-radius:50px; padding:8px 14px; font-size:14px; font-weight:900; color:var(--text); box-shadow:0 2px 8px rgba(0,0,0,.08); display:flex; align-items:center; gap:4px; min-width:74px; justify-content:center; }
+.timer-pill.warn   { background:#FFF3E0; color:#E65100; }
+.timer-pill.danger { background:#FFEBEE; color:#C62828; animation:pulse-timer .5s ease infinite; }
+@keyframes pulse-timer { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+
+.q-counter { text-align:center; font-size:13px; font-weight:800; color:var(--muted); letter-spacing:.5px; margin-bottom:6px; }
+.q-dots    { display:flex; gap:6px; justify-content:center; margin-bottom:14px; }
+.q-dot { width:10px; height:10px; border-radius:50%; background:#E0E0E0; transition:all .3s; }
+.q-dot.active  { background:var(--sky);   transform:scale(1.3); }
+.q-dot.correct { background:var(--grass); }
+.q-dot.wrong   { background:var(--coral); }
+
+.score-row { display:flex; gap:14px; justify-content:center; margin-bottom:12px; }
+.score-chip { border-radius:50px; padding:7px 16px; font-size:14px; font-weight:900; display:flex; align-items:center; gap:5px; }
+.score-chip.correct { background:#E8F5E9; color:#2E7D32; }
+.score-chip.wrong   { background:#FFEBEE; color:#C62828; }
+
+.emoji-card { background:white; border-radius:var(--radius); padding:22px 32px; box-shadow:var(--shadow-lg); margin-bottom:12px; text-align:center; }
+.big-emoji   { font-size:clamp(72px,20vw,110px); display:block; line-height:1; animation:pop-in .4s cubic-bezier(.175,.885,.32,1.275); }
+@keyframes pop-in { from{transform:scale(.4) rotate(-10deg);opacity:0} to{transform:scale(1) rotate(0);opacity:1} }
+.big-word    { font-family:'Fredoka One',cursive; font-size:clamp(26px,8vw,48px); color:var(--text); letter-spacing:4px; text-transform:uppercase; margin-top:8px; }
+.hebrew-word { font-size:16px; color:var(--muted); font-weight:700; margin-top:4px; }
+
+.speak-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg,#4FC3F7,#0288D1); color:white;
+  border:none; border-radius:50px; padding:12px 24px; font-size:15px; font-weight:800;
+  cursor:pointer; box-shadow:0 4px 16px rgba(79,195,247,.35); transition:all .15s;
+  margin-bottom:16px; font-family:'Nunito',sans-serif;
+}
+.speak-btn:hover { transform:scale(1.05); }
+.speak-btn:active { transform:scale(.95); }
+.speak-btn.speaking { animation:pulse-speak .4s ease infinite; }
+@keyframes pulse-speak { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+
+.letter-options { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; width:100%; max-width:400px; }
+.opt-letter {
+  background:white; border:3px solid #E0E0E0; border-radius:18px;
+  padding:16px 6px; font-family:'Fredoka One',cursive; font-size:34px; text-transform:uppercase;
+  cursor:pointer; transition:all .15s cubic-bezier(.22,1,.36,1); box-shadow:0 4px 0 #E0E0E0;
+}
+.opt-letter:hover   { border-color:var(--sky);   box-shadow:0 4px 0 var(--sky);   transform:translateY(-2px); }
+.opt-letter.correct { background:#E8F5E9; border-color:var(--grass); box-shadow:0 4px 0 #388E3C; color:#2E7D32; animation:correct-flash .4s; }
+.opt-letter.wrong   { background:#FFEBEE; border-color:var(--coral); box-shadow:0 4px 0 #D32F2F; color:#C62828; animation:wrong-shake .4s; }
+.opt-letter:disabled { cursor:default; }
+@keyframes correct-flash { 0%{transform:scale(1)} 50%{transform:scale(1.22)} 100%{transform:scale(1)} }
+@keyframes wrong-shake   { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+.image-options { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; width:100%; max-width:420px; }
+.opt-image {
+  background:white; border:3px solid #E0E0E0; border-radius:var(--radius);
+  padding:16px 8px 14px; cursor:pointer;
+  transition:all .15s cubic-bezier(.22,1,.36,1); box-shadow:0 4px 0 #E0E0E0;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+}
+.opt-image:hover   { border-color:var(--sky);   box-shadow:0 4px 0 var(--sky);   transform:translateY(-3px); }
+.opt-image.correct { background:#E8F5E9; border-color:var(--grass); box-shadow:0 4px 0 #388E3C; animation:correct-flash .4s; }
+.opt-image.wrong   { background:#FFEBEE; border-color:var(--coral); box-shadow:0 4px 0 #D32F2F; animation:wrong-shake .4s; }
+.opt-image:disabled { cursor:default; }
+.opt-img-emoji { font-size:clamp(50px,14vw,72px); line-height:1; }
+
+/* TASK COMPLETE */
+#screen-task-complete {
+  background:linear-gradient(160deg,#FFF8E1,#F3E5F5,#E8F5E9);
+  align-items:center; justify-content:center; text-align:center; padding:30px 20px;
+}
+.complete-emoji  { font-size:clamp(80px,22vw,110px); display:block; animation:bounce-slow 1s ease infinite; }
+.complete-title  { font-family:'Fredoka One',cursive; font-size:clamp(30px,9vw,50px); color:var(--text); margin:14px 0 6px; }
+.complete-score  { font-size:17px; color:var(--muted); font-weight:700; }
+.complete-stars  { display:flex; gap:8px; justify-content:center; margin:18px 0; }
+.star-big        { font-size:44px; display:block; }
+.star-big.lit    { animation:star-pop .4s cubic-bezier(.175,.885,.32,1.275) forwards; }
+@keyframes star-pop { from{transform:scale(0) rotate(-20deg)} to{transform:scale(1) rotate(0)} }
+.complete-btns   { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:18px; }
+.btn-home { background:white; border:3px solid #E0E0E0; border-radius:50px; padding:14px 28px; font-size:17px; font-weight:800; cursor:pointer; transition:all .15s; font-family:'Nunito',sans-serif; color:var(--text); }
+.btn-home:hover { border-color:var(--sky); }
+.btn-next { background:linear-gradient(135deg,#FF7043,#E64A19); color:white; border:none; border-radius:50px; padding:14px 28px; font-size:17px; font-weight:800; cursor:pointer; box-shadow:0 5px 0 #BF360C; transition:all .15s; font-family:'Nunito',sans-serif; display:none; }
+.btn-next:hover { transform:translateY(-3px); box-shadow:0 8px 0 #BF360C; }
+
+/* PARENT DASHBOARD */
+#screen-parent-dashboard { background:#F8F9FF; }
+.parent-header { background:linear-gradient(135deg,#1A237E,#303F9F); padding:22px 20px 18px; color:white; display:flex; align-items:center; justify-content:space-between; }
+.parent-header-title { font-family:'Fredoka One',cursive; font-size:22px; }
+.btn-logout { background:rgba(255,255,255,.15); color:white; border:none; border-radius:10px; padding:8px 14px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; transition:background .2s; }
+.btn-logout:hover { background:rgba(255,255,255,.25); }
+
+.tab-bar { display:flex; background:white; border-bottom:2px solid #F0F0F0; overflow-x:auto; }
+.tab-btn { flex:1; min-width:60px; padding:12px 4px; font-size:12px; font-weight:800; border:none; background:none; cursor:pointer; color:var(--muted); border-bottom:3px solid transparent; transition:all .2s; font-family:'Nunito',sans-serif; white-space:nowrap; }
+.tab-btn.active { color:var(--purple); border-bottom-color:var(--purple); }
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+.parent-scroll { flex:1; overflow-y:auto; padding:14px; }
+
+.p-card { background:white; border-radius:var(--radius); padding:18px; margin-bottom:14px; box-shadow:0 4px 12px rgba(0,0,0,.06); }
+.p-card-title { font-size:15px; font-weight:800; color:var(--text); margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+
+.report-row { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid #F5F5F5; }
+.report-row:last-child { border-bottom:none; }
+.report-name { font-size:15px; font-weight:800; display:flex; align-items:center; gap:8px; }
+.report-pct  { font-size:22px; font-weight:900; color:var(--purple); }
+.badge { display:inline-block; padding:3px 10px; border-radius:50px; font-size:11px; font-weight:800; }
+.badge-done    { background:#E8F5E9; color:#2E7D32; }
+.badge-partial { background:#FFF3E0; color:#E65100; }
+.badge-none    { background:#FFEBEE; color:#C62828; }
+
+.form-group   { margin-bottom:16px; }
+.range-val    { font-family:'Fredoka One',cursive; font-size:34px; color:var(--purple); text-align:center; margin-bottom:4px; }
+input[type=range]  { width:100%; accent-color:var(--purple); height:6px; border-radius:3px; cursor:pointer; }
+input[type=number] { width:100%; padding:12px 14px; border:2px solid #E0E0E0; border-radius:13px; font-size:20px; font-weight:900; font-family:'Fredoka One',cursive; color:var(--purple); text-align:center; outline:none; transition:border-color .2s; }
+input[type=number]:focus { border-color:var(--purple); }
+.checkbox-row { display:flex; align-items:center; gap:10px; padding:9px 0; cursor:pointer; font-size:14px; font-weight:700; }
+.checkbox-row input[type=checkbox] { width:20px; height:20px; accent-color:var(--purple); cursor:pointer; }
+
+.btn-save { width:100%; background:linear-gradient(135deg,#66BB6A,#43A047); color:white; border:none; border-radius:13px; padding:15px; font-size:16px; font-weight:800; cursor:pointer; font-family:'Nunito',sans-serif; box-shadow:0 5px 0 #2E7D32; transition:all .15s; }
+.btn-save:hover  { transform:translateY(-2px); }
+.btn-save:active { transform:translateY(2px); box-shadow:0 2px 0 #2E7D32; }
+
+.avatar-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:8px; }
+.avatar-opt { font-size:26px; text-align:center; padding:7px; border-radius:11px; cursor:pointer; border:2px solid transparent; transition:all .15s; }
+.avatar-opt:hover,.avatar-opt.sel { border-color:var(--purple); background:#F3E5F5; }
+
+.btn-add-child { width:100%; background:linear-gradient(135deg,#AB47BC,#7B1FA2); color:white; border:none; border-radius:13px; padding:13px; font-size:15px; font-weight:800; cursor:pointer; font-family:'Nunito',sans-serif; box-shadow:0 4px 0 #4A148C; transition:all .15s; }
+.btn-add-child:hover { transform:translateY(-2px); }
+
+.child-list-item { display:flex; align-items:center; gap:12px; background:white; border-radius:var(--radius-sm); padding:13px; margin-bottom:9px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+.cli-avatar { font-size:36px; }
+.cli-info   { flex:1; }
+.cli-name   { font-size:15px; font-weight:800; }
+.cli-sub    { font-size:12px; color:var(--muted); font-weight:700; margin-top:2px; }
+.btn-del { background:none; border:none; font-size:18px; cursor:pointer; padding:6px; border-radius:8px; transition:background .15s; }
+.btn-del:hover { background:#FFEBEE; }
+
+/* WORDS TAB */
+.word-list-item { display:flex; align-items:center; gap:10px; background:white; border-radius:var(--radius-sm); padding:12px 14px; margin-bottom:8px; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+.word-item-info { flex:1; }
+.word-en { font-size:15px; font-weight:800; }
+.word-he { font-size:13px; color:var(--muted); font-weight:700; }
+.word-custom-badge { background:#E3F2FD; color:#0277BD; border-radius:50px; padding:2px 8px; font-size:10px; font-weight:800; }
+.translate-btn {
+  background:linear-gradient(135deg,#4FC3F7,#0288D1); color:white;
+  border:none; border-radius:10px; padding:9px 14px; font-size:13px; font-weight:800;
+  cursor:pointer; font-family:'Nunito',sans-serif; transition:all .15s; white-space:nowrap;
+}
+.translate-btn:hover { transform:scale(1.04); }
+.translate-btn:disabled { opacity:.5; cursor:default; }
+.translate-note { font-size:11px; color:var(--muted); margin-top:4px; }
+
+/* TOAST */
+.toast { position:fixed; bottom:26px; left:50%; transform:translateX(-50%); background:#2C2C54; color:white; padding:13px 26px; border-radius:50px; font-size:14px; font-weight:700; z-index:9999; white-space:nowrap; animation:toast-in .3s ease, toast-out .3s ease 2.2s forwards; }
+@keyframes toast-in  { from{opacity:0;transform:translateX(-50%) translateY(14px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+@keyframes toast-out { to{opacity:0;transform:translateX(-50%) translateY(14px)} }
+
+/* FEEDBACK */
+.feedback-overlay { position:fixed; top:0;left:0;right:0;bottom:0; display:flex; align-items:center; justify-content:center; font-size:clamp(80px,22vw,120px); z-index:8888; pointer-events:none; animation:feedback-pop .85s cubic-bezier(.22,1,.36,1) forwards; }
+@keyframes feedback-pop { 0%{opacity:0;transform:scale(.3)} 40%{opacity:1;transform:scale(1.2)} 70%{opacity:1;transform:scale(1)} 100%{opacity:0;transform:scale(.8)} }
+
+/* CONFETTI */
+.confetti-wrap { position:fixed; top:0;left:0;width:100%;height:100%; pointer-events:none; z-index:9000; overflow:hidden; }
+.confetti-bit  { position:absolute; width:10px; height:10px; border-radius:2px; opacity:0; animation:confetti-fall linear forwards; }
+@keyframes confetti-fall { 0%{opacity:1;transform:translateY(-10px) rotate(0)} 100%{opacity:0;transform:translateY(105vh) rotate(600deg)} }
+
+@media(max-width:380px){ .letter-options{grid-template-columns:repeat(2,1fr)} .opt-letter{font-size:26px;padding:13px} }
+
+/* ── LETS START ── */
+.lets-start-card {
+  margin:14px 16px 0; background:linear-gradient(135deg,#FF7043,#E64A19);
+  border-radius:var(--radius); padding:18px 20px;
+  display:flex; align-items:center; gap:14px; cursor:pointer;
+  box-shadow:0 6px 20px rgba(255,112,67,.3); transition:all .2s;
+}
+.lets-start-card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(255,112,67,.4); }
+.ls-icon  { font-size:52px; animation:bounce-slow 2.5s ease infinite; }
+.ls-info  { flex:1; }
+.ls-title { font-family:'Fredoka One',cursive; font-size:22px; color:white; }
+.ls-sub   { font-size:13px; color:rgba(255,255,255,.85); font-weight:700; margin-top:2px; }
+
+#screen-lets-start { background:linear-gradient(160deg,#FFF3E0,#FFF9F0); }
+.ls-header { background:linear-gradient(135deg,#FF7043,#E64A19); padding:22px 20px 18px; color:white; display:flex; align-items:center; justify-content:space-between; }
+.ls-header-title { font-family:'Fredoka One',cursive; font-size:24px; }
+
+.games-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; padding:16px; }
+.game-tile {
+  background:white; border-radius:var(--radius); padding:20px 12px 16px;
+  text-align:center; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.08);
+  border:3px solid transparent; transition:all .2s cubic-bezier(.22,1,.36,1);
+}
+.game-tile:hover { transform:translateY(-5px) scale(1.02); }
+.game-tile-icon { font-size:48px; display:block; margin-bottom:8px; }
+.game-tile-name { font-size:14px; font-weight:800; color:var(--text); margin-bottom:4px; }
+.game-tile-desc { font-size:11px; color:var(--muted); font-weight:600; line-height:1.4; }
+.gt-c1{border-color:#FF7043} .gt-c2{border-color:#AB47BC} .gt-c3{border-color:#0288D1}
+.gt-c4{border-color:#43A047} .gt-c5{border-color:#FFB300}
+
+/* ── GAME SCREEN SHARED ── */
+.game-screen { background:linear-gradient(160deg,#E8EAF6,#FFF9F0); align-items:center; padding:0 16px 30px; }
+.game-top { width:100%; display:flex; align-items:center; justify-content:space-between; padding:18px 0 0; margin-bottom:14px; }
+.game-badge { background:white; border-radius:50px; padding:7px 14px; font-size:13px; font-weight:800; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+.game-score-pill { background:linear-gradient(135deg,#FFD54F,#FF7043); color:white; border-radius:50px; padding:7px 16px; font-size:14px; font-weight:900; box-shadow:0 3px 8px rgba(255,112,67,.3); }
+
+/* Letter Hunt */
+.hunt-prompt { font-family:'Fredoka One',cursive; font-size:clamp(18px,5vw,24px); color:var(--text); text-align:center; margin-bottom:16px; }
+.hunt-target { display:inline-flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#FF7043,#E64A19); color:white; border-radius:16px; padding:6px 18px; font-family:'Fredoka One',cursive; font-size:52px; box-shadow:0 4px 12px rgba(255,112,67,.4); animation:bounce-slow 2s ease infinite; }
+.hunt-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:9px; width:100%; max-width:360px; margin-bottom:16px; }
+.hunt-letter { background:white; border:3px solid #E0E0E0; border-radius:14px; padding:12px 4px; font-family:'Fredoka One',cursive; font-size:26px; text-align:center; cursor:pointer; box-shadow:0 3px 0 #E0E0E0; transition:all .15s; }
+.hunt-letter:hover { border-color:var(--coral); transform:scale(1.1); }
+.hunt-letter.correct { background:#E8F5E9; border-color:var(--grass); box-shadow:0 3px 0 #388E3C; animation:correct-flash .4s; }
+.hunt-letter.wrong   { background:#FFEBEE; border-color:var(--coral); animation:wrong-shake .4s; }
+.hunt-round { font-size:13px; font-weight:800; color:var(--muted); text-align:center; margin-bottom:8px; }
+.diff-btns { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:16px; }
+.diff-btn { background:white; border:2px solid #E0E0E0; border-radius:50px; padding:8px 16px; font-size:13px; font-weight:800; cursor:pointer; transition:all .15s; font-family:'Nunito',sans-serif; }
+.diff-btn.active { background:var(--coral); border-color:var(--coral); color:white; }
+
+/* Letter & Sound */
+.alpha-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:7px; width:100%; max-width:400px; }
+.alpha-btn { background:white; border:2px solid #E0E0E0; border-radius:12px; padding:9px 2px; font-family:'Fredoka One',cursive; font-size:20px; cursor:pointer; text-align:center; box-shadow:0 3px 0 #E0E0E0; transition:all .15s; }
+.alpha-btn:hover { border-color:var(--purple); transform:translateY(-2px); }
+.alpha-btn.active { background:linear-gradient(135deg,#AB47BC,#7B1FA2); color:white; border-color:#7B1FA2; }
+.sound-card { background:white; border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; text-align:center; box-shadow:var(--shadow-lg); min-height:150px; display:flex; flex-direction:column; align-items:center; justify-content:center; animation:pop-in .35s cubic-bezier(.175,.885,.32,1.275); width:100%; max-width:400px; }
+.sound-big { font-family:'Fredoka One',cursive; font-size:80px; line-height:1; color:var(--purple); }
+.sound-phonetic { font-size:16px; font-weight:800; color:var(--muted); margin:4px 0; }
+.sound-word { font-size:22px; font-weight:900; color:var(--text); display:flex; align-items:center; justify-content:center; gap:8px; }
+
+/* What Starts With */
+.starts-letter { font-family:'Fredoka One',cursive; font-size:clamp(60px,18vw,96px); color:var(--purple); background:white; border-radius:var(--radius); padding:18px 36px; box-shadow:var(--shadow-lg); margin-bottom:18px; animation:pop-in .35s cubic-bezier(.175,.885,.32,1.275); }
+
+/* Build the Word */
+.build-img-card { background:white; border-radius:var(--radius); padding:18px 28px; box-shadow:var(--shadow-lg); margin-bottom:14px; text-align:center; }
+.build-answer-row { display:flex; gap:8px; justify-content:center; margin-bottom:16px; flex-wrap:wrap; }
+.ans-slot { width:44px; height:54px; border-radius:12px; border:3px dashed #E0E0E0; display:flex; align-items:center; justify-content:center; font-family:'Fredoka One',cursive; font-size:26px; background:white; transition:all .25s; }
+.ans-slot.filled  { border-color:var(--purple); border-style:solid; background:#F3E5F5; color:var(--purple); animation:pop-in .2s cubic-bezier(.175,.885,.32,1.275); }
+.ans-slot.correct-sl { border-color:var(--grass); background:#E8F5E9; color:#2E7D32; }
+.ans-slot.wrong-sl   { border-color:var(--coral); background:#FFEBEE; color:#C62828; }
+.build-letters { display:flex; gap:9px; justify-content:center; flex-wrap:wrap; max-width:380px; }
+.build-letter { width:48px; height:58px; border-radius:13px; background:white; border:3px solid #E0E0E0; box-shadow:0 4px 0 #E0E0E0; font-family:'Fredoka One',cursive; font-size:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .15s; }
+.build-letter:hover { border-color:var(--purple); box-shadow:0 4px 0 var(--purple); transform:translateY(-2px); }
+.build-letter.used { opacity:.22; cursor:default; pointer-events:none; }
+.build-backspace { background:#FFEBEE; border-color:var(--coral); font-size:20px; }
+.build-backspace:hover { border-color:var(--coral); box-shadow:0 4px 0 #D32F2F; }
+</style>
+</head>
+<body>
+
+<div class="confetti-wrap" id="confetti-wrap"></div>
+
+<!-- ═══ WELCOME ═══ -->
+<div class="screen active" id="screen-welcome">
+  <div class="clouds">
+    <div class="cloud" style="width:160px;height:48px;top:8%;animation-duration:18s;animation-delay:-3s"></div>
+    <div class="cloud" style="width:110px;height:36px;top:20%;animation-duration:24s;animation-delay:-10s;opacity:.35"></div>
+    <div class="cloud" style="width:190px;height:56px;top:32%;animation-duration:21s;animation-delay:-7s;opacity:.28"></div>
+  </div>
+  <span class="welcome-star">🌟</span>
+  <div class="welcome-title">English<br>Adventure!</div>
+  <div class="welcome-sub">ללמוד אנגלית זה כיף! 🎉</div>
+  <div class="welcome-btns">
+    <button class="btn-welcome-child"  onclick="APP.show('screen-child-login')"><span>👦</span> אני ילד/ה</button>
+    <button class="btn-welcome-parent" onclick="APP.showParentLogin()"><span>👨‍👩‍👧</span> הורים</button>
+  </div>
+</div>
+
+<!-- ═══ CHILD LOGIN ═══ -->
+<div class="screen login-screen" id="screen-child-login">
+  <div class="login-card">
+    <span class="login-lock">🎒</span>
+    <div class="login-title">כניסת ילדים</div>
+    <div class="form-group">
+      <label class="form-label">שם משתמש</label>
+      <input type="text" class="form-input" id="child-uname" placeholder="הכנס שם משתמש"
+             onkeydown="if(event.key==='Enter')document.getElementById('child-pw').focus()">
+    </div>
+    <div class="form-group">
+      <label class="form-label">סיסמה</label>
+      <input type="password" class="form-input" id="child-pw" placeholder="הכנס סיסמה"
+             onkeydown="if(event.key==='Enter')APP.checkChildLogin()">
+    </div>
+    <div class="login-error" id="child-login-error"></div>
+    <button class="btn-login" onclick="APP.checkChildLogin()">כניסה →</button>
+    <button class="btn-login-back" onclick="APP.show('screen-welcome')">← חזרה</button>
+  </div>
+</div>
+
+<!-- ═══ CHILD MAIN ═══ -->
+<div class="screen" id="screen-child-main">
+  <div class="child-header">
+    <div>
+      <div class="child-header-name" id="child-header-name">שלום! 👋</div>
+      <div style="font-size:14px;opacity:.85;font-weight:600">בוא נלמוד אנגלית יחד!</div>
+      <div class="streak-pill" id="streak-pill" style="display:none">🔥 <span id="streak-num">0</span> ימים ברצף!</div>
+    </div>
+    <button class="btn-back" style="background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.4);color:white;" onclick="APP.show('screen-child-login')">יציאה ←</button>
+  </div>
+  <div class="daily-card">
+    <div class="daily-card-title">📅 התקדמות היום</div>
+    <div class="progress-track"><div class="progress-fill" id="daily-fill" style="width:0%"></div></div>
+    <div class="progress-label">
+      <span id="daily-pct-label">0% הושלם</span>
+      <span id="daily-stars-label">⭐ 0 כוכבים</span>
+    </div>
+    <div class="stars-row" id="stars-row"></div>
+  </div>
+  <div class="tasks-section">
+    <div class="section-label">המשימות שלי</div>
+    <div id="task-list"></div>
+  </div>
+  <div class="lets-start-card" onclick="APP.show('screen-lets-start')">
+    <div class="ls-icon">🚀</div>
+    <div class="ls-info">
+      <div class="ls-title">Let's Start!</div>
+      <div class="ls-sub">משחקים מיוחדים לאנגלית 🎮</div>
+    </div>
+    <div style="font-size:26px;color:white;opacity:.8">←</div>
+  </div>
+</div>
+
+<!-- ═══ TASK 1 – Image → First Letter ═══ -->
+<div class="screen task-screen" id="screen-task1">
+  <div class="task-top-bar">
+    <button class="btn-back" onclick="APP.exitTask()">← יציאה</button>
+    <div class="task-title-pill">🔤 מה האות הראשונה?</div>
+    <div class="timer-pill" id="timer1">⏱ --:--</div>
+  </div>
+  <div class="q-counter" id="qcount1">שאלה 1 מתוך 5</div>
+  <div class="q-dots"    id="qdots1"></div>
+  <div class="score-row">
+    <div class="score-chip correct">✅ <span id="s1c">0</span></div>
+    <div class="score-chip wrong">❌ <span id="s1w">0</span></div>
+  </div>
+  <div class="emoji-card">
+    <span class="big-emoji" id="t1-emoji">🍎</span>
+    <div class="hebrew-word" id="t1-heb">תפוח</div>
+  </div>
+  <button class="speak-btn" id="speak1" onclick="APP.speak(1)">🔊 שמע את המילה</button>
+  <div class="letter-options" id="t1-opts"></div>
+</div>
+
+<!-- ═══ TASK 2 – Word + Image → First Letter ═══ -->
+<div class="screen task-screen" id="screen-task2">
+  <div class="task-top-bar">
+    <button class="btn-back" onclick="APP.exitTask()">← יציאה</button>
+    <div class="task-title-pill">📖 מה האות הראשונה?</div>
+    <div class="timer-pill" id="timer2">⏱ --:--</div>
+  </div>
+  <div class="q-counter" id="qcount2">שאלה 1 מתוך 5</div>
+  <div class="q-dots"    id="qdots2"></div>
+  <div class="score-row">
+    <div class="score-chip correct">✅ <span id="s2c">0</span></div>
+    <div class="score-chip wrong">❌ <span id="s2w">0</span></div>
+  </div>
+  <div class="emoji-card">
+    <span class="big-emoji" id="t2-emoji">🍎</span>
+    <div class="big-word"   id="t2-word">APPLE</div>
+    <div class="hebrew-word" id="t2-heb">תפוח</div>
+  </div>
+  <button class="speak-btn" id="speak2" onclick="APP.speak(2)">🔊 שמע את המילה</button>
+  <div class="letter-options" id="t2-opts"></div>
+</div>
+
+<!-- ═══ TASK 3 – Word → Choose Image (NO Hebrew labels) ═══ -->
+<div class="screen task-screen" id="screen-task3">
+  <div class="task-top-bar">
+    <button class="btn-back" onclick="APP.exitTask()">← יציאה</button>
+    <div class="task-title-pill">🖼️ בחר תמונה למילה</div>
+    <div class="timer-pill" id="timer3">⏱ --:--</div>
+  </div>
+  <div class="q-counter" id="qcount3">שאלה 1 מתוך 5</div>
+  <div class="q-dots"    id="qdots3"></div>
+  <div class="score-row">
+    <div class="score-chip correct">✅ <span id="s3c">0</span></div>
+    <div class="score-chip wrong">❌ <span id="s3w">0</span></div>
+  </div>
+  <div class="emoji-card" style="padding:18px 28px">
+    <div class="big-word"    id="t3-word">APPLE</div>
+    <div class="hebrew-word" id="t3-heb">(תפוח)</div>
+  </div>
+  <button class="speak-btn" id="speak3" onclick="APP.speak(3)">🔊 שמע את המילה</button>
+  <div class="image-options" id="t3-opts"></div>
+</div>
+
+<!-- ═══ TASK COMPLETE ═══ -->
+<div class="screen" id="screen-task-complete">
+  <span class="complete-emoji" id="complete-emoji">🎉</span>
+  <div class="complete-title"  id="complete-title">כל הכבוד!</div>
+  <div class="complete-score"  id="complete-score">5 מתוך 5 נכון</div>
+  <div class="complete-stars"  id="complete-stars"></div>
+  <div class="complete-btns">
+    <button class="btn-home" onclick="APP.goHome()">🏠 לדף הבית</button>
+    <button class="btn-next" id="btn-next" onclick="APP.doNextTask()">➡️ משימה הבאה!</button>
+  </div>
+</div>
+
+<!-- ═══ PARENT LOGIN ═══ -->
+<div class="screen login-screen" id="screen-parent-login">
+  <div class="login-card">
+    <span class="login-lock">🔐</span>
+    <div class="login-title">כניסת הורים</div>
+    <div class="form-group">
+      <label class="form-label">סיסמה</label>
+      <input type="password" class="form-input" id="parent-pw" placeholder="הכנס סיסמה"
+             onkeydown="if(event.key==='Enter')APP.checkParentLogin()">
+    </div>
+    <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:8px">
+      סיסמת ברירת מחדל: <strong>1234</strong>
+    </div>
+    <div class="login-error" id="parent-login-error"></div>
+    <button class="btn-login" style="background:linear-gradient(135deg,#AB47BC,#7B1FA2);box-shadow:0 5px 0 #4A148C" onclick="APP.checkParentLogin()">כניסה →</button>
+    <button class="btn-login-back" onclick="APP.show('screen-welcome')">← חזרה</button>
+    <button class="btn-login-back" style="color:#E53935;margin-top:0" onclick="APP.resetAllData()">🗑️ איפוס נתונים (אם הסיסמה נשכחה)</button>
+  </div>
+</div>
+
+<!-- ═══ PARENT DASHBOARD ═══ -->
+<div class="screen" id="screen-parent-dashboard">
+  <div class="parent-header">
+    <div class="parent-header-title">🛠️ הגדרות הורים</div>
+    <button class="btn-logout" onclick="APP.show('screen-welcome')">יציאה ←</button>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="APP.showTab('tab-report')"   id="ptab-report">📊 דוח</button>
+    <button class="tab-btn"        onclick="APP.showTab('tab-settings')" id="ptab-settings">⚙️ הגדרות</button>
+    <button class="tab-btn"        onclick="APP.showTab('tab-children')" id="ptab-children">👦 ילדים</button>
+    <button class="tab-btn"        onclick="APP.showTab('tab-words')"    id="ptab-words">📝 מילים</button>
+  </div>
+  <div class="parent-scroll">
+
+    <!-- TAB: REPORT -->
+    <div class="tab-content active" id="tab-report">
+      <div class="p-card" style="margin-top:2px">
+        <div class="p-card-title">📊 דוח יומי – <span id="report-date"></span></div>
+        <div id="report-content">
+          <div style="text-align:center;padding:40px 0;color:var(--muted)">
+            <div style="font-size:48px">📭</div><div style="font-weight:800;margin-top:8px">אין נתונים להיום</div>
+          </div>
+        </div>
+      </div>
+      <div id="per-child-detail"></div>
+    </div>
+
+    <!-- TAB: SETTINGS -->
+    <div class="tab-content" id="tab-settings">
+      <div class="p-card" style="margin-top:2px">
+        <div class="p-card-title">📝 הגדרות משימות</div>
+
+        <div class="form-group">
+          <label class="form-label">כמות משימות יומית</label>
+          <input type="number" id="set-daily-tasks" min="1" placeholder="3" style="margin-bottom:0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">מילים בכל משימה</label>
+          <div class="range-val" id="rval-words">5</div>
+          <input type="range" min="3" max="15" id="set-words"
+                 oninput="document.getElementById('rval-words').textContent=this.value">
+        </div>
+
+        <div style="font-size:13px;font-weight:800;color:var(--muted);margin-bottom:10px;margin-top:4px">⏱️ זמן לכל משימה (דקות)</div>
+        <div class="form-group">
+          <label class="form-label">🔤 משימה 1 – תמונה → אות</label>
+          <div class="range-val" id="rval-time1">10</div>
+          <input type="range" min="1" max="30" id="set-time1"
+                 oninput="document.getElementById('rval-time1').textContent=this.value">
+        </div>
+        <div class="form-group">
+          <label class="form-label">📖 משימה 2 – מילה+תמונה → אות</label>
+          <div class="range-val" id="rval-time2">10</div>
+          <input type="range" min="1" max="30" id="set-time2"
+                 oninput="document.getElementById('rval-time2').textContent=this.value">
+        </div>
+        <div class="form-group">
+          <label class="form-label">🖼️ משימה 3 – מילה → תמונה</label>
+          <div class="range-val" id="rval-time3">10</div>
+          <input type="range" min="1" max="30" id="set-time3"
+                 oninput="document.getElementById('rval-time3').textContent=this.value">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">משימות פעילות</label>
+          <label class="checkbox-row"><input type="checkbox" id="set-t1"> 🔤 תמונה → אות ראשונה</label>
+          <label class="checkbox-row"><input type="checkbox" id="set-t2"> 📖 מילה+תמונה → אות</label>
+          <label class="checkbox-row"><input type="checkbox" id="set-t3"> 🖼️ מילה → תמונה</label>
+        </div>
+
+        <div style="font-size:13px;font-weight:800;color:var(--muted);margin-bottom:10px;margin-top:4px">🔒 סיסמת הורים</div>
+        <div class="form-group">
+          <label class="form-label">סיסמה חדשה (ריק = ללא שינוי)</label>
+          <input type="password" class="form-input" id="set-new-pw" placeholder="סיסמה חדשה">
+        </div>
+        <input type="text" id="set-parent-uname" style="display:none" value="admin">
+        <button class="btn-save" onclick="APP.saveSettings()">💾 שמור הגדרות</button>
+      </div>
+    </div>
+
+    <!-- TAB: CHILDREN -->
+    <div class="tab-content" id="tab-children">
+      <div class="p-card" style="margin-top:2px">
+        <div class="p-card-title">➕ הוסף ילד/ה</div>
+        <div class="form-group">
+          <label class="form-label">שם תצוגה</label>
+          <input type="text" class="form-input" id="new-child-name" placeholder="שם הילד/ה" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label class="form-label">שם משתמש לכניסה</label>
+          <input type="text" class="form-input" id="new-child-uname" placeholder="לדוגמה: daniel123" maxlength="20" style="direction:ltr">
+        </div>
+        <div class="form-group">
+          <label class="form-label">סיסמה</label>
+          <input type="text" class="form-input" id="new-child-pass" placeholder="לדוגמה: 1234" maxlength="20" style="direction:ltr">
+        </div>
+        <div class="form-group">
+          <label class="form-label">בחר אווטאר</label>
+          <div class="avatar-grid" id="avatar-grid"></div>
+        </div>
+        <button class="btn-add-child" onclick="APP.addChild()">➕ הוסף ילד/ה</button>
+      </div>
+      <div id="children-list"></div>
+    </div>
+
+    <!-- TAB: WORDS -->
+    <div class="tab-content" id="tab-words">
+      <div class="p-card" style="margin-top:2px">
+        <div class="p-card-title">➕ הוסף מילה חדשה</div>
+        <div style="display:flex;gap:10px;margin-bottom:8px">
+          <div style="flex:1">
+            <label class="form-label">מילה בעברית</label>
+            <input type="text" class="form-input" id="new-word-he" placeholder="כלב" oninput="APP.wordInputChanged('he')">
+          </div>
+          <div style="flex:1">
+            <label class="form-label">מילה באנגלית</label>
+            <input type="text" class="form-input" id="new-word-en" placeholder="Dog" style="direction:ltr" oninput="APP.wordInputChanged('en')">
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <button class="translate-btn" id="trans-btn-he" onclick="APP.autoTranslate('he')" disabled>🔄 תרגם עברית→אנגלית</button>
+          <button class="translate-btn" id="trans-btn-en" onclick="APP.autoTranslate('en')" disabled>🔄 תרגם אנגלית→עברית</button>
+        </div>
+        <div class="translate-note">💡 התרגום האוטומטי דורש חיבור לאינטרנט</div>
+        <div style="margin-top:12px">
+          <label class="form-label">אמוג'י / תמונה (אופציונלי)</label>
+          <input type="text" class="form-input" id="new-word-emoji" placeholder="🐕" maxlength="4" style="direction:ltr;font-size:28px;text-align:center">
+        </div>
+        <button class="btn-save" style="margin-top:12px" onclick="APP.addCustomWord()">➕ הוסף מילה</button>
+      </div>
+      <div class="p-card">
+        <div class="p-card-title">📚 רשימת מילים מותאמות אישית</div>
+        <div id="custom-words-list">
+          <div style="text-align:center;padding:20px;color:var(--muted);font-weight:700">אין מילים מותאמות עדיין</div>
+        </div>
+      </div>
+      <div class="p-card">
+        <div class="p-card-title">📖 מאגר המילים הקיים (<span id="word-bank-count">0</span> מילים)</div>
+        <div id="builtin-words-list" style="max-height:300px;overflow-y:auto"></div>
+      </div>
+    </div>
+
+  </div><!-- parent-scroll -->
+</div>
+
+<!-- ═══ LETS START HUB ═══ -->
+<div class="screen" id="screen-lets-start">
+  <div class="ls-header">
+    <div class="ls-header-title">🚀 Let's Start!</div>
+    <button class="btn-logout" onclick="APP.goHome()">🏠 בית</button>
+  </div>
+  <div style="padding:12px 16px 0;font-size:13px;font-weight:700;color:var(--muted)">בחר משחק 👇</div>
+  <div class="games-grid">
+    <div class="game-tile gt-c1" onclick="GAMES.startHunt()">
+      <span class="game-tile-icon">🎯</span>
+      <div class="game-tile-name">ציד אותיות</div>
+      <div class="game-tile-desc">מצא את האות הנכונה מתוך הקבוצה!</div>
+    </div>
+    <div class="game-tile gt-c2" onclick="GAMES.startSound()">
+      <span class="game-tile-icon">🔤</span>
+      <div class="game-tile-name">אות וקול</div>
+      <div class="game-tile-desc">לחץ על אות ושמע את שמה וצלילה</div>
+    </div>
+    <div class="game-tile gt-c3" onclick="GAMES.startListen()">
+      <span class="game-tile-icon">👂</span>
+      <div class="game-tile-name">שמע ובחר</div>
+      <div class="game-tile-desc">שמע מילה ובחר את התמונה הנכונה</div>
+    </div>
+    <div class="game-tile gt-c4" onclick="GAMES.startStarts()">
+      <span class="game-tile-icon">🔡</span>
+      <div class="game-tile-name">מה מתחיל ב...?</div>
+      <div class="game-tile-desc">ראה אות ובחר תמונה שמתחילה בה</div>
+    </div>
+    <div class="game-tile gt-c5" onclick="GAMES.startBuild()">
+      <span class="game-tile-icon">🧩</span>
+      <div class="game-tile-name">בנה מילה</div>
+      <div class="game-tile-desc">סדר אותיות לבנות את המילה הנכונה</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ GAME: LETTER HUNT ═══ -->
+<div class="screen game-screen" id="screen-game-hunt">
+  <div class="game-top">
+    <button class="btn-back" onclick="APP.show('screen-lets-start')">← חזרה</button>
+    <div class="game-badge">🎯 ציד אותיות</div>
+    <div class="game-score-pill">⭐ <span id="hunt-score">0</span></div>
+  </div>
+  <div class="diff-btns">
+    <button class="diff-btn active" id="diff-upper" onclick="GAMES.setHuntDiff('upper')">ABC גדולות</button>
+    <button class="diff-btn"        id="diff-lower" onclick="GAMES.setHuntDiff('lower')">abc קטנות</button>
+    <button class="diff-btn"        id="diff-mix"   onclick="GAMES.setHuntDiff('mix')">ערבוב</button>
+  </div>
+  <div class="hunt-round" id="hunt-round">סיבוב 1 מתוך 5</div>
+  <div class="hunt-prompt">מצא את האות: <span class="hunt-target" id="hunt-target">A</span></div>
+  <div class="hunt-grid" id="hunt-grid"></div>
+</div>
+
+<!-- ═══ GAME: LETTER & SOUND ═══ -->
+<div class="screen game-screen" id="screen-game-sound">
+  <div class="game-top">
+    <button class="btn-back" onclick="APP.show('screen-lets-start')">← חזרה</button>
+    <div class="game-badge">🔤 אות וקול</div>
+    <div></div>
+  </div>
+  <div style="font-size:14px;font-weight:700;color:var(--muted);margin-bottom:14px;text-align:center">לחץ על אות כדי ללמוד אותה 👇</div>
+  <div class="sound-card" id="sound-card">
+    <div style="font-size:18px;color:var(--muted);font-weight:700">👆 בחר אות מלמטה</div>
+  </div>
+  <div class="alpha-grid" id="alpha-grid"></div>
+</div>
+
+<!-- ═══ GAME: LISTEN & CHOOSE ═══ -->
+<div class="screen game-screen" id="screen-game-listen">
+  <div class="game-top">
+    <button class="btn-back" onclick="APP.show('screen-lets-start')">← חזרה</button>
+    <div class="game-badge">👂 שמע ובחר</div>
+    <div class="game-score-pill">⭐ <span id="listen-score">0</span></div>
+  </div>
+  <div class="q-counter" id="listen-count">שאלה 1 מתוך 5</div>
+  <div class="q-dots" id="listen-dots"></div>
+  <div class="score-row">
+    <div class="score-chip correct">✅ <span id="listen-c">0</span></div>
+    <div class="score-chip wrong">❌ <span id="listen-w">0</span></div>
+  </div>
+  <button class="speak-btn" id="listen-speak-btn" onclick="GAMES.listenSpeak()" style="font-size:17px;padding:14px 28px">
+    🔊 לחץ לשמוע את המילה
+  </button>
+  <div class="image-options" id="listen-opts"></div>
+</div>
+
+<!-- ═══ GAME: WHAT STARTS WITH ═══ -->
+<div class="screen game-screen" id="screen-game-starts">
+  <div class="game-top">
+    <button class="btn-back" onclick="APP.show('screen-lets-start')">← חזרה</button>
+    <div class="game-badge">🔡 מה מתחיל ב...?</div>
+    <div class="game-score-pill">⭐ <span id="starts-score">0</span></div>
+  </div>
+  <div class="q-counter" id="starts-count">שאלה 1 מתוך 5</div>
+  <div class="q-dots" id="starts-dots"></div>
+  <div class="score-row">
+    <div class="score-chip correct">✅ <span id="starts-c">0</span></div>
+    <div class="score-chip wrong">❌ <span id="starts-w">0</span></div>
+  </div>
+  <div class="starts-letter" id="starts-letter">A</div>
+  <div class="image-options" id="starts-opts"></div>
+</div>
+
+<!-- ═══ GAME: BUILD THE WORD ═══ -->
+<div class="screen game-screen" id="screen-game-build">
+  <div class="game-top">
+    <button class="btn-back" onclick="APP.show('screen-lets-start')">← חזרה</button>
+    <div class="game-badge">🧩 בנה מילה</div>
+    <div class="game-score-pill">⭐ <span id="build-score">0</span></div>
+  </div>
+  <div class="q-counter" id="build-count">מילה 1 מתוך 5</div>
+  <div class="q-dots" id="build-dots"></div>
+  <div class="score-row">
+    <div class="score-chip correct">✅ <span id="build-c">0</span></div>
+    <div class="score-chip wrong">❌ <span id="build-w">0</span></div>
+  </div>
+  <div class="build-img-card">
+    <span class="big-emoji" id="build-emoji">🍎</span>
+    <div class="hebrew-word" id="build-heb">תפוח</div>
+  </div>
+  <div class="build-answer-row" id="build-answer"></div>
+  <div class="build-letters" id="build-letters"></div>
+  <button class="speak-btn" onclick="GAMES.buildSpeak()" style="margin-top:12px">🔊 שמע את המילה</button>
+</div>
+
+<!-- ════════════════ JAVASCRIPT ════════════════ -->
+<script>
+// ── BUILT-IN WORD BANK ─────────────────────────────────────
+const BUILTIN_WORDS = [
+  {word:'Apple',      heb:'תפוח',      e:'🍎', l:'A'},
+  {word:'Ball',       heb:'כדור',      e:'⚽', l:'B'},
+  {word:'Cat',        heb:'חתול',      e:'🐱', l:'C'},
+  {word:'Dog',        heb:'כלב',       e:'🐶', l:'D'},
+  {word:'Egg',        heb:'ביצה',      e:'🥚', l:'E'},
+  {word:'Fish',       heb:'דג',        e:'🐟', l:'F'},
+  {word:'Goat',       heb:'עז',        e:'🐐', l:'G'},
+  {word:'Hat',        heb:'כובע',      e:'🎩', l:'H'},
+  {word:'Ice cream',  heb:'גלידה',     e:'🍦', l:'I'},
+  {word:'Jam',        heb:'ריבה',      e:'🍯', l:'J'},
+  {word:'Kite',       heb:'עפיפון',    e:'🪁', l:'K'},
+  {word:'Lion',       heb:'אריה',      e:'🦁', l:'L'},
+  {word:'Moon',       heb:'ירח',       e:'🌙', l:'M'},
+  {word:'Nest',       heb:'קן',        e:'🪺', l:'N'},
+  {word:'Orange',     heb:'תפוז',      e:'🍊', l:'O'},
+  {word:'Pig',        heb:'חזיר',      e:'🐷', l:'P'},
+  {word:'Queen',      heb:'מלכה',      e:'👸', l:'Q'},
+  {word:'Rainbow',    heb:'קשת',       e:'🌈', l:'R'},
+  {word:'Sun',        heb:'שמש',       e:'☀️', l:'S'},
+  {word:'Tree',       heb:'עץ',        e:'🌳', l:'T'},
+  {word:'Umbrella',   heb:'מטריה',     e:'☂️', l:'U'},
+  {word:'Violin',     heb:'כינור',     e:'🎻', l:'V'},
+  {word:'Whale',      heb:'לוויתן',    e:'🐋', l:'W'},
+  {word:'Fox',        heb:'שועל',      e:'🦊', l:'F'},
+  {word:'Butterfly',  heb:'פרפר',      e:'🦋', l:'B'},
+  {word:'Strawberry', heb:'תות',       e:'🍓', l:'S'},
+  {word:'Elephant',   heb:'פיל',       e:'🐘', l:'E'},
+  {word:'Rocket',     heb:'רקטה',      e:'🚀', l:'R'},
+  {word:'Turtle',     heb:'צב',        e:'🐢', l:'T'},
+  {word:'Panda',      heb:'פנדה',      e:'🐼', l:'P'},
+  {word:'Monkey',     heb:'קוף',       e:'🐒', l:'M'},
+  {word:'Cake',       heb:'עוגה',      e:'🎂', l:'C'},
+  {word:'Dragon',     heb:'דרקון',     e:'🐉', l:'D'},
+  {word:'Star',       heb:'כוכב',      e:'⭐', l:'S'},
+  {word:'Heart',      heb:'לב',        e:'❤️', l:'H'},
+  {word:'Book',       heb:'ספר',       e:'📚', l:'B'},
+  {word:'Flower',     heb:'פרח',       e:'🌸', l:'F'},
+  {word:'Guitar',     heb:'גיטרה',     e:'🎸', l:'G'},
+  {word:'Lamp',       heb:'מנורה',     e:'💡', l:'L'},
+  {word:'Nose',       heb:'אף',        e:'👃', l:'N'},
+];
+
+const AVATARS = ['🦁','🐸','🦄','🐼','🐯','🦊','🐨','🐙','🦋','🐬','🐶','🐱','🐰','🐭','🦜','🐳','🐢','🦔','⭐','🌟'];
+
+// ── DATA LAYER ─────────────────────────────────────────────
+const DB = {
+  // ⚠️ KEY קבוע לעולם – לעולם אל תשנה!
+  KEY: 'englishApp_STABLE',
+
+  // כל מפתחות הגרסאות הישנות – לצורך מיגרציה
+  OLD_KEYS: ['englishAdv_v4','englishAdventureData_v2','englishFunData'],
+
+  defaults() {
+    return {
+      settings: {
+        parentUsername: 'admin',
+        parentPassword: '1234',
+        dailyTaskCount:  3,
+        wordsPerTask:    5,
+        timeTask1: 10, timeTask2: 10, timeTask3: 10,
+        enabledTasks: [true, true, true],
+        customWords: []
+      },
+      children: [],
+      progress: {}
+    };
+  },
+
+  // מיזוג עמוק – שמור נתונים קיימים, השלם חסרים מברירות מחדל
+  merge(existing) {
+    const def = this.defaults();
+    return {
+      settings: Object.assign({}, def.settings, existing.settings || {}),
+      children: existing.children  || [],
+      progress: existing.progress  || {}
+    };
+  },
+
+  load() {
+    // 1. נסה את המפתח הקבוע
+    try {
+      const r = localStorage.getItem(this.KEY);
+      if (r) return this.merge(JSON.parse(r));
+    } catch(e) {}
+
+    // 2. נסה למגרר נתונים מגרסאות ישנות
+    for (const old of this.OLD_KEYS) {
+      try {
+        const r = localStorage.getItem(old);
+        if (r) {
+          const migrated = this.merge(JSON.parse(r));
+          this.save(migrated);               // שמור תחת המפתח הקבוע
+          localStorage.removeItem(old);      // נקה את הישן
+          return migrated;
+        }
+      } catch(e) {}
+    }
+
+    // 3. ברירת מחדל ראשונה
+    return this.defaults();
+  },
+
+  save(d) { try { localStorage.setItem(this.KEY, JSON.stringify(d)); } catch(e){} },
+  get()   { return this.load(); },
+  set(fn) { const d=this.load(); fn(d); this.save(d); },
+  today() { return new Date().toISOString().split('T')[0]; }
+};
+
+// ── STATE ──────────────────────────────────────────────────
+const ST = {
+  child: null, taskNum: null,
+  questions: [], qIdx: 0, correct: 0, wrong: 0,
+  timerInt: null, timeLeft: 0,
+  nextTask: null, dotStates: [],
+  pickedAv: AVATARS[0]
+};
+
+// ── HELPERS ────────────────────────────────────────────────
+function allWords() {
+  const d = DB.get();
+  const custom = (d.settings.customWords||[]).map(w=>({
+    word: w.en,
+    heb:  w.he,
+    e:    w.emoji || '📝',
+    l:    w.en.trim().charAt(0).toUpperCase(),
+    custom: true
+  }));
+  return [...BUILTIN_WORDS, ...custom];
+}
+
+// ── APP ────────────────────────────────────────────────────
+const APP = {
+
+  show(id) {
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  },
+
+  // ── CHILD AUTH ─────────────────────────────────────────
+  checkChildLogin() {
+    const d = DB.get();
+    const uname = document.getElementById('child-uname').value.trim();
+    const pw    = document.getElementById('child-pw').value;
+    const child = d.children.find(c=>c.username===uname && c.password===pw);
+    if (child) {
+      document.getElementById('child-uname').value='';
+      document.getElementById('child-pw').value='';
+      document.getElementById('child-login-error').textContent='';
+      ST.child = child;
+      this.renderChildMain();
+      this.show('screen-child-main');
+    } else {
+      document.getElementById('child-login-error').textContent='❌ שם משתמש או סיסמה שגויים';
+    }
+  },
+
+  // ── CHILD MAIN ─────────────────────────────────────────
+  renderChildMain() {
+    const c = ST.child, d = DB.get(), s = d.settings;
+    document.getElementById('child-header-name').textContent = `שלום ${c.name}! ${c.avatar}`;
+
+    const streak = this.streak(c.id);
+    const sp = document.getElementById('streak-pill');
+    if (streak>1) { sp.style.display='inline-flex'; document.getElementById('streak-num').textContent=streak; }
+    else sp.style.display='none';
+
+    const enabled  = s.enabledTasks||[true,true,true];
+    const maxTasks = Math.max(1, parseInt(s.dailyTaskCount)||3);
+    const defs = [
+      {num:1, icon:'🔤', name:'תמונה → אות ראשונה', desc:'ראה תמונה ובחר את האות הראשונה'},
+      {num:2, icon:'📖', name:'מילה + תמונה → אות',  desc:'ראה מילה ותמונה ובחר את האות הראשונה'},
+      {num:3, icon:'🖼️', name:'מילה → תמונה',        desc:'קרא מילה ובחר את התמונה הנכונה'},
+    ];
+    const list = document.getElementById('task-list');
+    list.innerHTML='';
+    let totalDone=0, totalTasks=0, ec=0;
+
+    defs.forEach((def,i)=>{
+      if (!enabled[i] || ec>=maxTasks) return;
+      ec++; totalTasks++;
+      const prog = this.getProgress(c.id, def.num);
+      const pct  = prog.total>0 ? Math.round(prog.completed/prog.total*100) : 0;
+      if (prog.done) totalDone++;
+      const card = document.createElement('div');
+      card.className = `task-card${prog.done?' done':''}`;
+      card.innerHTML = `
+        <div class="task-card-icon">${def.icon}</div>
+        <div class="task-card-body">
+          <div class="task-card-name">${def.name} ${prog.done?'✅':''}</div>
+          <div class="task-card-desc">${def.desc}</div>
+          <div class="task-prog-track"><div class="task-prog-fill" style="width:${pct}%"></div></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px">✅ ${prog.correct||0} &nbsp;❌ ${prog.wrong||0}</div>
+        </div>
+        <div class="task-pct">${pct}%</div>`;
+      if (!prog.done) card.onclick = ()=>this.startTask(def.num);
+      list.appendChild(card);
+    });
+
+    const pct = totalTasks>0?Math.round(totalDone/totalTasks*100):0;
+    document.getElementById('daily-fill').style.width = pct+'%';
+    document.getElementById('daily-pct-label').textContent = pct+'% הושלם';
+    const stars = this.totalStars(c.id);
+    document.getElementById('daily-stars-label').textContent = '⭐ '+stars+' כוכבים';
+    const row = document.getElementById('stars-row');
+    row.innerHTML='';
+    for(let i=0;i<Math.min(stars,12);i++) row.innerHTML+='<span class="star-icon">⭐</span>';
+    if(stars>12) row.innerHTML+=`<span style="font-size:11px;color:var(--muted);margin-right:4px">+${stars-12}</span>`;
+  },
+
+  totalStars(cid) {
+    const d=DB.get(); let t=0;
+    Object.values(d.progress||{}).forEach(day=>{
+      const cd=day[cid]; if(!cd) return;
+      [1,2,3].forEach(n=>{ const p=cd['task'+n]; if(p&&p.done){const r=p.total>0?p.correct/p.total:0; t+=r>=.8?3:r>=.6?2:1;} });
+    });
+    return t;
+  },
+
+  streak(cid) {
+    const d=DB.get(); let s=0; const now=new Date();
+    for(let i=0;i<60;i++){
+      const dt=new Date(now); dt.setDate(dt.getDate()-i);
+      const key=dt.toISOString().split('T')[0];
+      const dd=d.progress?.[key]?.[cid];
+      if(dd&&Object.values(dd).some(t=>t.done)) s++;
+      else if(i>0) break;
+    }
+    return s;
+  },
+
+  getProgress(cid,num) {
+    const d=DB.get();
+    return d.progress?.[DB.today()]?.[cid]?.['task'+num]||{completed:0,total:0,correct:0,wrong:0,done:false};
+  },
+
+  saveProgress(cid,num,upd) {
+    DB.set(d=>{
+      const t=DB.today();
+      if(!d.progress[t]) d.progress[t]={};
+      if(!d.progress[t][cid]) d.progress[t][cid]={};
+      const key='task'+num;
+      if(!d.progress[t][cid][key]) d.progress[t][cid][key]={completed:0,total:0,correct:0,wrong:0,done:false};
+      Object.assign(d.progress[t][cid][key],upd);
+    });
+  },
+
+  // ── PARENT AUTH ────────────────────────────────────────
+  showParentLogin() {
+    document.getElementById('parent-pw').value='';
+    document.getElementById('parent-login-error').textContent='';
+    this.show('screen-parent-login');
+  },
+
+  checkParentLogin() {
+    const d  = DB.get();
+    const p  = document.getElementById('parent-pw').value;
+    const ok = d.settings.parentPassword || '1234';
+    if (p === ok) {
+      document.getElementById('parent-login-error').textContent = '';
+      this.renderParentDash();
+      this.show('screen-parent-dashboard');
+    } else {
+      document.getElementById('parent-login-error').textContent = '❌ סיסמה שגויה';
+      document.getElementById('parent-pw').value = '';
+    }
+  },
+
+  resetAllData() {
+    if (!confirm('⚠️ פעולה זו תמחק את כל הנתונים (ילדים, התקדמות, הגדרות).\nלהמשיך?')) return;
+    DB.OLD_KEYS.forEach(k => localStorage.removeItem(k));
+    localStorage.removeItem(DB.KEY);
+    this.toast('✅ הנתונים אופסו. סיסמה: 1234');
+    setTimeout(() => location.reload(), 1500);
+  },
+
+  // ── PARENT DASHBOARD ──────────────────────────────────
+  showTab(id) {
+    ['tab-report','tab-settings','tab-children','tab-words'].forEach(t=>{
+      document.getElementById(t).classList.toggle('active',t===id);
+      const b=document.getElementById('ptab-'+t.replace('tab-',''));
+      if(b) b.classList.toggle('active',t===id);
+    });
+  },
+
+  renderParentDash() {
+    const d=DB.get(), s=d.settings;
+    document.getElementById('report-date').textContent=new Date().toLocaleDateString('he-IL');
+
+    document.getElementById('set-daily-tasks').value = s.dailyTaskCount||3;
+    document.getElementById('set-words').value  = s.wordsPerTask||5;
+    document.getElementById('rval-words').textContent = s.wordsPerTask||5;
+    document.getElementById('set-time1').value  = s.timeTask1||10; document.getElementById('rval-time1').textContent = s.timeTask1||10;
+    document.getElementById('set-time2').value  = s.timeTask2||10; document.getElementById('rval-time2').textContent = s.timeTask2||10;
+    document.getElementById('set-time3').value  = s.timeTask3||10; document.getElementById('rval-time3').textContent = s.timeTask3||10;
+    const en=s.enabledTasks||[true,true,true];
+    document.getElementById('set-t1').checked=en[0]!==false;
+    document.getElementById('set-t2').checked=en[1]!==false;
+    document.getElementById('set-t3').checked=en[2]!==false;
+    document.getElementById('set-parent-uname').value = s.parentUsername||'admin';
+
+    this.renderReport();
+    this.renderChildList();
+    this.initAvatarGrid();
+    this.renderWordsTabs();
+  },
+
+  renderReport() {
+    const d=DB.get(), today=DB.today(), tod=d.progress?.[today]||{};
+    const rEl=document.getElementById('report-content'), dEl=document.getElementById('per-child-detail');
+    if(!d.children.length){
+      rEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-weight:800">אין ילדים עדיין</div>';
+      dEl.innerHTML=''; return;
+    }
+    let html='', detail='';
+    d.children.forEach(c=>{
+      const cd=tod[c.id]||{};
+      const tasks=[1,2,3].map(n=>cd['task'+n]).filter(Boolean);
+      const totC=tasks.reduce((s,t)=>s+(t.correct||0),0);
+      const totT=tasks.reduce((s,t)=>s+(t.total||0),0);
+      const doneN=tasks.filter(t=>t.done).length;
+      const pct=totT>0?Math.round(totC/totT*100):0;
+      const bc=doneN===tasks.length&&tasks.length>0?'badge-done':doneN>0?'badge-partial':'badge-none';
+      const bt=doneN===tasks.length&&tasks.length>0?'הושלם ✓':doneN>0?`בביצוע ${doneN}/${tasks.length}`:'לא התחיל';
+      html+=`<div class="report-row"><div><div class="report-name">${c.avatar} ${c.name}</div><span class="badge ${bc}">${bt}</span></div><div class="report-pct">${pct}%</div></div>`;
+      if(tasks.length){
+        const names=['תמונה→אות','מילה+תמונה→אות','מילה→תמונה'];
+        let rows='';
+        [1,2,3].forEach(n=>{const p=cd['task'+n];if(!p)return;const tp=p.total>0?Math.round(p.correct/p.total*100):0;rows+=`<div class="report-row"><span>${names[n-1]} ${p.done?'✅':'⏳'}</span><span><strong>${p.correct||0}</strong>/${p.total||0} (${tp}%)</span></div>`;});
+        detail+=`<div class="p-card"><div class="p-card-title">${c.avatar} ${c.name} – פירוט</div>${rows}</div>`;
+      }
+    });
+    rEl.innerHTML=html;
+    dEl.innerHTML=detail;
+  },
+
+  renderChildList() {
+    const d=DB.get(), el=document.getElementById('children-list');
+    el.innerHTML='';
+    if(!d.children.length){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-weight:800">אין ילדים עדיין</div>';return;}
+    d.children.forEach(c=>{
+      const div=document.createElement('div'); div.className='child-list-item';
+      div.innerHTML=`<div class="cli-avatar">${c.avatar}</div>
+        <div class="cli-info">
+          <div class="cli-name">${c.name}</div>
+          <div class="cli-sub">👤 ${c.username} &nbsp;⭐ ${this.totalStars(c.id)} כוכבים</div>
+        </div>
+        <button class="btn-del" onclick="APP.deleteChild('${c.id}')">🗑️</button>`;
+      el.appendChild(div);
+    });
+  },
+
+  saveSettings() {
+    DB.set(d=>{
+      d.settings.dailyTaskCount = Math.max(1, parseInt(document.getElementById('set-daily-tasks').value)||3);
+      d.settings.wordsPerTask   = +document.getElementById('set-words').value;
+      d.settings.timeTask1      = +document.getElementById('set-time1').value;
+      d.settings.timeTask2      = +document.getElementById('set-time2').value;
+      d.settings.timeTask3      = +document.getElementById('set-time3').value;
+      d.settings.enabledTasks   = [document.getElementById('set-t1').checked,document.getElementById('set-t2').checked,document.getElementById('set-t3').checked];
+      const nu=document.getElementById('set-parent-uname').value.trim();
+      if(nu) d.settings.parentUsername=nu;
+      const np=document.getElementById('set-new-pw').value.trim();
+      if(np){d.settings.parentPassword=np;document.getElementById('set-new-pw').value='';}
+    });
+    this.toast('✅ ההגדרות נשמרו בהצלחה!');
+  },
+
+  initAvatarGrid() {
+    const g=document.getElementById('avatar-grid'); if(!g)return;
+    g.innerHTML=AVATARS.map(a=>`<div class="avatar-opt${a===ST.pickedAv?' sel':''}" onclick="APP.pickAv('${a}')">${a}</div>`).join('');
+  },
+  pickAv(a) { ST.pickedAv=a; document.querySelectorAll('.avatar-opt').forEach(el=>el.classList.toggle('sel',el.textContent===a)); },
+
+  addChild() {
+    const name  = document.getElementById('new-child-name').value.trim();
+    const uname = document.getElementById('new-child-uname').value.trim();
+    const pass  = document.getElementById('new-child-pass').value.trim();
+    if(!name)  { this.toast('❌ יש להכניס שם תצוגה'); return; }
+    if(!uname) { this.toast('❌ יש להכניס שם משתמש');  return; }
+    if(!pass)  { this.toast('❌ יש להכניס סיסמה');     return; }
+    const d = DB.get();
+    if(d.children.find(c=>c.username===uname)) { this.toast('❌ שם משתמש קיים כבר'); return; }
+    DB.set(d=>{ d.children.push({id:'c'+Date.now(), name, username:uname, password:pass, avatar:ST.pickedAv}); });
+    document.getElementById('new-child-name').value='';
+    document.getElementById('new-child-uname').value='';
+    document.getElementById('new-child-pass').value='';
+    this.renderChildList();
+    this.toast('✅ '+name+' נוסף!');
+  },
+
+  deleteChild(id) {
+    if(!confirm('למחוק את הילד?')) return;
+    DB.set(d=>{ d.children=d.children.filter(c=>c.id!==id); });
+    this.renderChildList();
+    this.toast('🗑️ נמחק');
+  },
+
+  // ── WORDS TAB ──────────────────────────────────────────
+  wordInputChanged(lang) {
+    const heVal = document.getElementById('new-word-he').value.trim();
+    const enVal = document.getElementById('new-word-en').value.trim();
+    document.getElementById('trans-btn-he').disabled = !heVal;
+    document.getElementById('trans-btn-en').disabled = !enVal;
+  },
+
+  async autoTranslate(from) {
+    const btn = document.getElementById(from==='he'?'trans-btn-he':'trans-btn-en');
+    const srcEl = document.getElementById(from==='he'?'new-word-he':'new-word-en');
+    const dstEl = document.getElementById(from==='he'?'new-word-en':'new-word-he');
+    const text = srcEl.value.trim();
+    if(!text) return;
+    btn.disabled=true; btn.textContent='⏳ מתרגם...';
+    try {
+      const pair = from==='he'?'he|en':'en|he';
+      const url  = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${pair}`;
+      const resp = await fetch(url);
+      const data = await resp.json();
+      const result = data?.responseData?.translatedText;
+      if(result && result!=='NULL') {
+        dstEl.value = result;
+        this.wordInputChanged(from==='he'?'en':'he');
+        this.toast('✅ תורגם בהצלחה');
+      } else {
+        this.toast('❌ לא ניתן לתרגם');
+      }
+    } catch(e) {
+      this.toast('❌ שגיאת חיבור לאינטרנט');
+    }
+    btn.disabled=false;
+    btn.textContent = from==='he'?'🔄 תרגם עברית→אנגלית':'🔄 תרגם אנגלית→עברית';
+  },
+
+  addCustomWord() {
+    const he    = document.getElementById('new-word-he').value.trim();
+    const en    = document.getElementById('new-word-en').value.trim();
+    const emoji = document.getElementById('new-word-emoji').value.trim();
+    if(!he) { this.toast('❌ יש להכניס מילה בעברית');  return; }
+    if(!en) { this.toast('❌ יש להכניס מילה באנגלית'); return; }
+    DB.set(d=>{
+      if(!d.settings.customWords) d.settings.customWords=[];
+      d.settings.customWords.push({id:'w'+Date.now(), he, en, emoji:emoji||'📝'});
+    });
+    document.getElementById('new-word-he').value='';
+    document.getElementById('new-word-en').value='';
+    document.getElementById('new-word-emoji').value='';
+    document.getElementById('trans-btn-he').disabled=true;
+    document.getElementById('trans-btn-en').disabled=true;
+    this.renderWordsTabs();
+    this.toast('✅ המילה נוספה!');
+  },
+
+  deleteCustomWord(id) {
+    DB.set(d=>{ d.settings.customWords=(d.settings.customWords||[]).filter(w=>w.id!==id); });
+    this.renderWordsTabs();
+    this.toast('🗑️ המילה נמחקה');
+  },
+
+  renderWordsTabs() {
+    const d=DB.get();
+    const custom=d.settings.customWords||[];
+    const cList=document.getElementById('custom-words-list');
+    if(!custom.length){
+      cList.innerHTML='<div style="text-align:center;padding:16px;color:var(--muted);font-weight:700">אין מילים מותאמות עדיין</div>';
+    } else {
+      cList.innerHTML=custom.map(w=>`
+        <div class="word-list-item">
+          <div style="font-size:28px">${w.emoji||'📝'}</div>
+          <div class="word-item-info">
+            <div class="word-en">${w.en} <span class="word-custom-badge">מותאם</span></div>
+            <div class="word-he">${w.he}</div>
+          </div>
+          <button class="btn-del" onclick="APP.deleteCustomWord('${w.id}')">🗑️</button>
+        </div>`).join('');
+    }
+    // Built-in list
+    document.getElementById('word-bank-count').textContent=BUILTIN_WORDS.length;
+    document.getElementById('builtin-words-list').innerHTML=BUILTIN_WORDS.map(w=>
+      `<div class="word-list-item">
+        <div style="font-size:24px">${w.e}</div>
+        <div class="word-item-info"><div class="word-en">${w.word}</div><div class="word-he">${w.heb}</div></div>
+      </div>`
+    ).join('');
+  },
+
+  // ── TASK ENGINE ────────────────────────────────────────
+  startTask(num) {
+    const d=DB.get(), n=d.settings.wordsPerTask||5;
+    const bank = allWords();
+    ST.taskNum   = num;
+    ST.questions = [...bank].sort(()=>Math.random()-.5).slice(0,Math.min(n,bank.length));
+    ST.qIdx=0; ST.correct=0; ST.wrong=0;
+    ST.dotStates = new Array(ST.questions.length).fill('');
+    this.saveProgress(ST.child.id,num,{total:ST.questions.length,completed:0,correct:0,wrong:0,done:false});
+    this.loadQ();
+    this.show('screen-task'+num);
+    const times=['timeTask1','timeTask2','timeTask3'];
+    this.startTimer(num, d.settings[times[num-1]]||10);
+  },
+
+  loadQ() {
+    const num=ST.taskNum, q=ST.questions[ST.qIdx];
+    const tot=ST.questions.length, idx=ST.qIdx+1;
+    ST.dotStates[ST.qIdx]='active';
+    this.renderDots(num,tot);
+    if(num===1){
+      document.getElementById('qcount1').textContent=`שאלה ${idx} מתוך ${tot}`;
+      document.getElementById('t1-emoji').textContent=q.e;
+      document.getElementById('t1-heb').textContent=q.heb;
+      document.getElementById('s1c').textContent=ST.correct;
+      document.getElementById('s1w').textContent=ST.wrong;
+      this.buildLetterOpts('t1-opts',q.l,num);
+    } else if(num===2){
+      document.getElementById('qcount2').textContent=`שאלה ${idx} מתוך ${tot}`;
+      document.getElementById('t2-emoji').textContent=q.e;
+      document.getElementById('t2-word').textContent=q.word.toUpperCase();
+      document.getElementById('t2-heb').textContent=q.heb;
+      document.getElementById('s2c').textContent=ST.correct;
+      document.getElementById('s2w').textContent=ST.wrong;
+      this.buildLetterOpts('t2-opts',q.l,num);
+    } else {
+      document.getElementById('qcount3').textContent=`שאלה ${idx} מתוך ${tot}`;
+      document.getElementById('t3-word').textContent=q.word.toUpperCase();
+      document.getElementById('t3-heb').textContent='('+q.heb+')';
+      document.getElementById('s3c').textContent=ST.correct;
+      document.getElementById('s3w').textContent=ST.wrong;
+      this.buildImageOpts('t3-opts',q,num);
+    }
+    setTimeout(()=>this.speak(num),650);
+  },
+
+  renderDots(num,tot) {
+    document.getElementById('qdots'+num).innerHTML=ST.dotStates.map(s=>`<div class="q-dot ${s}"></div>`).join('');
+  },
+
+  buildLetterOpts(cId,correct,taskNum) {
+    const con=document.getElementById(cId); con.innerHTML='';
+    const wrong='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(l=>l!==correct).sort(()=>Math.random()-.5).slice(0,3);
+    [correct,...wrong].sort(()=>Math.random()-.5).forEach(l=>{
+      const b=document.createElement('button');
+      b.className='opt-letter'; b.textContent=l;
+      b.onclick=()=>this.ansLetter(l,correct,b,con,taskNum);
+      con.appendChild(b);
+    });
+  },
+
+  buildImageOpts(cId,correct,taskNum) {
+    const con=document.getElementById(cId); con.innerHTML='';
+    const bank=allWords();
+    const wrong=bank.filter(w=>w.word!==correct.word).sort(()=>Math.random()-.5).slice(0,3);
+    [correct,...wrong].sort(()=>Math.random()-.5).forEach(w=>{
+      const b=document.createElement('button'); b.className='opt-image';
+      // Task 3: no Hebrew label below image
+      b.innerHTML=`<span class="opt-img-emoji">${w.e}</span>`;
+      b.onclick=()=>this.ansImage(w,correct,b,con,taskNum);
+      con.appendChild(b);
+    });
+  },
+
+  ansLetter(sel,correct,btn,con,taskNum) {
+    const btns=con.querySelectorAll('.opt-letter'); btns.forEach(b=>b.disabled=true);
+    const ok=sel===correct;
+    btn.classList.add(ok?'correct':'wrong');
+    if(!ok) btns.forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+    this.regAnswer(ok,taskNum);
+    setTimeout(()=>this.nextQ(),1300);
+  },
+
+  ansImage(sel,correct,btn,con,taskNum) {
+    const btns=con.querySelectorAll('.opt-image'); btns.forEach(b=>b.disabled=true);
+    const ok=sel.word===correct.word;
+    btn.classList.add(ok?'correct':'wrong');
+    if(!ok){
+      btns.forEach(b=>{
+        const em=b.querySelector('.opt-img-emoji');
+        if(em&&em.textContent.trim()===correct.e.trim()) b.classList.add('correct');
+      });
+    }
+    this.regAnswer(ok,taskNum);
+    setTimeout(()=>this.nextQ(),1500);
+  },
+
+  regAnswer(ok,taskNum) {
+    if(ok) ST.correct++; else ST.wrong++;
+    ST.dotStates[ST.qIdx]=ok?'correct':'wrong';
+    this.renderDots(taskNum,ST.questions.length);
+    this.showFeedback(ok?'✅':'❌');
+    this.beep(ok);
+    const cid=ST.child.id, cur=this.getProgress(cid,taskNum);
+    this.saveProgress(cid,taskNum,{correct:(cur.correct||0)+(ok?1:0),wrong:(cur.wrong||0)+(ok?0:1),completed:(cur.completed||0)+1});
+  },
+
+  nextQ() {
+    ST.qIdx++;
+    if(ST.qIdx>=ST.questions.length) this.finishTask();
+    else this.loadQ();
+  },
+
+  finishTask() {
+    this.stopTimer();
+    const cid=ST.child.id, num=ST.taskNum;
+    this.saveProgress(cid,num,{done:true});
+    const total=ST.questions.length, correct=ST.correct;
+    const pct=total>0?Math.round(correct/total*100):0;
+    const stars=pct>=80?3:pct>=60?2:1;
+    document.getElementById('complete-emoji').textContent=pct>=80?'🎉':pct>=60?'😊':'💪';
+    document.getElementById('complete-title').textContent=pct>=80?'מדהים! כל הכבוד!':pct>=60?'יפה מאוד!':'כל הכבוד על הניסיון!';
+    document.getElementById('complete-score').textContent=`${correct} מתוך ${total} נכון (${pct}%)`;
+    const se=document.getElementById('complete-stars'); se.innerHTML='';
+    for(let i=0;i<3;i++){
+      const sp=document.createElement('span'); sp.className='star-big'; sp.textContent=i<stars?'⭐':'☆';
+      se.appendChild(sp);
+      if(i<stars) setTimeout(()=>sp.classList.add('lit'),i*220+100);
+    }
+    const d=DB.get(), s=d.settings, en=s.enabledTasks||[true,true,true];
+    const maxT=Math.max(1,parseInt(s.dailyTaskCount)||3);
+    const cp=d.progress?.[DB.today()]?.[cid]||{};
+    let next=null, ec=0;
+    for(let i=0;i<3;i++){
+      if(!en[i]) continue;
+      if(ec>=maxT) break;
+      ec++;
+      if(i+1!==num && !cp['task'+(i+1)]?.done){next=i+1;break;}
+    }
+    ST.nextTask=next;
+    document.getElementById('btn-next').style.display=next?'inline-flex':'none';
+    this.confetti();
+    this.show('screen-task-complete');
+  },
+
+  doNextTask() { if(ST.nextTask) this.startTask(ST.nextTask); },
+  exitTask()   { this.stopTimer(); this.goHome(); },
+  goHome()     { this.stopTimer(); this.renderChildMain(); this.show('screen-child-main'); },
+
+  // ── TIMER ──────────────────────────────────────────────
+  startTimer(num,mins) {
+    this.stopTimer();
+    ST.timeLeft=mins*60;
+    const el=document.getElementById('timer'+num);
+    const tick=()=>{
+      if(!el)return;
+      const m=Math.floor(ST.timeLeft/60), s=ST.timeLeft%60;
+      el.textContent=`⏱ ${m}:${s.toString().padStart(2,'0')}`;
+      el.className='timer-pill';
+      if(ST.timeLeft<=30) el.classList.add('danger');
+      else if(ST.timeLeft<=60) el.classList.add('warn');
+      if(ST.timeLeft<=0){this.stopTimer();this.finishTask();return;}
+      ST.timeLeft--;
+    };
+    tick(); ST.timerInt=setInterval(tick,1000);
+  },
+  stopTimer() { if(ST.timerInt){clearInterval(ST.timerInt);ST.timerInt=null;} },
+
+  // ── SPEECH ─────────────────────────────────────────────
+  speak(taskNum) {
+    const q=ST.questions[ST.qIdx]; if(!q||!window.speechSynthesis)return;
+    speechSynthesis.cancel();
+    const btn=document.getElementById('speak'+taskNum);
+    if(btn){btn.classList.add('speaking');setTimeout(()=>btn.classList.remove('speaking'),1600);}
+    const u=new SpeechSynthesisUtterance(q.word);
+    u.lang='en-US'; u.rate=0.65; u.pitch=1.1; u.volume=1;
+    const voices=speechSynthesis.getVoices();
+    const v=voices.find(x=>x.lang.startsWith('en-'));
+    if(v) u.voice=v;
+    speechSynthesis.speak(u);
+  },
+
+  // ── SOUND ──────────────────────────────────────────────
+  beep(ok) {
+    try {
+      const ctx=new(window.AudioContext||window.webkitAudioContext)();
+      const osc=ctx.createOscillator(), g=ctx.createGain();
+      osc.connect(g); g.connect(ctx.destination);
+      if(ok){osc.frequency.setValueAtTime(523,ctx.currentTime);osc.frequency.setValueAtTime(659,ctx.currentTime+.1);osc.frequency.setValueAtTime(784,ctx.currentTime+.2);}
+      else{osc.frequency.setValueAtTime(280,ctx.currentTime);osc.frequency.setValueAtTime(200,ctx.currentTime+.15);}
+      g.gain.setValueAtTime(.25,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.45);
+      osc.start(); osc.stop(ctx.currentTime+.45);
+    }catch(e){}
+  },
+
+  // ── EFFECTS ────────────────────────────────────────────
+  showFeedback(emoji) {
+    document.querySelectorAll('.feedback-overlay').forEach(el=>el.remove());
+    const div=document.createElement('div'); div.className='feedback-overlay'; div.textContent=emoji;
+    document.body.appendChild(div);
+    setTimeout(()=>div.remove(),900);
+  },
+
+  confetti() {
+    const wrap=document.getElementById('confetti-wrap'); wrap.innerHTML='';
+    const colors=['#FF6584','#FFD54F','#66BB6A','#4FC3F7','#AB47BC','#FF7043','#29B6F6'];
+    for(let i=0;i<72;i++){
+      const d=document.createElement('div'); d.className='confetti-bit';
+      d.style.cssText=`left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*1.3}s;animation-duration:${2.2+Math.random()*2.2}s;border-radius:${Math.random()>.5?'50%':'2px'};transform:rotate(${Math.random()*360}deg);`;
+      wrap.appendChild(d); setTimeout(()=>d.remove(),5500);
+    }
+  },
+
+  toast(msg) {
+    document.querySelectorAll('.toast').forEach(t=>t.remove());
+    const t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+    document.body.appendChild(t); setTimeout(()=>t.remove(),2700);
+  }
+};
+
+// ── GAMES (LETS START) ─────────────────────────────────────
+const GAMES = {
+
+  // ── helper: speak with English voice ─────────────────────
+  say(text, rate=0.7) {
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US'; u.rate=rate; u.pitch=1.1;
+    const v=speechSynthesis.getVoices().find(x=>x.lang.startsWith('en-'));
+    if(v) u.voice=v;
+    speechSynthesis.speak(u);
+  },
+
+  showFeedback(e){ APP.showFeedback(e); },
+
+  endGame(type) {
+    const g=this[type];
+    const pct=g.total>0?Math.round(g.correct/g.total*100):0;
+    APP.confetti();
+    this.showFeedback(pct>=80?'🎉':'😊');
+    setTimeout(()=>{
+      APP.toast(`✨ ${g.correct}/${g.total} נכון! ⭐ ${g.score} נקודות`);
+      APP.show('screen-lets-start');
+    }, 1000);
+  },
+
+  // ════ LETTER HUNT ══════════════════════════════════════════
+  hunt:{ diff:'upper', round:0, score:0, total:5, target:'' },
+
+  setHuntDiff(d) {
+    this.hunt.diff=d;
+    ['upper','lower','mix'].forEach(x=>document.getElementById('diff-'+x).classList.toggle('active',x===d));
+    this.loadHuntRound();
+  },
+
+  startHunt() {
+    this.hunt.round=0; this.hunt.score=0;
+    APP.show('screen-game-hunt');
+    this.loadHuntRound();
+  },
+
+  loadHuntRound() {
+    const h=this.hunt;
+    if(h.round>=h.total){ this.endGame('hunt'); return; }
+    h.round++;
+    document.getElementById('hunt-round').textContent=`סיבוב ${h.round} מתוך ${h.total}`;
+    document.getElementById('hunt-score').textContent=h.score;
+
+    const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const target=alpha[Math.floor(Math.random()*alpha.length)];
+    h.target=target;
+
+    // 20 letters: 19 fillers (target won't repeat) + 1 correct
+    let fillers=[];
+    while(fillers.length<19){
+      const l=alpha[Math.floor(Math.random()*alpha.length)];
+      if(l!==target) fillers.push(l);
+    }
+    const pool=[...fillers,target].sort(()=>Math.random()-.5);
+
+    // Apply difficulty case
+    const show=pool.map(l=>{
+      if(h.diff==='lower') return l.toLowerCase();
+      if(h.diff==='mix')   return Math.random()>.5?l.toLowerCase():l;
+      return l;
+    });
+    const tShow=h.diff==='lower'?target.toLowerCase():target;
+    document.getElementById('hunt-target').textContent=tShow;
+
+    setTimeout(()=>this.say('Find the letter '+target, 0.75), 300);
+
+    const grid=document.getElementById('hunt-grid'); grid.innerHTML='';
+    show.forEach((l,i)=>{
+      const btn=document.createElement('div'); btn.className='hunt-letter'; btn.textContent=l;
+      btn.onclick=()=>this.huntClick(btn, l.toUpperCase()===target, grid);
+      grid.appendChild(btn);
+    });
+  },
+
+  huntClick(btn,isOk,grid) {
+    grid.querySelectorAll('.hunt-letter').forEach(b=>b.onclick=null);
+    btn.classList.add(isOk?'correct':'wrong');
+    if(isOk){ this.hunt.score+=10; APP.beep(true); this.showFeedback('✅'); }
+    else {
+      APP.beep(false); this.showFeedback('❌');
+      const t=this.hunt.target;
+      grid.querySelectorAll('.hunt-letter').forEach(b=>{ if(b.textContent.toUpperCase()===t) b.classList.add('correct'); });
+    }
+    setTimeout(()=>this.loadHuntRound(), 1400);
+  },
+
+  // ════ LETTER & SOUND ═══════════════════════════════════════
+  PHONETICS:{A:'æ',B:'b',C:'k',D:'d',E:'ɛ',F:'f',G:'g',H:'h',I:'ɪ',J:'dʒ',K:'k',L:'l',M:'m',N:'n',O:'ɒ',P:'p',Q:'kw',R:'r',S:'s',T:'t',U:'ʌ',V:'v',W:'w',X:'ks',Y:'j',Z:'z'},
+
+  startSound() {
+    APP.show('screen-game-sound');
+    const grid=document.getElementById('alpha-grid'); grid.innerHTML='';
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l=>{
+      const btn=document.createElement('div'); btn.className='alpha-btn'; btn.textContent=l;
+      btn.onclick=()=>this.soundClick(l,btn);
+      grid.appendChild(btn);
+    });
+    document.getElementById('sound-card').innerHTML='<div style="font-size:18px;color:var(--muted);font-weight:700">👆 בחר אות מלמטה</div>';
+  },
+
+  soundClick(letter,btn) {
+    document.querySelectorAll('.alpha-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const bank=allWords();
+    const match=bank.find(w=>w.l===letter)||bank.find(w=>w.word[0].toUpperCase()===letter);
+    const card=document.getElementById('sound-card');
+    card.innerHTML=match
+      ? `<div class="sound-big">${letter}</div>
+         <div class="sound-phonetic">/ ${this.PHONETICS[letter]||letter} /</div>
+         <div class="sound-word"><span style="font-size:42px">${match.e}</span> ${match.word}</div>
+         <div style="font-size:14px;color:var(--muted);margin-top:6px">${match.heb}</div>`
+      : `<div class="sound-big">${letter}</div><div class="sound-phonetic">/ ${this.PHONETICS[letter]||letter} /</div>`;
+
+    // Speak: letter name, then example word
+    speechSynthesis.cancel();
+    const seq=[letter, match?match.word:''].filter(Boolean);
+    let i=0;
+    const next=()=>{ if(i>=seq.length)return; const u=new SpeechSynthesisUtterance(seq[i]); u.lang='en-US'; u.rate=0.7; u.pitch=1.1; const v=speechSynthesis.getVoices().find(x=>x.lang.startsWith('en-')); if(v)u.voice=v; u.onend=()=>{i++;setTimeout(next,350);}; speechSynthesis.speak(u); i++; };
+    next();
+  },
+
+  // ════ LISTEN & CHOOSE ══════════════════════════════════════
+  listen:{ qs:[], i:0, correct:0, wrong:0, total:5, dots:[], score:0, cur:null },
+
+  startListen() {
+    const l=this.listen;
+    l.qs=[...allWords()].sort(()=>Math.random()-.5).slice(0,l.total);
+    l.i=0; l.correct=0; l.wrong=0; l.score=0; l.dots=new Array(l.total).fill('');
+    APP.show('screen-game-listen');
+    this.loadListenQ();
+  },
+
+  loadListenQ() {
+    const l=this.listen;
+    if(l.i>=l.total){ this.endGame('listen'); return; }
+    const q=l.qs[l.i]; l.cur=q;
+    l.dots[l.i]='active';
+    document.getElementById('listen-count').textContent=`שאלה ${l.i+1} מתוך ${l.total}`;
+    document.getElementById('listen-c').textContent=l.correct;
+    document.getElementById('listen-w').textContent=l.wrong;
+    document.getElementById('listen-score').textContent=l.score;
+    document.getElementById('listen-dots').innerHTML=l.dots.map(s=>`<div class="q-dot ${s}"></div>`).join('');
+
+    const wrong=allWords().filter(w=>w.word!==q.word).sort(()=>Math.random()-.5).slice(0,3);
+    const opts=[q,...wrong].sort(()=>Math.random()-.5);
+    const con=document.getElementById('listen-opts'); con.innerHTML='';
+    opts.forEach(w=>{
+      const b=document.createElement('button'); b.className='opt-image';
+      b.innerHTML=`<span class="opt-img-emoji">${w.e}</span>`;
+      b.onclick=()=>this.listenAns(w,q,b,con);
+      con.appendChild(b);
+    });
+    setTimeout(()=>this.listenSpeak(), 700);
+  },
+
+  listenSpeak() {
+    const q=this.listen.cur; if(!q)return;
+    const btn=document.getElementById('listen-speak-btn');
+    btn.classList.add('speaking'); setTimeout(()=>btn.classList.remove('speaking'),1500);
+    this.say(q.word, 0.65);
+  },
+
+  listenAns(sel,correct,btn,con) {
+    con.querySelectorAll('.opt-image').forEach(b=>b.disabled=true);
+    const ok=sel.word===correct.word;
+    btn.classList.add(ok?'correct':'wrong');
+    if(!ok) con.querySelectorAll('.opt-image').forEach(b=>{const em=b.querySelector('.opt-img-emoji');if(em&&em.textContent.trim()===correct.e.trim())b.classList.add('correct');});
+    const l=this.listen;
+    if(ok){l.correct++;l.score+=10;} else l.wrong++;
+    l.dots[l.i]=ok?'correct':'wrong';
+    document.getElementById('listen-dots').innerHTML=l.dots.map(s=>`<div class="q-dot ${s}"></div>`).join('');
+    APP.beep(ok); this.showFeedback(ok?'✅':'❌');
+    setTimeout(()=>{l.i++; this.loadListenQ();}, 1400);
+  },
+
+  // ════ WHAT STARTS WITH ═════════════════════════════════════
+  starts:{ qs:[], i:0, correct:0, wrong:0, total:5, dots:[], score:0 },
+
+  startStarts() {
+    const s=this.starts;
+    s.qs=[...allWords()].sort(()=>Math.random()-.5).slice(0,s.total);
+    s.i=0; s.correct=0; s.wrong=0; s.score=0; s.dots=new Array(s.total).fill('');
+    APP.show('screen-game-starts');
+    this.loadStartsQ();
+  },
+
+  loadStartsQ() {
+    const s=this.starts;
+    if(s.i>=s.total){ this.endGame('starts'); return; }
+    const q=s.qs[s.i];
+    s.dots[s.i]='active';
+    document.getElementById('starts-count').textContent=`שאלה ${s.i+1} מתוך ${s.total}`;
+    document.getElementById('starts-c').textContent=s.correct;
+    document.getElementById('starts-w').textContent=s.wrong;
+    document.getElementById('starts-score').textContent=s.score;
+    document.getElementById('starts-dots').innerHTML=s.dots.map(x=>`<div class="q-dot ${x}"></div>`).join('');
+    document.getElementById('starts-letter').textContent=q.l;
+
+    const wrong=allWords().filter(w=>w.l!==q.l).sort(()=>Math.random()-.5).slice(0,3);
+    const opts=[q,...wrong].sort(()=>Math.random()-.5);
+    const con=document.getElementById('starts-opts'); con.innerHTML='';
+    opts.forEach(w=>{
+      const b=document.createElement('button'); b.className='opt-image';
+      b.innerHTML=`<span class="opt-img-emoji">${w.e}</span>`;
+      b.onclick=()=>this.startsAns(w,q,b,con);
+      con.appendChild(b);
+    });
+    setTimeout(()=>this.say(`What starts with the letter ${q.l}?`, 0.75), 400);
+  },
+
+  startsAns(sel,correct,btn,con) {
+    con.querySelectorAll('.opt-image').forEach(b=>b.disabled=true);
+    const ok=sel.word===correct.word;
+    btn.classList.add(ok?'correct':'wrong');
+    if(!ok) con.querySelectorAll('.opt-image').forEach(b=>{const em=b.querySelector('.opt-img-emoji');if(em&&em.textContent.trim()===correct.e.trim())b.classList.add('correct');});
+    const s=this.starts;
+    if(ok){s.correct++;s.score+=10;} else s.wrong++;
+    s.dots[s.i]=ok?'correct':'wrong';
+    document.getElementById('starts-dots').innerHTML=s.dots.map(x=>`<div class="q-dot ${x}"></div>`).join('');
+    APP.beep(ok); this.showFeedback(ok?'✅':'❌');
+    setTimeout(()=>{s.i++; this.loadStartsQ();}, 1400);
+  },
+
+  // ════ BUILD THE WORD ═══════════════════════════════════════
+  build:{ qs:[], i:0, correct:0, wrong:0, total:5, dots:[], score:0, ans:[], done:false },
+
+  startBuild() {
+    const b=this.build;
+    // Use shorter words (≤6 letters) for kids
+    const bank=allWords().filter(w=>w.word.replace(/\s/g,'').length<=6);
+    b.qs=[...bank].sort(()=>Math.random()-.5).slice(0,b.total);
+    b.i=0; b.correct=0; b.wrong=0; b.score=0; b.dots=new Array(b.total).fill('');
+    APP.show('screen-game-build');
+    this.loadBuildQ();
+  },
+
+  loadBuildQ() {
+    const b=this.build;
+    if(b.i>=b.total){ this.endGame('build'); return; }
+    const q=b.qs[b.i];
+    const wrd=q.word.replace(/\s/g,'').toUpperCase();
+    b.ans=new Array(wrd.length).fill(null); b.done=false;
+    b.dots[b.i]='active';
+    document.getElementById('build-count').textContent=`מילה ${b.i+1} מתוך ${b.total}`;
+    document.getElementById('build-c').textContent=b.correct;
+    document.getElementById('build-w').textContent=b.wrong;
+    document.getElementById('build-score').textContent=b.score;
+    document.getElementById('build-dots').innerHTML=b.dots.map(x=>`<div class="q-dot ${x}"></div>`).join('');
+    document.getElementById('build-emoji').textContent=q.e;
+    document.getElementById('build-heb').textContent=q.heb;
+
+    // Answer slots
+    const ar=document.getElementById('build-answer'); ar.innerHTML='';
+    for(let i=0;i<wrd.length;i++){
+      const sl=document.createElement('div'); sl.className='ans-slot'; sl.id='bslot-'+i;
+      ar.appendChild(sl);
+    }
+
+    // Scrambled letters + 1-2 distractors
+    const letters=wrd.split('');
+    const extras='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(x=>!letters.includes(x)).sort(()=>Math.random()-.5).slice(0,2);
+    const pool=[...letters,...extras].sort(()=>Math.random()-.5);
+
+    const lr=document.getElementById('build-letters'); lr.innerHTML='';
+    pool.forEach((l,idx)=>{
+      const btn=document.createElement('div'); btn.className='build-letter'; btn.textContent=l; btn.dataset.idx=idx;
+      btn.onclick=()=>{ if(!b.done) this.buildPick(btn,l,wrd); };
+      lr.appendChild(btn);
+    });
+    // Backspace button
+    const back=document.createElement('div'); back.className='build-letter build-backspace'; back.textContent='⌫';
+    back.onclick=()=>{ if(!b.done) this.buildBack(wrd); };
+    lr.appendChild(back);
+
+    setTimeout(()=>this.buildSpeak(), 500);
+  },
+
+  buildSpeak() {
+    const q=this.build.qs[this.build.i]; if(!q)return;
+    this.say(q.word, 0.65);
+  },
+
+  buildPick(btn,letter,word) {
+    const b=this.build;
+    const next=b.ans.findIndex(x=>x===null); if(next<0)return;
+    b.ans[next]={letter,btnIdx:btn.dataset.idx};
+    btn.classList.add('used');
+    const sl=document.getElementById('bslot-'+next);
+    sl.textContent=letter; sl.classList.add('filled');
+
+    if(b.ans.every(x=>x!==null)){
+      b.done=true;
+      const formed=b.ans.map(x=>x.letter).join('');
+      const ok=formed===word;
+      for(let i=0;i<word.length;i++){
+        const s=document.getElementById('bslot-'+i);
+        s.classList.add(ok?'correct-sl':'wrong-sl');
+      }
+      if(ok){b.correct++;b.score+=15;} else b.wrong++;
+      b.dots[b.i]=ok?'correct':'wrong';
+      document.getElementById('build-dots').innerHTML=b.dots.map(x=>`<div class="q-dot ${x}"></div>`).join('');
+      APP.beep(ok); this.showFeedback(ok?'✅':'❌');
+      if(ok) this.say(this.build.qs[b.i].word, 0.6);
+      setTimeout(()=>{b.i++; this.loadBuildQ();}, ok?1600:2000);
+    }
+  },
+
+  buildBack(word) {
+    const b=this.build;
+    // Find last filled slot
+    let last=-1;
+    for(let i=b.ans.length-1;i>=0;i--){ if(b.ans[i]!==null){last=i;break;} }
+    if(last<0)return;
+    const removed=b.ans[last];
+    b.ans[last]=null;
+    const sl=document.getElementById('bslot-'+last);
+    sl.textContent=''; sl.classList.remove('filled');
+    // Un-use the button
+    document.querySelectorAll('#build-letters .build-letter').forEach(btn=>{
+      if(btn.dataset.idx===removed.btnIdx) btn.classList.remove('used');
+    });
+  }
+};
+
+// ── INIT ───────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  APP.initAvatarGrid();
+  if(window.speechSynthesis){
+    speechSynthesis.getVoices();
+    speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();
+  }
+});
+</script>
+</body>
+</html>
