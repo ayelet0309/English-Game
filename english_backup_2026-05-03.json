@@ -1,0 +1,3559 @@
+{
+  "version": 1,
+  "exportedAt": "2026-05-03T10:15:51.275Z",
+  "words": [
+    {
+      "addedDate": "2026-03-05",
+      "category": "בעלי חיים",
+      "english": "dog",
+      "hebrew": "כלב",
+      "id": "w0"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "בעלי חיים",
+      "english": "cat",
+      "hebrew": "חתול",
+      "id": "w1"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "בעלי חיים",
+      "english": "horse",
+      "hebrew": "סוס",
+      "id": "w2"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "בעלי חיים",
+      "english": "bird",
+      "hebrew": "ציפור",
+      "id": "w3"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "בעלי חיים",
+      "english": "fish",
+      "hebrew": "דג",
+      "id": "w4"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מקומות",
+      "english": "house",
+      "hebrew": "בית",
+      "id": "w5"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מקומות",
+      "english": "school",
+      "hebrew": "בית ספר",
+      "id": "w6"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מקומות",
+      "english": "store",
+      "hebrew": "חנות",
+      "id": "w7"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מקומות",
+      "english": "park",
+      "hebrew": "פארק",
+      "id": "w8"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "טבע",
+      "english": "sea",
+      "hebrew": "ים",
+      "id": "w9"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "טבע",
+      "english": "sun",
+      "hebrew": "שמש",
+      "id": "w10"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "טבע",
+      "english": "moon",
+      "hebrew": "ירח",
+      "id": "w11"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "טבע",
+      "english": "tree",
+      "hebrew": "עץ",
+      "id": "w12"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "טבע",
+      "english": "flower",
+      "hebrew": "פרח",
+      "id": "w13"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אוכל",
+      "english": "apple",
+      "hebrew": "תפוח",
+      "id": "w14"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אוכל",
+      "english": "banana",
+      "hebrew": "בננה",
+      "id": "w15"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אוכל",
+      "english": "strawberry",
+      "hebrew": "תות",
+      "id": "w16"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אוכל",
+      "english": "bread",
+      "hebrew": "לחם",
+      "id": "w17"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אוכל",
+      "english": "water",
+      "hebrew": "מים",
+      "id": "w18"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "חפצים",
+      "english": "book",
+      "hebrew": "ספר",
+      "id": "w19"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "חפצים",
+      "english": "chair",
+      "hebrew": "כיסא",
+      "id": "w20"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "חפצים",
+      "english": "table",
+      "hebrew": "שולחן",
+      "id": "w21"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "חפצים",
+      "english": "door",
+      "hebrew": "דלת",
+      "id": "w22"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "חפצים",
+      "english": "window",
+      "hebrew": "חלון",
+      "id": "w23"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אנשים",
+      "english": "boy",
+      "hebrew": "ילד",
+      "id": "w24"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אנשים",
+      "english": "girl",
+      "hebrew": "ילדה",
+      "id": "w25"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אנשים",
+      "english": "mom",
+      "hebrew": "אמא",
+      "id": "w26"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אנשים",
+      "english": "dad",
+      "hebrew": "אבא",
+      "id": "w27"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אנשים",
+      "english": "teacher",
+      "hebrew": "מורה",
+      "id": "w28"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "אנשים",
+      "english": "friend",
+      "hebrew": "חבר",
+      "id": "w29"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "צבעים",
+      "english": "red",
+      "hebrew": "אדום",
+      "id": "w30"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "צבעים",
+      "english": "blue",
+      "hebrew": "כחול",
+      "id": "w31"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "צבעים",
+      "english": "green",
+      "hebrew": "ירוק",
+      "id": "w32"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "צבעים",
+      "english": "yellow",
+      "hebrew": "צהוב",
+      "id": "w33"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "צבעים",
+      "english": "white",
+      "hebrew": "לבן",
+      "id": "w34"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "צבעים",
+      "english": "black",
+      "hebrew": "שחור",
+      "id": "w35"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "תארים",
+      "english": "big",
+      "hebrew": "גדול",
+      "id": "w36"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "תארים",
+      "english": "small",
+      "hebrew": "קטן",
+      "id": "w37"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "תארים",
+      "english": "beautiful",
+      "hebrew": "יפה",
+      "id": "w38"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "תארים",
+      "english": "fast",
+      "hebrew": "מהיר",
+      "id": "w39"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "פעלים",
+      "english": "to eat",
+      "hebrew": "לאכול",
+      "id": "w40"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "פעלים",
+      "english": "to drink",
+      "hebrew": "לשתות",
+      "id": "w41"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "פעלים",
+      "english": "to sleep",
+      "hebrew": "לישון",
+      "id": "w42"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "פעלים",
+      "english": "to run",
+      "hebrew": "לרוץ",
+      "id": "w43"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "פעלים",
+      "english": "to play",
+      "hebrew": "לשחק",
+      "id": "w44"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מספרים",
+      "english": "one",
+      "hebrew": "אחד",
+      "id": "w45"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מספרים",
+      "english": "two",
+      "hebrew": "שניים",
+      "id": "w46"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מספרים",
+      "english": "three",
+      "hebrew": "שלושה",
+      "id": "w47"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מספרים",
+      "english": "four",
+      "hebrew": "ארבעה",
+      "id": "w48"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "מספרים",
+      "english": "five",
+      "hebrew": "חמישה",
+      "id": "w49"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "accident",
+      "hebrew": "תאונה",
+      "id": "w_1772746764283"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "achieve",
+      "hebrew": "להשיג",
+      "id": "w_1772746774045"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "adventure",
+      "hebrew": "הרפתקה",
+      "id": "w_1772746792768"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "scared",
+      "hebrew": "מפחד",
+      "id": "w_1772746810787"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "alive",
+      "hebrew": "בחיים",
+      "id": "w_1772746820785"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "army",
+      "hebrew": "צבא",
+      "id": "w_1772746829835"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "as soon as",
+      "hebrew": "ברגע ש",
+      "id": "w_1772746841558"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "able to",
+      "hebrew": "מסוגל ל",
+      "id": "w_1772746855810"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "bear",
+      "hebrew": "דוב",
+      "id": "w_1772746871038"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "blood",
+      "hebrew": "דם",
+      "id": "w_1772746880558"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "brave",
+      "hebrew": "אמיץ",
+      "id": "w_1772746891408"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "broken",
+      "hebrew": "שבור",
+      "id": "w_1772746913276"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "mistakenly",
+      "hebrew": "בטעות",
+      "id": "w_1772746924099"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "character",
+      "hebrew": "דמות",
+      "id": "w_1772746936128"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "contact",
+      "hebrew": "ליצור קשר",
+      "id": "w_1772747453150"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "continue",
+      "hebrew": "להמשיך",
+      "id": "w_1772747466492"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "dangerous",
+      "hebrew": "מסוכן",
+      "id": "w_1772747475383"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "darkness",
+      "hebrew": "חשכה",
+      "id": "w_1772747488293"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "destroy",
+      "hebrew": "להרוס",
+      "id": "w_1772747498603"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "difficulty",
+      "hebrew": "קושי",
+      "id": "w_1772747507280"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "discover",
+      "hebrew": "לגלות",
+      "id": "w_1772747516020"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "do the best",
+      "hebrew": "לעשות הכי טוב",
+      "id": "w_1772747531150"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "drop",
+      "hebrew": "טיפה",
+      "id": "w_1772747552664"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "ending",
+      "hebrew": "סיום",
+      "id": "w_1772747569922"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "entry",
+      "hebrew": "כניסה",
+      "id": "w_1772747591143"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "fix",
+      "hebrew": "לתקן",
+      "id": "w_1772747607767"
+    },
+    {
+      "addedDate": "2026-03-05",
+      "category": "כללי",
+      "english": "fog",
+      "hebrew": "ערפל",
+      "id": "w_1772747621229"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "fresh air",
+      "hebrew": "אויר צח",
+      "id": "w_1772807637440"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "gold",
+      "hebrew": "זהב",
+      "id": "w_1772807654036"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "government",
+      "hebrew": "ממשלה",
+      "id": "w_1772807691897"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "hero",
+      "hebrew": "גבור",
+      "id": "w_1772808080863"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "hide",
+      "hebrew": "להחביא",
+      "id": "w_1772808095104"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "terrible",
+      "hebrew": "נוראי",
+      "id": "w_1772808107953"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "hurt",
+      "hebrew": "לפגוע",
+      "id": "w_1772808119841"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "impossible",
+      "hebrew": "בלתי אפשרי",
+      "id": "w_1772808150325"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "insect",
+      "hebrew": "חרק",
+      "id": "w_1772808159809"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "laptop computer",
+      "hebrew": "מחשב נייד",
+      "id": "w_1772808177283"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "land",
+      "hebrew": "לנחות",
+      "id": "w_1772808189332"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "lion",
+      "hebrew": "אריה",
+      "id": "w_1772808202954"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "medal",
+      "hebrew": "מדליה",
+      "id": "w_1772808214615"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "elevator",
+      "hebrew": "מעלית",
+      "id": "w_1772808251202"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "perhaps",
+      "hebrew": "אולי",
+      "id": "w_1772808284651"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "missing",
+      "hebrew": "נעדר",
+      "id": "w_1772808305659"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "nearly",
+      "hebrew": "בסביבה",
+      "id": "w_1772808327308"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "ordinary",
+      "hebrew": "רגיל",
+      "id": "w_1772808373460"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "prove",
+      "hebrew": "להוכיח",
+      "id": "w_1772808388649"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "reach",
+      "hebrew": "להגיע",
+      "id": "w_1772808399648"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "reality",
+      "hebrew": "מציאות",
+      "id": "w_1772808410079"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "understand",
+      "hebrew": "מבין",
+      "id": "w_1772808418530"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "realize",
+      "hebrew": "להבין",
+      "id": "w_1772808452256"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "recover",
+      "hebrew": "להחלים",
+      "id": "w_1772808475661"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "rescue",
+      "hebrew": "חילוץ",
+      "id": "w_1772808484714"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "protected",
+      "hebrew": "מוגן",
+      "id": "w_1772808498970"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "safe",
+      "hebrew": "בטיחותי",
+      "id": "w_1772808538574"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "shadow",
+      "hebrew": "צל",
+      "id": "w_1772808545204"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "shout",
+      "hebrew": "לצעוק",
+      "id": "w_1772808553093"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "same",
+      "hebrew": "דומה",
+      "id": "w_1772808586524"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "situation",
+      "hebrew": "מצב",
+      "id": "w_1772808625524"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "a soldier",
+      "hebrew": "חייל",
+      "id": "w_1772808641138"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "succeed",
+      "hebrew": "להצליח",
+      "id": "w_1772808648740"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "group",
+      "hebrew": "קבוצה",
+      "id": "w_1772808656820"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "team",
+      "hebrew": "נבחרת",
+      "id": "w_1772808676208"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "thunderstorm",
+      "hebrew": "סופת רעמים",
+      "id": "w_1772808688320"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "training",
+      "hebrew": "אימון",
+      "id": "w_1772808746781"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "traveling",
+      "hebrew": "מטייל",
+      "id": "w_1772808754824"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "trouble",
+      "hebrew": "צרה",
+      "id": "w_1772808766400"
+    },
+    {
+      "addedDate": "2026-03-06",
+      "category": "כללי",
+      "english": "worried",
+      "hebrew": "מודאג",
+      "id": "w_1772808804237"
+    }
+  ],
+  "sessions": [
+    {
+      "date": "2026-03-05",
+      "duration": 13,
+      "id": "sess_1772746374550",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w0"
+        },
+        {
+          "correct": true,
+          "wordId": "w2"
+        },
+        {
+          "correct": true,
+          "wordId": "w1"
+        },
+        {
+          "correct": true,
+          "wordId": "w4"
+        },
+        {
+          "correct": true,
+          "wordId": "w3"
+        }
+      ],
+      "timestamp": 1772746374550
+    },
+    {
+      "date": "2026-03-05",
+      "duration": 14,
+      "id": "sess_1772746391768",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w2"
+        },
+        {
+          "correct": true,
+          "wordId": "w3"
+        },
+        {
+          "correct": true,
+          "wordId": "w0"
+        },
+        {
+          "correct": true,
+          "wordId": "w4"
+        },
+        {
+          "correct": true,
+          "wordId": "w1"
+        }
+      ],
+      "timestamp": 1772746391768
+    },
+    {
+      "date": "2026-03-05",
+      "duration": 19,
+      "id": "sess_1772747719187",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w3"
+        },
+        {
+          "correct": false,
+          "wordId": "w2"
+        },
+        {
+          "correct": false,
+          "wordId": "w0"
+        },
+        {
+          "correct": false,
+          "wordId": "w4"
+        },
+        {
+          "correct": false,
+          "wordId": "w1"
+        }
+      ],
+      "timestamp": 1772747719187
+    },
+    {
+      "date": "2026-03-06",
+      "duration": 54,
+      "id": "sess_1772819052378",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w27"
+        },
+        {
+          "correct": true,
+          "wordId": "w41"
+        },
+        {
+          "correct": true,
+          "wordId": "w18"
+        },
+        {
+          "correct": true,
+          "wordId": "w22"
+        },
+        {
+          "correct": true,
+          "wordId": "w24"
+        },
+        {
+          "correct": true,
+          "wordId": "w19"
+        },
+        {
+          "correct": true,
+          "wordId": "w28"
+        },
+        {
+          "correct": true,
+          "wordId": "w23"
+        },
+        {
+          "correct": true,
+          "wordId": "w39"
+        },
+        {
+          "correct": true,
+          "wordId": "w31"
+        },
+        {
+          "correct": true,
+          "wordId": "w7"
+        },
+        {
+          "correct": true,
+          "wordId": "w30"
+        },
+        {
+          "correct": true,
+          "wordId": "w29"
+        },
+        {
+          "correct": true,
+          "wordId": "w43"
+        },
+        {
+          "correct": true,
+          "wordId": "w10"
+        },
+        {
+          "correct": true,
+          "wordId": "w8"
+        },
+        {
+          "correct": true,
+          "wordId": "w34"
+        },
+        {
+          "correct": true,
+          "wordId": "w5"
+        },
+        {
+          "correct": true,
+          "wordId": "w15"
+        },
+        {
+          "correct": true,
+          "wordId": "w21"
+        }
+      ],
+      "timestamp": 1772819052378
+    },
+    {
+      "date": "2026-03-06",
+      "duration": 67,
+      "id": "sess_1772819122696",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w17"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746855810"
+        },
+        {
+          "correct": true,
+          "wordId": "w16"
+        },
+        {
+          "correct": true,
+          "wordId": "w26"
+        },
+        {
+          "correct": true,
+          "wordId": "w20"
+        },
+        {
+          "correct": true,
+          "wordId": "w36"
+        },
+        {
+          "correct": true,
+          "wordId": "w33"
+        },
+        {
+          "correct": true,
+          "wordId": "w11"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746764283"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746871038"
+        },
+        {
+          "correct": true,
+          "wordId": "w44"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746792768"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746891408"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746841558"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747453150"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746924099"
+        },
+        {
+          "correct": true,
+          "wordId": "w42"
+        },
+        {
+          "correct": true,
+          "wordId": "w48"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746880558"
+        },
+        {
+          "correct": true,
+          "wordId": "w37"
+        }
+      ],
+      "timestamp": 1772819122696
+    },
+    {
+      "date": "2026-03-06",
+      "duration": 68,
+      "id": "sess_1772819195849",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w49"
+        },
+        {
+          "correct": true,
+          "wordId": "w14"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746820785"
+        },
+        {
+          "correct": true,
+          "wordId": "w12"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747552664"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746913276"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746810787"
+        },
+        {
+          "correct": true,
+          "wordId": "w47"
+        },
+        {
+          "correct": true,
+          "wordId": "w35"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807654036"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747498603"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747607767"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807637440"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747516020"
+        },
+        {
+          "correct": true,
+          "wordId": "w0"
+        },
+        {
+          "correct": true,
+          "wordId": "w2"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747466492"
+        },
+        {
+          "correct": true,
+          "wordId": "w3"
+        },
+        {
+          "correct": true,
+          "wordId": "w40"
+        }
+      ],
+      "timestamp": 1772819195849
+    },
+    {
+      "date": "2026-03-07",
+      "duration": 75,
+      "id": "sess_1772886156470",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w_1772808214615"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808388649"
+        },
+        {
+          "correct": true,
+          "wordId": "w45"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808484714"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808399648"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808251202"
+        },
+        {
+          "correct": true,
+          "wordId": "w46"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808080863"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808284651"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747475383"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747621229"
+        },
+        {
+          "correct": true,
+          "wordId": "w38"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746936128"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808202954"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808189332"
+        },
+        {
+          "correct": true,
+          "wordId": "w25"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808177283"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808159809"
+        },
+        {
+          "correct": true,
+          "wordId": "w32"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746774045"
+        }
+      ],
+      "timestamp": 1772886156470
+    },
+    {
+      "date": "2026-03-07",
+      "duration": 84,
+      "id": "sess_1772886243619",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w_1772746829835"
+        },
+        {
+          "correct": true,
+          "wordId": "w4"
+        },
+        {
+          "correct": true,
+          "wordId": "w9"
+        },
+        {
+          "correct": true,
+          "wordId": "w13"
+        },
+        {
+          "correct": true,
+          "wordId": "w1"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808410079"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808746781"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808553093"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747591143"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808688320"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808538574"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808107953"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808475661"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808676208"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808641138"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808418530"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747569922"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808150325"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808498970"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808284651"
+        }
+      ],
+      "timestamp": 1772886243619
+    },
+    {
+      "date": "2026-03-08",
+      "duration": 82,
+      "id": "sess_1772978850998",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w8"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808284651"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808545204"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808095104"
+        },
+        {
+          "correct": true,
+          "wordId": "w10"
+        },
+        {
+          "correct": true,
+          "wordId": "w5"
+        },
+        {
+          "correct": true,
+          "wordId": "w11"
+        },
+        {
+          "correct": true,
+          "wordId": "w16"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808586524"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808119841"
+        },
+        {
+          "correct": true,
+          "wordId": "w7"
+        },
+        {
+          "correct": true,
+          "wordId": "w15"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808159809"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747531150"
+        },
+        {
+          "correct": true,
+          "wordId": "w4"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808553093"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808754824"
+        }
+      ],
+      "timestamp": 1772978850998
+    },
+    {
+      "date": "2026-03-08",
+      "duration": 87,
+      "id": "sess_1772978941719",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w3"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": true,
+          "wordId": "w30"
+        },
+        {
+          "correct": true,
+          "wordId": "w23"
+        },
+        {
+          "correct": true,
+          "wordId": "w22"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808804237"
+        },
+        {
+          "correct": true,
+          "wordId": "w19"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808553093"
+        },
+        {
+          "correct": true,
+          "wordId": "w1"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808119841"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w0"
+        },
+        {
+          "correct": true,
+          "wordId": "w26"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808656820"
+        },
+        {
+          "correct": true,
+          "wordId": "w18"
+        },
+        {
+          "correct": true,
+          "wordId": "w24"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808399648"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808251202"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808452256"
+        }
+      ],
+      "timestamp": 1772978941719
+    },
+    {
+      "date": "2026-03-09",
+      "duration": 110,
+      "id": "sess_1773080772683",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w6"
+        },
+        {
+          "correct": true,
+          "wordId": "w27"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772807691897"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": true,
+          "wordId": "w43"
+        },
+        {
+          "correct": true,
+          "wordId": "w20"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808766400"
+        },
+        {
+          "correct": true,
+          "wordId": "w31"
+        },
+        {
+          "correct": true,
+          "wordId": "w35"
+        },
+        {
+          "correct": true,
+          "wordId": "w14"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808399648"
+        },
+        {
+          "correct": true,
+          "wordId": "w48"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808251202"
+        },
+        {
+          "correct": true,
+          "wordId": "w17"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808625524"
+        },
+        {
+          "correct": true,
+          "wordId": "w36"
+        },
+        {
+          "correct": true,
+          "wordId": "w21"
+        },
+        {
+          "correct": true,
+          "wordId": "w28"
+        }
+      ],
+      "timestamp": 1773080772683
+    },
+    {
+      "date": "2026-03-09",
+      "duration": 98,
+      "id": "sess_1773080875341",
+      "results": [
+        {
+          "correct": false,
+          "wordId": "w_1772747498603"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808553093"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746880558"
+        },
+        {
+          "correct": true,
+          "wordId": "w42"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746810787"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808159809"
+        },
+        {
+          "correct": true,
+          "wordId": "w33"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746764283"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772807691897"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772747516020"
+        },
+        {
+          "correct": true,
+          "wordId": "w12"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747466492"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746871038"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746913276"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808305659"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746820785"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": true,
+          "wordId": "w40"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746924099"
+        }
+      ],
+      "timestamp": 1773080875341
+    },
+    {
+      "date": "2026-03-09",
+      "duration": 91,
+      "id": "sess_1773080969380",
+      "results": [
+        {
+          "correct": false,
+          "wordId": "w_1772747498603"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808119841"
+        },
+        {
+          "correct": true,
+          "wordId": "w37"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808305659"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747552664"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746855810"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808553093"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": true,
+          "wordId": "w32"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807654036"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808641138"
+        },
+        {
+          "correct": true,
+          "wordId": "w49"
+        },
+        {
+          "correct": true,
+          "wordId": "w41"
+        },
+        {
+          "correct": true,
+          "wordId": "w9"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746891408"
+        },
+        {
+          "correct": true,
+          "wordId": "w47"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747607767"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772747453150"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808159809"
+        },
+        {
+          "correct": true,
+          "wordId": "w29"
+        }
+      ],
+      "timestamp": 1773080969380
+    },
+    {
+      "date": "2026-03-09",
+      "duration": 98,
+      "id": "sess_1773081071039",
+      "results": [
+        {
+          "correct": false,
+          "wordId": "w_1772808107953"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808214615"
+        },
+        {
+          "correct": true,
+          "wordId": "w46"
+        },
+        {
+          "correct": true,
+          "wordId": "w25"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747488293"
+        },
+        {
+          "correct": true,
+          "wordId": "w2"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746841558"
+        },
+        {
+          "correct": true,
+          "wordId": "w34"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808388649"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746936128"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808641138"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747453150"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808189332"
+        },
+        {
+          "correct": true,
+          "wordId": "w1"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772747591143"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808399648"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747475383"
+        },
+        {
+          "correct": true,
+          "wordId": "w4"
+        },
+        {
+          "correct": true,
+          "wordId": "w44"
+        }
+      ],
+      "timestamp": 1773081071039
+    },
+    {
+      "date": "2026-03-09",
+      "duration": 101,
+      "id": "sess_1773081176810",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w_1772808538574"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807691897"
+        },
+        {
+          "correct": false,
+          "wordId": "w2"
+        },
+        {
+          "correct": true,
+          "wordId": "w39"
+        },
+        {
+          "correct": true,
+          "wordId": "w0"
+        },
+        {
+          "correct": true,
+          "wordId": "w45"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808498970"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": true,
+          "wordId": "w4"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746792768"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808284651"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808688320"
+        },
+        {
+          "correct": true,
+          "wordId": "w5"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808080863"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808418530"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808150325"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747621229"
+        },
+        {
+          "correct": true,
+          "wordId": "w38"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772747516020"
+        }
+      ],
+      "timestamp": 1773081176810
+    },
+    {
+      "date": "2026-03-09",
+      "duration": 109,
+      "id": "sess_1773081289403",
+      "results": [
+        {
+          "correct": false,
+          "wordId": "w16"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808746781"
+        },
+        {
+          "correct": true,
+          "wordId": "w0"
+        },
+        {
+          "correct": true,
+          "wordId": "w8"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808284651"
+        },
+        {
+          "correct": true,
+          "wordId": "w10"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808251202"
+        },
+        {
+          "correct": true,
+          "wordId": "w24"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808202954"
+        },
+        {
+          "correct": true,
+          "wordId": "w3"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807637440"
+        },
+        {
+          "correct": true,
+          "wordId": "w7"
+        },
+        {
+          "correct": true,
+          "wordId": "w26"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808484714"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747516020"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746829835"
+        },
+        {
+          "correct": true,
+          "wordId": "w18"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747498603"
+        }
+      ],
+      "timestamp": 1773081289403
+    },
+    {
+      "date": "2026-03-10",
+      "duration": 140,
+      "id": "sess_1773152157340",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w_1772808641138"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747498603"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808305659"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808251202"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807691897"
+        },
+        {
+          "correct": true,
+          "wordId": "w16"
+        },
+        {
+          "correct": true,
+          "wordId": "w15"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808095104"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747569922"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772747516020"
+        },
+        {
+          "correct": true,
+          "wordId": "w22"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808545204"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772747453150"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747531150"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808452256"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808418530"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808746781"
+        }
+      ],
+      "timestamp": 1773152157340
+    },
+    {
+      "date": "2026-03-10",
+      "duration": 110,
+      "id": "sess_1773152272015",
+      "results": [
+        {
+          "correct": false,
+          "wordId": "w_1772808418530"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747453150"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808410079"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808553093"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808545204"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808746781"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808754824"
+        },
+        {
+          "correct": true,
+          "wordId": "w11"
+        },
+        {
+          "correct": true,
+          "wordId": "w13"
+        },
+        {
+          "correct": true,
+          "wordId": "w23"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808107953"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808305659"
+        },
+        {
+          "correct": true,
+          "wordId": "w19"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808804237"
+        },
+        {
+          "correct": true,
+          "wordId": "w3"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808388649"
+        }
+      ],
+      "timestamp": 1773152272015
+    },
+    {
+      "date": "2026-03-10",
+      "duration": 98,
+      "id": "sess_1773152373936",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w_1772808676208"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808475661"
+        },
+        {
+          "correct": true,
+          "wordId": "w5"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808388649"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808107953"
+        },
+        {
+          "correct": true,
+          "wordId": "w1"
+        },
+        {
+          "correct": true,
+          "wordId": "w18"
+        },
+        {
+          "correct": true,
+          "wordId": "w28"
+        },
+        {
+          "correct": true,
+          "wordId": "w21"
+        },
+        {
+          "correct": true,
+          "wordId": "w30"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808399648"
+        },
+        {
+          "correct": true,
+          "wordId": "w2"
+        },
+        {
+          "correct": true,
+          "wordId": "w17"
+        },
+        {
+          "correct": true,
+          "wordId": "w20"
+        },
+        {
+          "correct": true,
+          "wordId": "w35"
+        },
+        {
+          "correct": true,
+          "wordId": "w14"
+        },
+        {
+          "correct": true,
+          "wordId": "w27"
+        },
+        {
+          "correct": true,
+          "wordId": "w26"
+        },
+        {
+          "correct": true,
+          "wordId": "w32"
+        }
+      ],
+      "timestamp": 1773152373936
+    },
+    {
+      "date": "2026-03-10",
+      "duration": 78,
+      "id": "sess_1773152457212",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w33"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807691897"
+        },
+        {
+          "correct": true,
+          "wordId": "w37"
+        },
+        {
+          "correct": true,
+          "wordId": "w31"
+        },
+        {
+          "correct": true,
+          "wordId": "w25"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808251202"
+        },
+        {
+          "correct": true,
+          "wordId": "w29"
+        },
+        {
+          "correct": true,
+          "wordId": "w46"
+        },
+        {
+          "correct": true,
+          "wordId": "w40"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808475661"
+        },
+        {
+          "correct": true,
+          "wordId": "w6"
+        },
+        {
+          "correct": true,
+          "wordId": "w12"
+        },
+        {
+          "correct": true,
+          "wordId": "w9"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808159809"
+        },
+        {
+          "correct": true,
+          "wordId": "w24"
+        },
+        {
+          "correct": true,
+          "wordId": "w45"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808656820"
+        },
+        {
+          "correct": true,
+          "wordId": "w44"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808095104"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808641138"
+        }
+      ],
+      "timestamp": 1773152457212
+    },
+    {
+      "date": "2026-03-11",
+      "duration": 62456,
+      "id": "sess_1773232490168",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808475661"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808746781"
+        },
+        {
+          "correct": true,
+          "wordId": "w16"
+        },
+        {
+          "correct": true,
+          "wordId": "w38"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747453150"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808641138"
+        },
+        {
+          "correct": true,
+          "wordId": "w8"
+        },
+        {
+          "correct": true,
+          "wordId": "w2"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747591143"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807691897"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808388649"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808095104"
+        },
+        {
+          "correct": true,
+          "wordId": "w7"
+        },
+        {
+          "correct": true,
+          "wordId": "w34"
+        },
+        {
+          "correct": true,
+          "wordId": "w47"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808418530"
+        }
+      ],
+      "timestamp": 1773232490168
+    },
+    {
+      "date": "2026-03-17",
+      "duration": 129,
+      "id": "sess_1773765920847",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w12"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747591143"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808284651"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": true,
+          "wordId": "w4"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808305659"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808418530"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747453150"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808553093"
+        },
+        {
+          "correct": true,
+          "wordId": "w13"
+        },
+        {
+          "correct": true,
+          "wordId": "w18"
+        },
+        {
+          "correct": true,
+          "wordId": "w14"
+        },
+        {
+          "correct": true,
+          "wordId": "w15"
+        },
+        {
+          "correct": true,
+          "wordId": "w10"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808545204"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808159809"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808107953"
+        },
+        {
+          "correct": true,
+          "wordId": "w9"
+        }
+      ],
+      "timestamp": 1773765920847
+    },
+    {
+      "date": "2026-03-21",
+      "duration": 71,
+      "id": "sess_1774086779208",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w27"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747498603"
+        },
+        {
+          "correct": true,
+          "wordId": "w32"
+        },
+        {
+          "correct": true,
+          "wordId": "w30"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808399648"
+        },
+        {
+          "correct": true,
+          "wordId": "w7"
+        },
+        {
+          "correct": true,
+          "wordId": "w8"
+        },
+        {
+          "correct": true,
+          "wordId": "w33"
+        },
+        {
+          "correct": true,
+          "wordId": "w20"
+        },
+        {
+          "correct": true,
+          "wordId": "w16"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808641138"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807691897"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808119841"
+        },
+        {
+          "correct": true,
+          "wordId": "w29"
+        },
+        {
+          "correct": true,
+          "wordId": "w2"
+        },
+        {
+          "correct": true,
+          "wordId": "w17"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808475661"
+        },
+        {
+          "correct": true,
+          "wordId": "w19"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": true,
+          "wordId": "w23"
+        }
+      ],
+      "timestamp": 1774086779208
+    },
+    {
+      "date": "2026-03-25",
+      "duration": 366471,
+      "id": "sess_1774453255669",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w25"
+        },
+        {
+          "correct": true,
+          "wordId": "w45"
+        },
+        {
+          "correct": true,
+          "wordId": "w47"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w38"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808388649"
+        },
+        {
+          "correct": true,
+          "wordId": "w1"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772746810787"
+        },
+        {
+          "correct": true,
+          "wordId": "w24"
+        },
+        {
+          "correct": false,
+          "wordId": "w5"
+        },
+        {
+          "correct": true,
+          "wordId": "w28"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808095104"
+        },
+        {
+          "correct": true,
+          "wordId": "w46"
+        },
+        {
+          "correct": true,
+          "wordId": "w6"
+        },
+        {
+          "correct": true,
+          "wordId": "w40"
+        },
+        {
+          "correct": true,
+          "wordId": "w37"
+        },
+        {
+          "correct": true,
+          "wordId": "w36"
+        },
+        {
+          "correct": true,
+          "wordId": "w0"
+        },
+        {
+          "correct": true,
+          "wordId": "w42"
+        },
+        {
+          "correct": true,
+          "wordId": "w21"
+        }
+      ],
+      "timestamp": 1774453255669
+    },
+    {
+      "date": "2026-03-31",
+      "duration": 67,
+      "id": "sess_1774939106097",
+      "results": [
+        {
+          "correct": true,
+          "wordId": "w_1772808095104"
+        },
+        {
+          "correct": false,
+          "wordId": "w17"
+        },
+        {
+          "correct": true,
+          "wordId": "w14"
+        },
+        {
+          "correct": true,
+          "wordId": "w9"
+        },
+        {
+          "correct": true,
+          "wordId": "w11"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808327308"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808284651"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808545204"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772807691897"
+        },
+        {
+          "correct": true,
+          "wordId": "w5"
+        },
+        {
+          "correct": true,
+          "wordId": "w16"
+        },
+        {
+          "correct": true,
+          "wordId": "w15"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808648740"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808107953"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772747498603"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808388649"
+        },
+        {
+          "correct": true,
+          "wordId": "w3"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747591143"
+        },
+        {
+          "correct": true,
+          "wordId": "w2"
+        }
+      ],
+      "timestamp": 1774939106097
+    },
+    {
+      "date": "2026-04-03",
+      "duration": 71,
+      "id": "sess_1775208255543",
+      "results": [
+        {
+          "correct": false,
+          "wordId": "w_1772808475661"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808553093"
+        },
+        {
+          "correct": true,
+          "wordId": "w30"
+        },
+        {
+          "correct": true,
+          "wordId": "w27"
+        },
+        {
+          "correct": true,
+          "wordId": "w23"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808641138"
+        },
+        {
+          "correct": true,
+          "wordId": "w28"
+        },
+        {
+          "correct": true,
+          "wordId": "w10"
+        },
+        {
+          "correct": true,
+          "wordId": "w7"
+        },
+        {
+          "correct": true,
+          "wordId": "w20"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772808373460"
+        },
+        {
+          "correct": true,
+          "wordId": "w8"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808399648"
+        },
+        {
+          "correct": false,
+          "wordId": "w_1772808251202"
+        },
+        {
+          "correct": true,
+          "wordId": "w34"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747453150"
+        },
+        {
+          "correct": true,
+          "wordId": "w13"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747507280"
+        },
+        {
+          "correct": true,
+          "wordId": "w29"
+        },
+        {
+          "correct": true,
+          "wordId": "w_1772747516020"
+        }
+      ],
+      "timestamp": 1775208255543
+    }
+  ],
+  "wordStats": {
+    "w0": {
+      "correct": 7,
+      "lastDate": "2026-03-25",
+      "total": 8
+    },
+    "w1": {
+      "correct": 7,
+      "lastDate": "2026-03-25",
+      "total": 8
+    },
+    "w10": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 5
+    },
+    "w11": {
+      "correct": 4,
+      "lastDate": "2026-03-31",
+      "total": 4
+    },
+    "w12": {
+      "correct": 4,
+      "lastDate": "2026-03-17",
+      "total": 4
+    },
+    "w13": {
+      "correct": 4,
+      "lastDate": "2026-04-03",
+      "total": 4
+    },
+    "w14": {
+      "correct": 5,
+      "lastDate": "2026-03-31",
+      "total": 5
+    },
+    "w15": {
+      "correct": 5,
+      "lastDate": "2026-03-31",
+      "total": 5
+    },
+    "w16": {
+      "correct": 6,
+      "lastDate": "2026-03-31",
+      "total": 7
+    },
+    "w17": {
+      "correct": 4,
+      "lastDate": "2026-03-31",
+      "total": 5
+    },
+    "w18": {
+      "correct": 5,
+      "lastDate": "2026-03-17",
+      "total": 5
+    },
+    "w19": {
+      "correct": 4,
+      "lastDate": "2026-03-21",
+      "total": 4
+    },
+    "w2": {
+      "correct": 8,
+      "lastDate": "2026-03-31",
+      "total": 10
+    },
+    "w20": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 5
+    },
+    "w21": {
+      "correct": 4,
+      "lastDate": "2026-03-25",
+      "total": 4
+    },
+    "w22": {
+      "correct": 3,
+      "lastDate": "2026-03-10",
+      "total": 3
+    },
+    "w23": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 5
+    },
+    "w24": {
+      "correct": 5,
+      "lastDate": "2026-03-25",
+      "total": 5
+    },
+    "w25": {
+      "correct": 4,
+      "lastDate": "2026-03-21",
+      "total": 4
+    },
+    "w26": {
+      "correct": 4,
+      "lastDate": "2026-03-10",
+      "total": 4
+    },
+    "w27": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 5
+    },
+    "w28": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 5
+    },
+    "w29": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 5
+    },
+    "w3": {
+      "correct": 8,
+      "lastDate": "2026-03-31",
+      "total": 8
+    },
+    "w30": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 5
+    },
+    "w31": {
+      "correct": 3,
+      "lastDate": "2026-03-10",
+      "total": 3
+    },
+    "w32": {
+      "correct": 4,
+      "lastDate": "2026-03-21",
+      "total": 4
+    },
+    "w33": {
+      "correct": 4,
+      "lastDate": "2026-03-21",
+      "total": 4
+    },
+    "w34": {
+      "correct": 4,
+      "lastDate": "2026-04-03",
+      "total": 4
+    },
+    "w35": {
+      "correct": 3,
+      "lastDate": "2026-03-10",
+      "total": 3
+    },
+    "w36": {
+      "correct": 3,
+      "lastDate": "2026-03-25",
+      "total": 3
+    },
+    "w37": {
+      "correct": 4,
+      "lastDate": "2026-03-25",
+      "total": 4
+    },
+    "w38": {
+      "correct": 4,
+      "lastDate": "2026-03-25",
+      "total": 4
+    },
+    "w39": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w4": {
+      "correct": 7,
+      "lastDate": "2026-03-17",
+      "total": 8
+    },
+    "w40": {
+      "correct": 4,
+      "lastDate": "2026-03-25",
+      "total": 4
+    },
+    "w41": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w42": {
+      "correct": 3,
+      "lastDate": "2026-03-25",
+      "total": 3
+    },
+    "w43": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w44": {
+      "correct": 3,
+      "lastDate": "2026-03-10",
+      "total": 3
+    },
+    "w45": {
+      "correct": 4,
+      "lastDate": "2026-03-25",
+      "total": 4
+    },
+    "w46": {
+      "correct": 4,
+      "lastDate": "2026-03-25",
+      "total": 4
+    },
+    "w47": {
+      "correct": 4,
+      "lastDate": "2026-03-25",
+      "total": 4
+    },
+    "w48": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w49": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w5": {
+      "correct": 5,
+      "lastDate": "2026-03-31",
+      "total": 6
+    },
+    "w6": {
+      "correct": 3,
+      "lastDate": "2026-03-25",
+      "total": 3
+    },
+    "w7": {
+      "correct": 6,
+      "lastDate": "2026-04-03",
+      "total": 6
+    },
+    "w8": {
+      "correct": 6,
+      "lastDate": "2026-04-03",
+      "total": 6
+    },
+    "w9": {
+      "correct": 5,
+      "lastDate": "2026-03-31",
+      "total": 5
+    },
+    "w_1772746764283": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746774045": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746792768": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746810787": {
+      "correct": 3,
+      "lastDate": "2026-03-25",
+      "total": 3
+    },
+    "w_1772746820785": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746829835": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746841558": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746855810": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746871038": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746880558": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746891408": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746913276": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746924099": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772746936128": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772747453150": {
+      "correct": 6,
+      "lastDate": "2026-04-03",
+      "total": 8
+    },
+    "w_1772747466492": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772747475383": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772747488293": {
+      "correct": 1,
+      "lastDate": "2026-03-09",
+      "total": 1
+    },
+    "w_1772747498603": {
+      "correct": 4,
+      "lastDate": "2026-03-31",
+      "total": 8
+    },
+    "w_1772747507280": {
+      "correct": 8,
+      "lastDate": "2026-04-03",
+      "total": 9
+    },
+    "w_1772747516020": {
+      "correct": 3,
+      "lastDate": "2026-04-03",
+      "total": 6
+    },
+    "w_1772747531150": {
+      "correct": 2,
+      "lastDate": "2026-03-10",
+      "total": 2
+    },
+    "w_1772747552664": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772747569922": {
+      "correct": 2,
+      "lastDate": "2026-03-10",
+      "total": 2
+    },
+    "w_1772747591143": {
+      "correct": 5,
+      "lastDate": "2026-03-31",
+      "total": 6
+    },
+    "w_1772747607767": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772747621229": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772807637440": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772807654036": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772807691897": {
+      "correct": 6,
+      "lastDate": "2026-03-31",
+      "total": 8
+    },
+    "w_1772808080863": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808095104": {
+      "correct": 4,
+      "lastDate": "2026-03-31",
+      "total": 6
+    },
+    "w_1772808107953": {
+      "correct": 5,
+      "lastDate": "2026-03-31",
+      "total": 7
+    },
+    "w_1772808119841": {
+      "correct": 3,
+      "lastDate": "2026-03-21",
+      "total": 4
+    },
+    "w_1772808150325": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808159809": {
+      "correct": 4,
+      "lastDate": "2026-03-17",
+      "total": 6
+    },
+    "w_1772808177283": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808189332": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808202954": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808214615": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808251202": {
+      "correct": 4,
+      "lastDate": "2026-04-03",
+      "total": 7
+    },
+    "w_1772808284651": {
+      "correct": 3,
+      "lastDate": "2026-03-31",
+      "total": 7
+    },
+    "w_1772808305659": {
+      "correct": 3,
+      "lastDate": "2026-03-17",
+      "total": 5
+    },
+    "w_1772808327308": {
+      "correct": 6,
+      "lastDate": "2026-03-31",
+      "total": 9
+    },
+    "w_1772808373460": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 13
+    },
+    "w_1772808388649": {
+      "correct": 4,
+      "lastDate": "2026-03-31",
+      "total": 7
+    },
+    "w_1772808399648": {
+      "correct": 3,
+      "lastDate": "2026-04-03",
+      "total": 8
+    },
+    "w_1772808410079": {
+      "correct": 2,
+      "lastDate": "2026-03-10",
+      "total": 2
+    },
+    "w_1772808418530": {
+      "correct": 4,
+      "lastDate": "2026-03-17",
+      "total": 6
+    },
+    "w_1772808452256": {
+      "correct": 2,
+      "lastDate": "2026-03-10",
+      "total": 2
+    },
+    "w_1772808475661": {
+      "correct": 4,
+      "lastDate": "2026-04-03",
+      "total": 6
+    },
+    "w_1772808484714": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808498970": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808538574": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808545204": {
+      "correct": 4,
+      "lastDate": "2026-03-31",
+      "total": 5
+    },
+    "w_1772808553093": {
+      "correct": 5,
+      "lastDate": "2026-04-03",
+      "total": 8
+    },
+    "w_1772808586524": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808625524": {
+      "correct": 1,
+      "lastDate": "2026-03-09",
+      "total": 1
+    },
+    "w_1772808641138": {
+      "correct": 6,
+      "lastDate": "2026-04-03",
+      "total": 8
+    },
+    "w_1772808648740": {
+      "correct": 8,
+      "lastDate": "2026-03-31",
+      "total": 10
+    },
+    "w_1772808656820": {
+      "correct": 2,
+      "lastDate": "2026-03-10",
+      "total": 2
+    },
+    "w_1772808676208": {
+      "correct": 2,
+      "lastDate": "2026-03-10",
+      "total": 2
+    },
+    "w_1772808688320": {
+      "correct": 2,
+      "lastDate": "2026-03-09",
+      "total": 2
+    },
+    "w_1772808746781": {
+      "correct": 3,
+      "lastDate": "2026-03-11",
+      "total": 5
+    },
+    "w_1772808754824": {
+      "correct": 2,
+      "lastDate": "2026-03-10",
+      "total": 2
+    },
+    "w_1772808766400": {
+      "correct": 1,
+      "lastDate": "2026-03-09",
+      "total": 1
+    },
+    "w_1772808804237": {
+      "correct": 2,
+      "lastDate": "2026-03-10",
+      "total": 2
+    }
+  },
+  "settings": {
+    "dailyNew": 40,
+    "sessionLen": 20,
+    "timeLimit": 0,
+    "wordTime": 30,
+    "goalWords": 20,
+    "goalPresent": 1,
+    "goalPast": 1,
+    "goalMixed": 1,
+    "goalUnseen": 1,
+    "goalWriting": 1,
+    "name": "אוריה",
+    "pin": "1234",
+    "appStart": "2026-03-05",
+    "dailySessionGoal": 2,
+    "dailyWordGoal": 40
+  },
+  "users": [
+    {
+      "id": "child_1",
+      "name": "אוריה",
+      "password": "3010",
+      "role": "child",
+      "username": "oriya"
+    },
+    {
+      "id": "parent_1",
+      "name": "הורה",
+      "password": "0309",
+      "role": "parent",
+      "username": "ayelet"
+    }
+  ],
+  "streak": {
+    "count": 1,
+    "lastDate": "2026-04-03"
+  }
+}
