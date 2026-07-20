@@ -734,10 +734,12 @@
   <div class="card text-center" style="gap:14px;display:flex;flex-direction:column;align-items:center">
     <div style="font-size:14px;color:var(--muted)">צלמי או בחרי תמונה של דף העבודה</div>
     <img id="ws-preview-img" alt="תצוגה מקדימה של דף העבודה שנבחר" style="display:none;max-width:100%;border-radius:12px;border:2px solid var(--border)">
+    <!-- PDF upload support - START -->
     <label class="btn btn-secondary" style="cursor:pointer">
-      🖼️ בחרי תמונה
-      <input type="file" id="ws-file-input" accept="image/*" capture="environment" style="display:none" onchange="wsOnFileSelected(event)">
+      🖼️ בחרי תמונה או PDF
+      <input type="file" id="ws-file-input" accept="image/*,application/pdf" capture="environment" style="display:none" onchange="wsOnFileSelected(event)">
     </label>
+    <!-- PDF upload support - END -->
     <div style="font-size:11px;color:var(--muted)">🔒 הזיהוי מתבצע במכשיר שלך בלבד — התמונה לא נשלחת לשום שרת</div>
   </div>
 
@@ -2840,6 +2842,13 @@ init();
      same way the Firebase SDK above already is. -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="worksheet-ocr-provider.js"></script>
+<!-- PDF upload support - START -->
+<!-- Pinned exact version (not a floating tag) -- the matching pdf.worker.min.js
+     version is configured inside worksheet-pdf-provider.js. Client-side only,
+     no server, no API key. -->
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script src="worksheet-pdf-provider.js"></script>
+<!-- PDF upload support - END -->
 <script src="worksheet-parser.js"></script>
 <script src="worksheet-scan.js"></script>
 <!-- Worksheet Scanner - END -->

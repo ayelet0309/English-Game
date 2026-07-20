@@ -23,6 +23,19 @@ const WS_TYPE_LABELS = {
   unknown: '❓ לא זוהה',
 };
 
+// PDF upload support - START
+const WS_UNSUPPORTED_FILE_MESSAGE = '⚠️ ניתן לבחור קובץ JPG, PNG או PDF בלבד';
+const WS_MULTI_PAGE_NOTICE = 'ℹ️ הקובץ מכיל כמה עמודים — ניסרוק רק את העמוד הראשון';
+const WS_PDF_ERROR_MESSAGES = {
+  PDF_TOO_LARGE: '⚠️ הקובץ גדול מדי — נסי קובץ קטן יותר או צלמי את הדף',
+  PDF_CORRUPTED: '⚠️ לא הצלחנו לפתוח את קובץ ה-PDF — ייתכן שהוא פגום, נסי קובץ אחר',
+  PDF_PASSWORD_PROTECTED: '⚠️ קובץ ה-PDF מוגן בסיסמה — הסירי את הסיסמה או צלמי את הדף במקום',
+  PDF_EMPTY: '⚠️ קובץ ה-PDF ריק — נסי קובץ אחר',
+  PDF_ENGINE_UNAVAILABLE: '⚠️ מנוע קריאת ה-PDF לא נטען, בדקי את החיבור לאינטרנט ונסי שוב',
+  PDF_READ_FAILED: '⚠️ קריאת הקובץ נכשלה, נסי שוב',
+};
+// PDF upload support - END
+
 let wsState = {
   imageBitmap: null, // canvas holding the (downscaled) photo, discarded after OCR
   ocrText: '',
@@ -135,19 +148,51 @@ function wsLoadImageToCanvas(file) {
   });
 }
 
+// PDF upload support - START
+// Loads either an image or a PDF's first page into a canvas, using the same
+// downstream shape ({ canvas, previewUrl }) either way so the rest of this
+// function (and everything after it) doesn't need to know which one it got.
+async function wsLoadSelectedFileToCanvas(file, isPdf) {
+  if (isPdf) {
+    const result = await WSPdfProvider.renderFirstPage(file);
+    if (result.isMultiPage) {
+      wsSetStatus(WS_MULTI_PAGE_NOTICE, 'info');
+    }
+    return { canvas: result.canvas, previewUrl: result.canvas.toDataURL('image/jpeg', 0.85) };
+  }
+  return wsLoadImageToCanvas(file);
+}
+// PDF upload support - END
+
 async function wsOnFileSelected(event) {
   const file = event.target.files && event.target.files[0];
   if (!file) return;
   wsSetStatus('');
   document.getElementById('ws-scan-btn').disabled = true;
+
+  // PDF upload support - START
+  const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+  const isImage = file.type && file.type.startsWith('image/');
+  if (!isPdf && !isImage) {
+    wsSetStatus(WS_UNSUPPORTED_FILE_MESSAGE, 'error');
+    return;
+  }
+  // PDF upload support - END
+
   try {
-    const { canvas, previewUrl } = await wsLoadImageToCanvas(file);
+    const { canvas, previewUrl } = await wsLoadSelectedFileToCanvas(file, isPdf);
     wsState.imageBitmap = canvas;
     const img = document.getElementById('ws-preview-img');
     img.src = previewUrl;
     img.style.display = 'block';
     document.getElementById('ws-scan-btn').disabled = false;
-  } catch {
+  } catch (err) {
+    // PDF upload support - START
+    if (isPdf && err instanceof WSPdfProvider.PdfError) {
+      wsSetStatus(WS_PDF_ERROR_MESSAGES[err.code] || WS_PDF_ERROR_MESSAGES.PDF_CORRUPTED, 'error');
+      return;
+    }
+    // PDF upload support - END
     wsSetStatus('לא הצלחנו לקרוא את התמונה הזו, נסי לבחור תמונה אחרת', 'error');
   }
 }
