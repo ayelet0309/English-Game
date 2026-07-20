@@ -1,0 +1,13 @@
+{
+  "name": "english-adventure-worksheet-functions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Netlify Functions backend for the worksheet-scanning feature of English Adventure",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test netlify/functions/lib/__tests__/*.test.js"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
+}

@@ -267,6 +267,11 @@
   <button class="btn btn-secondary" style="font-size:18px;padding:14px;background:#fffbeb;border-color:#d97706;color:#92400e" onclick="startExamWords()">
     📝 מילים למבחן 05.2026
   </button>
+  <!-- Worksheet Scanner - START -->
+  <button class="btn btn-secondary" style="font-size:18px;padding:14px" onclick="wsOpenScan()">
+    📷 סריקת דף עבודה
+  </button>
+  <!-- Worksheet Scanner - END -->
   <button class="btn btn-muted" onclick="logout()">
     🚪 יציאה
   </button>
@@ -718,6 +723,89 @@
   </div>
 </div>
 
+<!-- Worksheet Scanner - START -->
+<!-- ===== SCREEN: SCAN WORKSHEET (capture / upload) ===== -->
+<div id="screen-scan-worksheet" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="wsQuitScan()">←</button>
+    <h2>📷 סריקת דף עבודה</h2>
+  </div>
+
+  <div class="card text-center" style="gap:14px;display:flex;flex-direction:column;align-items:center">
+    <div style="font-size:14px;color:var(--muted)">צלמי או בחרי תמונה של דף העבודה</div>
+    <img id="ws-preview-img" alt="תצוגה מקדימה של דף העבודה שנבחר" style="display:none;max-width:100%;border-radius:12px;border:2px solid var(--border)">
+    <label class="btn btn-secondary" style="cursor:pointer">
+      🖼️ בחרי תמונה
+      <input type="file" id="ws-file-input" accept="image/*" capture="environment" style="display:none" onchange="wsOnFileSelected(event)">
+    </label>
+  </div>
+
+  <div id="ws-status" role="status" aria-live="polite" style="display:none;text-align:center;padding:10px;border-radius:12px;font-size:14px;font-weight:600"></div>
+
+  <button class="btn btn-primary" id="ws-scan-btn" disabled onclick="wsStartScan()">🔍 סרקי את הדף</button>
+</div>
+
+<!-- ===== SCREEN: SCAN PROCESSING ===== -->
+<div id="screen-scan-processing" class="screen">
+  <div class="text-center" style="padding-top:60px;display:flex;flex-direction:column;align-items:center;gap:16px">
+    <div style="font-size:48px">☁️🔍</div>
+    <div style="font-size:18px;font-weight:700;color:var(--primary)">קוראים את הדף...</div>
+    <div style="font-size:13px;color:var(--muted)">זה יכול לקחת כמה שניות</div>
+  </div>
+</div>
+
+<!-- ===== SCREEN: SCAN REVIEW (confirm-or-rescan safety step) ===== -->
+<div id="screen-scan-review" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="wsQuitScan()">←</button>
+    <h2 id="ws-review-title">דף עבודה</h2>
+  </div>
+
+  <div style="font-size:13px;color:var(--muted);padding:0 4px">האם זה נראה נכון?</div>
+  <div id="ws-review-list" style="display:flex;flex-direction:column;gap:10px"></div>
+
+  <button class="btn btn-primary" onclick="wsConfirmReview()">✅ הכל נראה טוב, קדימה!</button>
+  <button class="btn btn-secondary" onclick="wsRescan()">🔄 סרקי שוב</button>
+</div>
+
+<!-- ===== SCREEN: SCAN INTERACTIVE (blank worksheet -- answer on-screen) ===== -->
+<div id="screen-scan-interactive" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="wsQuitInteractive()">←</button>
+    <h2>✏️ עני על השאלות</h2>
+  </div>
+
+  <div id="ws-interactive-blocks"></div>
+  <div id="ws-interactive-status" role="status" aria-live="polite" style="display:none;text-align:center;padding:10px;border-radius:12px;font-size:14px;font-weight:600"></div>
+  <button class="btn btn-primary" onclick="wsSubmitAnswers()">✓ בדקי תשובות</button>
+</div>
+
+<!-- ===== SCREEN: SCAN RESULTS ===== -->
+<div id="screen-scan-results" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+    <h2>📊 תוצאות</h2>
+  </div>
+
+  <div class="text-center" style="padding-top:8px">
+    <div class="stars" id="ws-result-stars">⭐⭐⭐</div>
+    <div style="height:12px"></div>
+    <div class="score-circle pop">
+      <div class="pct" id="ws-result-pct">80%</div>
+      <div class="lbl">הצלחה</div>
+    </div>
+    <div style="height:10px"></div>
+    <div style="font-size:17px;font-weight:700" id="ws-result-msg"></div>
+    <div style="color:var(--muted);font-size:13px;margin-top:4px" id="ws-result-sub"></div>
+  </div>
+
+  <div id="ws-result-breakdown"></div>
+
+  <button class="btn btn-primary" onclick="wsOpenScan()">📷 סרוק דף נוסף</button>
+  <button class="btn btn-secondary" onclick="showScreen('screen-home')">🏠 חזרה הבית</button>
+</div>
+<!-- Worksheet Scanner - END -->
+
 <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
 
@@ -816,6 +904,9 @@ const KEYS = {
   USERS: 'eg_users',
   DAILY_ACT: 'eg_daily_act',
   EXAM_WORDS: 'eg_exam_words',
+  // Worksheet Scanner - START
+  WORKSHEET_SCANS: 'eg_worksheet_scans',
+  // Worksheet Scanner - END
 };
 
 let currentUser = null; // { id, username, role, name }
@@ -2726,5 +2817,8 @@ async function init() {
 
 init();
 </script>
+<!-- Worksheet Scanner - START -->
+<script src="worksheet-scan.js"></script>
+<!-- Worksheet Scanner - END -->
 </body>
 </html>

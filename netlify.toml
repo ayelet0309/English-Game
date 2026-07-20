@@ -1,0 +1,8 @@
+# Production app lives in netlify-game/ (index.html + assets) — that is the
+# only real deployable directory in this repo (root just has README/backup data).
+[build]
+  publish = "netlify-game"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
