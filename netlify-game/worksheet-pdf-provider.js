@@ -12,7 +12,7 @@
 // ═══════════════════════════════════════════
 
 const WSPdfProvider = (function () {
-  const MAX_PDF_BYTES = 15 * 1024 * 1024; // 15 MB, checked before any parsing
+  const MAX_PDF_BYTES = 30 * 1024 * 1024; // 30 MB, checked before any parsing
   const MAX_DIMENSION = 2000; // matches the image path's downscale cap
   const MAX_RENDER_SCALE = 4; // defensive upper bound against degenerate tiny pages
 
