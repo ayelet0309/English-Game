@@ -272,6 +272,9 @@
     📷 סריקת דף עבודה
   </button>
   <!-- Worksheet Scanner - END -->
+  <button class="btn btn-secondary" style="font-size:18px;padding:14px;background:#ecfeff;border-color:#06b6d4;color:#0e7490" onclick="startTest1126()">
+    🧪 test 11.2026
+  </button>
   <button class="btn btn-muted" onclick="logout()">
     🚪 יציאה
   </button>
@@ -643,6 +646,28 @@
   <div id="edit-word-id" style="display:none"></div>
 </div>
 
+<!-- ===== SCREEN: TEST 11.2026 ===== -->
+<div id="screen-test1126" class="screen">
+  <div class="header">
+    <button class="back-btn" onclick="quitTest1126()">←</button>
+    <h2>🧪 test 11.2026</h2>
+  </div>
+
+  <div style="font-size:13px;color:var(--muted);padding:0 4px">הקישי על מילה מהבנק, ואז על החלק החסר במשפט המתאים</div>
+
+  <div class="card" style="gap:10px;display:flex;flex-direction:column">
+    <div class="card-title">מילים לשיבוץ</div>
+    <div id="t1126-bank" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+  </div>
+
+  <div id="t1126-sentences" style="display:flex;flex-direction:column;gap:10px"></div>
+
+  <div id="t1126-feedback" style="display:none;text-align:center;padding:10px;border-radius:12px;font-size:15px;font-weight:600"></div>
+
+  <button class="btn btn-primary" onclick="checkTest1126()">✓ Check Answers</button>
+  <button class="btn btn-secondary" onclick="newTest1126()">🔄 New Game</button>
+</div>
+
 <!-- ===== SCREEN: SETTINGS ===== -->
 <div id="screen-settings" class="screen">
   <div class="header">
@@ -928,6 +953,7 @@ const KEYS = {
   USERS: 'eg_users',
   DAILY_ACT: 'eg_daily_act',
   EXAM_WORDS: 'eg_exam_words',
+  VOCAB_VERSION: 'eg_vocab_version',
   // Worksheet Scanner - START
   WORKSHEET_SCANS: 'eg_worksheet_scans',
   // Worksheet Scanner - END
@@ -1172,74 +1198,311 @@ const WRITING_TOPICS = [
 ];
 
 // ═══════════════════════════════════════════
-//  BUILT-IN WORD LIST
+//  VOCABULARY — single source of truth for the
+//  Words section AND the test 11.2026 activity
 // ═══════════════════════════════════════════
 
-const BUILTIN = [
-  { h: 'כלב', e: 'dog', c: 'בעלי חיים' },
-  { h: 'חתול', e: 'cat', c: 'בעלי חיים' },
-  { h: 'סוס', e: 'horse', c: 'בעלי חיים' },
-  { h: 'ציפור', e: 'bird', c: 'בעלי חיים' },
-  { h: 'דג', e: 'fish', c: 'בעלי חיים' },
-  { h: 'בית', e: 'house', c: 'מקומות' },
-  { h: 'בית ספר', e: 'school', c: 'מקומות' },
-  { h: 'חנות', e: 'store', c: 'מקומות' },
-  { h: 'פארק', e: 'park', c: 'מקומות' },
-  { h: 'ים', e: 'sea', c: 'טבע' },
-  { h: 'שמש', e: 'sun', c: 'טבע' },
-  { h: 'ירח', e: 'moon', c: 'טבע' },
-  { h: 'עץ', e: 'tree', c: 'טבע' },
-  { h: 'פרח', e: 'flower', c: 'טבע' },
-  { h: 'תפוח', e: 'apple', c: 'אוכל' },
-  { h: 'בננה', e: 'banana', c: 'אוכל' },
-  { h: 'תות', e: 'strawberry', c: 'אוכל' },
-  { h: 'לחם', e: 'bread', c: 'אוכל' },
-  { h: 'מים', e: 'water', c: 'אוכל' },
-  { h: 'ספר', e: 'book', c: 'חפצים' },
-  { h: 'כיסא', e: 'chair', c: 'חפצים' },
-  { h: 'שולחן', e: 'table', c: 'חפצים' },
-  { h: 'דלת', e: 'door', c: 'חפצים' },
-  { h: 'חלון', e: 'window', c: 'חפצים' },
-  { h: 'ילד', e: 'boy', c: 'אנשים' },
-  { h: 'ילדה', e: 'girl', c: 'אנשים' },
-  { h: 'אמא', e: 'mom', c: 'אנשים' },
-  { h: 'אבא', e: 'dad', c: 'אנשים' },
-  { h: 'מורה', e: 'teacher', c: 'אנשים' },
-  { h: 'חבר', e: 'friend', c: 'אנשים' },
-  { h: 'אדום', e: 'red', c: 'צבעים' },
-  { h: 'כחול', e: 'blue', c: 'צבעים' },
-  { h: 'ירוק', e: 'green', c: 'צבעים' },
-  { h: 'צהוב', e: 'yellow', c: 'צבעים' },
-  { h: 'לבן', e: 'white', c: 'צבעים' },
-  { h: 'שחור', e: 'black', c: 'צבעים' },
-  { h: 'גדול', e: 'big', c: 'תארים' },
-  { h: 'קטן', e: 'small', c: 'תארים' },
-  { h: 'יפה', e: 'beautiful', c: 'תארים' },
-  { h: 'מהיר', e: 'fast', c: 'תארים' },
-  { h: 'לאכול', e: 'to eat', c: 'פעלים' },
-  { h: 'לשתות', e: 'to drink', c: 'פעלים' },
-  { h: 'לישון', e: 'to sleep', c: 'פעלים' },
-  { h: 'לרוץ', e: 'to run', c: 'פעלים' },
-  { h: 'לשחק', e: 'to play', c: 'פעלים' },
-  { h: 'אחד', e: 'one', c: 'מספרים' },
-  { h: 'שניים', e: 'two', c: 'מספרים' },
-  { h: 'שלושה', e: 'three', c: 'מספרים' },
-  { h: 'ארבעה', e: 'four', c: 'מספרים' },
-  { h: 'חמישה', e: 'five', c: 'מספרים' },
+const VOCAB_VERSION = 'vocab61-2026-11';
+
+const VOCAB_LISTS = [
+  {
+    id: 'list1', title: 'Vocabulary list 1',
+    words: [
+      { number: 1, english: 'adopt', hebrew: 'לאמץ' },
+      { number: 2, english: 'afterwards', hebrew: 'לאחר מכן' },
+      { number: 3, english: 'angel', hebrew: 'מלאך' },
+      { number: 4, english: 'announce', hebrew: 'להודיע / להכריז' },
+      { number: 5, english: 'announcement', hebrew: 'הכרזה' },
+      { number: 6, english: 'appreciate', hebrew: 'להעריך' },
+      { number: 7, english: 'aspect', hebrew: 'היבט' },
+      { number: 8, english: 'borrow', hebrew: 'להשאיל' },
+      { number: 9, english: 'cage', hebrew: 'כלוב' },
+      { number: 10, english: 'colleague', hebrew: 'חבר לעבודה' },
+      { number: 11, english: 'convenient', hebrew: 'נוח / נגיש' },
+      { number: 12, english: 'custom', hebrew: 'מנהג' },
+      { number: 13, english: 'demonstrate', hebrew: 'להמחיש / להדגים' },
+      { number: 14, english: 'ensure', hebrew: 'לוודא' },
+      { number: 15, english: 'equal', hebrew: 'שווה' },
+      { number: 16, english: 'forgive', hebrew: 'לסלוח' },
+      { number: 17, english: 'go viral', hebrew: 'להפוך לוויראלי' },
+      { number: 18, english: 'hardly', hebrew: 'בקושי' },
+      { number: 19, english: 'headache', hebrew: 'כאב ראש' },
+      { number: 20, english: 'mean', hebrew: 'רשע' },
+      { number: 21, english: 'nowadays', hebrew: 'כיום' },
+      { number: 22, english: 'odd', hebrew: 'מוזר' },
+      { number: 23, english: 'original', hebrew: 'מקורי' },
+      { number: 24, english: 'photography', hebrew: 'צילום' },
+      { number: 25, english: 'post', hebrew: 'לפרסם' },
+      { number: 26, english: 'previous', hebrew: 'הקודם' },
+      { number: 27, english: 'result in', hebrew: 'להיגמר בסופו של דבר' },
+      { number: 28, english: 'selfie', hebrew: 'צילום עצמי / סלפי' },
+      { number: 29, english: 'sense of humor', hebrew: 'חוש הומור' },
+      { number: 30, english: 'technique', hebrew: 'טכניקה' },
+      { number: 31, english: 'though', hebrew: 'אבל' },
+      { number: 32, english: 'to be honest', hebrew: 'להיות כן' },
+    ]
+  },
+  {
+    id: 'list2', title: 'Vocabulary list 2',
+    words: [
+      { number: 1, english: 'accept', hebrew: 'לקבל / להסכים' },
+      { number: 2, english: 'apology', hebrew: 'התנצלות' },
+      { number: 3, english: 'arrange', hebrew: 'לארגן' },
+      { number: 4, english: 'as you know', hebrew: 'כמו שאתה יודע' },
+      { number: 5, english: 'attend', hebrew: 'לנכוח / להשתתף' },
+      { number: 6, english: 'attitude', hebrew: 'גישה' },
+      { number: 7, english: 'board', hebrew: 'לעלות למטוס או לאונייה' },
+      { number: 8, english: 'bother', hebrew: 'להפריע' },
+      { number: 9, english: 'clear', hebrew: 'ברור / בהיר / שקוף' },
+      { number: 10, english: 'clearly', hebrew: 'מובן' },
+      { number: 11, english: 'complain', hebrew: 'להתלונן' },
+      { number: 12, english: 'crucial', hebrew: 'הכרחי' },
+      { number: 13, english: 'eventually', hebrew: 'בסופו של דבר' },
+      { number: 14, english: 'excuse', hebrew: 'תירוץ' },
+      { number: 15, english: 'foreign', hebrew: 'זר' },
+      { number: 16, english: 'in contrast', hebrew: 'בניגוד ל־' },
+      { number: 17, english: 'later on', hebrew: 'מאוחר יותר' },
+      { number: 18, english: 'pass through', hebrew: 'לעבור דרך' },
+      { number: 19, english: 'rather', hebrew: 'מעדיף' },
+      { number: 20, english: 'relatively', hebrew: 'יחסית' },
+      { number: 21, english: 'ride', hebrew: 'רכיבה' },
+      { number: 22, english: 'route', hebrew: 'שביל / דרך' },
+      { number: 23, english: 'standard', hebrew: 'סטנדרטי' },
+      { number: 24, english: 'switch', hebrew: 'להחליף' },
+      { number: 25, english: 'the press', hebrew: 'העיתונות' },
+      { number: 26, english: 'the public', hebrew: 'הציבור' },
+      { number: 27, english: 'tourist', hebrew: 'תייר' },
+      { number: 28, english: 'traveler', hebrew: 'מטייל' },
+      { number: 29, english: 'yet', hebrew: 'אבל' },
+    ]
+  }
 ];
+
+const BUILTIN = VOCAB_LISTS.flatMap(list =>
+  list.words.map(w => ({ id: 'v_' + list.id + '_' + w.number, h: w.hebrew, e: w.english, c: list.title }))
+);
 
 function initWords() {
   let words = getWords();
-  if (words.length === 0) {
+  const storedVersion = load(KEYS.VOCAB_VERSION, null);
+  if (words.length === 0 || storedVersion !== VOCAB_VERSION) {
     words = BUILTIN.map((w, i) => ({
-      id: 'w' + i,
+      id: w.id || ('w' + i),
       hebrew: w.h,
       english: w.e,
       category: w.c,
       addedDate: todayStr(),
     }));
     saveWords(words);
+    save(KEYS.VOCAB_VERSION, VOCAB_VERSION);
   }
+}
+
+// ═══════════════════════════════════════════
+//  TEST 11.2026 — fill-in-the-blank matching game
+//  Uses the same vocabulary (getWords()) as the Words section
+// ═══════════════════════════════════════════
+
+const T1126_SENTENCES = [
+  { word: 'adopt', text: "Many families decide to ___ a rescue dog instead of buying one from a breeder." },
+  { word: 'afterwards', text: "We watched the movie first and went out for pizza ___." },
+  { word: 'angel', text: "In the story, an ___ appeared to the shepherds in the field at night." },
+  { word: 'announce', text: "The principal will ___ the winners of the competition tomorrow morning." },
+  { word: 'announcement', text: "Please listen carefully to the following ___ from the school office." },
+  { word: 'appreciate', text: "I really ___ all the help you gave me while I was sick." },
+  { word: 'aspect', text: "Safety is the most important ___ of this new car design." },
+  { word: 'borrow', text: "Can I ___ your pen for a minute? I forgot mine at home." },
+  { word: 'cage', text: "The zookeeper opened the ___ carefully so the bird would not fly away." },
+  { word: 'colleague', text: "My ___ from the marketing department helped me finish the report on time." },
+  { word: 'convenient', text: "Shopping online is much more ___ than driving to a crowded mall." },
+  { word: 'custom', text: "It is a local ___ to remove your shoes before entering someone's home." },
+  { word: 'demonstrate', text: "The teacher will ___ the experiment before asking students to try it themselves." },
+  { word: 'ensure', text: "Please check the door twice to ___ that it is properly locked." },
+  { word: 'equal', text: "All the players on the team were given an ___ amount of practice time." },
+  { word: 'forgive', text: "It took her a long time to ___ her brother for breaking her laptop." },
+  { word: 'go viral', text: "A funny video like this can easily ___ within just a few hours online." },
+  { word: 'hardly', text: "I could ___ hear the teacher because the classroom was so noisy." },
+  { word: 'headache', text: "She took some medicine because she had a terrible ___ after the long exam." },
+  { word: 'mean', text: "The other kids avoided him because he was so ___ to anyone who looked different." },
+  { word: 'nowadays', text: "___, almost every teenager owns a smartphone and uses it every day." },
+  { word: 'odd', text: "It seemed ___ that nobody answered the phone, since someone is always home." },
+  { word: 'original', text: "The museum only displays the ___ painting, never a copy." },
+  { word: 'photography', text: "She spent the summer studying ___ and learning how to use a professional camera." },
+  { word: 'post', text: "He decided to ___ a photo of his vacation on social media." },
+  { word: 'previous', text: "In the ___ lesson, we learned about the water cycle." },
+  { word: 'result in', text: "Driving too fast in the rain can ___ a serious accident." },
+  { word: 'selfie', text: "They stopped in front of the famous tower to take a quick ___." },
+  { word: 'sense of humor', text: "Everyone loves spending time with him because he has such a great ___." },
+  { word: 'technique', text: "The coach taught the swimmers a new breathing ___ to improve their speed." },
+  { word: 'though', text: "The test was difficult. I think I did well on it, ___." },
+  { word: 'to be honest', text: "___, I didn't enjoy the movie as much as everyone else did." },
+  { word: 'accept', text: "After thinking about it for a while, she decided to ___ the job offer." },
+  { word: 'apology', text: "He wrote a short ___ to his teacher for arriving late to class." },
+  { word: 'arrange', text: "We need to ___ a meeting with the parents before the end of the month." },
+  { word: 'as you know', text: "___, the final exams start next week, so please review your notes." },
+  { word: 'attend', text: "All students are required to ___ the assembly on Monday morning." },
+  { word: 'attitude', text: "Her positive ___ helped the whole team stay motivated during the difficult project." },
+  { word: 'board', text: "Passengers were asked to ___ the plane through gate number seven." },
+  { word: 'bother', text: "I'm sorry to ___ you, but could you repeat the question?" },
+  { word: 'clear', text: "The water in the lake was so ___ that we could see the fish swimming below." },
+  { word: 'clearly', text: "She explained the instructions so ___ that nobody had any questions at the end." },
+  { word: 'complain', text: "Customers often ___ when their food arrives cold at the restaurant." },
+  { word: 'crucial', text: "Getting enough sleep before an exam is ___ for doing well." },
+  { word: 'eventually', text: "After months of practice, she ___ learned to play the violin perfectly." },
+  { word: 'excuse', text: "He gave a weak ___ for not finishing his homework on time." },
+  { word: 'foreign', text: "Learning a ___ language can open many new opportunities in the future." },
+  { word: 'in contrast', text: "My brother loves spicy food; ___, I can barely eat mild salsa." },
+  { word: 'later on', text: "We'll start with the introduction and discuss the details ___ in the lesson." },
+  { word: 'pass through', text: "The train has to ___ three tunnels before it reaches the mountain village." },
+  { word: 'rather', text: "I would ___ stay home and read than go to a loud party." },
+  { word: 'relatively', text: "The second test was ___ easy compared to the first one." },
+  { word: 'ride', text: "She took the children for a ___ on the new roller coaster at the fair." },
+  { word: 'route', text: "The bus driver chose a different ___ because of the heavy traffic downtown." },
+  { word: 'standard', text: "This restaurant follows a very high ___ of cleanliness in its kitchen." },
+  { word: 'switch', text: "He decided to ___ seats so he could sit next to his best friend." },
+  { word: 'the press', text: "The actor refused to answer questions from ___ about his personal life." },
+  { word: 'the public', text: "The new library will be open to ___ starting next Monday." },
+  { word: 'tourist', text: "She met a friendly ___ who was visiting from Japan and asking for directions." },
+  { word: 'traveler', text: "As an experienced ___, she always packs light and plans her route carefully." },
+  { word: 'yet', text: "I haven't finished reading that book ___, but I plan to this weekend." },
+];
+
+// Pairs of near-synonyms that could both fit the same blank — never put both in one round
+const T1126_CONFLICTS = [['though', 'yet'], ['tourist', 'traveler']];
+
+const T1126_ROUND_SIZE = 8;
+
+let t1126Round = [];      // [{ english, hebrew, text }]
+let t1126BankOrder = [];  // shuffled list of english strings for this round
+let t1126Assign = {};     // idx -> english string
+let t1126Result = {};     // idx -> true/false (set after Check Answers)
+let t1126Selected = null; // currently selected bank word
+
+function hasT1126Conflict(chosen, candidate) {
+  const cw = candidate.english.toLowerCase();
+  return chosen.some(c => {
+    const existing = c.english.toLowerCase();
+    return T1126_CONFLICTS.some(pair =>
+      (pair[0] === existing && pair[1] === cw) || (pair[1] === existing && pair[0] === cw)
+    );
+  });
+}
+
+function buildT1126Round() {
+  const vocab = getWords();
+  const withSentence = vocab.filter(w => T1126_SENTENCES.some(s => s.word.toLowerCase() === w.english.toLowerCase()));
+  const pool = shuffle([...withSentence]);
+  const chosen = [];
+  for (const w of pool) {
+    if (chosen.length >= T1126_ROUND_SIZE) break;
+    if (hasT1126Conflict(chosen, w)) continue;
+    chosen.push(w);
+  }
+  const withText = chosen.map(w => {
+    const s = T1126_SENTENCES.find(s => s.word.toLowerCase() === w.english.toLowerCase());
+    return { english: w.english, hebrew: w.hebrew, text: s.text };
+  });
+  t1126Round = shuffle(withText);
+  t1126BankOrder = shuffle(t1126Round.map(w => w.english));
+}
+
+function startTest1126() {
+  buildT1126Round();
+  t1126Assign = {}; t1126Result = {}; t1126Selected = null;
+  showScreen('screen-test1126');
+  document.getElementById('t1126-feedback').style.display = 'none';
+  renderT1126();
+}
+
+function newTest1126() {
+  buildT1126Round();
+  t1126Assign = {}; t1126Result = {}; t1126Selected = null;
+  document.getElementById('t1126-feedback').style.display = 'none';
+  renderT1126();
+}
+
+function quitTest1126() {
+  showScreen('screen-home');
+}
+
+function selectT1126Word(word) {
+  t1126Selected = (t1126Selected === word) ? null : word;
+  renderT1126();
+}
+
+function onT1126SlotClick(idx) {
+  if (t1126Result[idx] === true) return; // locked once correct
+  if (t1126Assign[idx] !== undefined) {
+    delete t1126Assign[idx];
+    delete t1126Result[idx];
+    renderT1126();
+    return;
+  }
+  if (t1126Selected) {
+    t1126Assign[idx] = t1126Selected;
+    delete t1126Result[idx];
+    t1126Selected = null;
+    renderT1126();
+  }
+}
+
+function renderT1126() {
+  const bankWrap = document.getElementById('t1126-bank');
+  bankWrap.innerHTML = '';
+  const assignedWords = Object.values(t1126Assign);
+  t1126BankOrder.forEach(word => {
+    const used = assignedWords.includes(word);
+    const selected = t1126Selected === word;
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'btn btn-sm';
+    chip.style.cssText = 'width:auto;direction:ltr;' +
+      (used ? 'opacity:0.3;cursor:default;' : 'cursor:pointer;') +
+      (selected ? 'background:#4f46e5;color:#fff;border-color:#4f46e5;' : '');
+    chip.textContent = word;
+    chip.disabled = used;
+    if (!used) chip.onclick = () => selectT1126Word(word);
+    bankWrap.appendChild(chip);
+  });
+
+  const sWrap = document.getElementById('t1126-sentences');
+  sWrap.innerHTML = '';
+  t1126Round.forEach((item, idx) => {
+    const assigned = t1126Assign[idx];
+    const result = t1126Result[idx];
+    let slotStyle = 'display:inline-block;min-width:70px;padding:2px 10px;border-radius:6px;font-weight:700;';
+    if (result === true) slotStyle += 'background:#dcfce7;color:#16a34a;';
+    else if (result === false) slotStyle += 'background:#fee2e2;color:#dc2626;';
+    else if (assigned) slotStyle += 'background:#ede9fe;color:#4338ca;';
+    else slotStyle += 'border-bottom:2px dashed #a5b4fc;';
+    const slotHtml = `<span style="${slotStyle}">${assigned ? assigned : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</span>`;
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.style.cssText = 'direction:ltr;text-align:left;font-size:15px;line-height:1.7;' + (result === true ? 'cursor:default;' : 'cursor:pointer;');
+    div.innerHTML = item.text.replace('___', slotHtml) +
+      `<div style="direction:rtl;text-align:right;color:var(--muted);font-size:12px;margin-top:6px">${item.hebrew}</div>`;
+    if (result !== true) div.onclick = () => onT1126SlotClick(idx);
+    sWrap.appendChild(div);
+  });
+}
+
+function checkTest1126() {
+  let correct = 0;
+  t1126Round.forEach((item, idx) => {
+    const given = t1126Assign[idx];
+    const ok = !!given && given.toLowerCase() === item.english.toLowerCase();
+    t1126Result[idx] = ok;
+    if (ok) correct++;
+  });
+  renderT1126();
+  const fb = document.getElementById('t1126-feedback');
+  fb.style.display = 'block';
+  const allCorrect = correct === t1126Round.length;
+  fb.style.background = allCorrect ? '#dcfce7' : '#fef3c7';
+  fb.style.color = allCorrect ? '#16a34a' : '#92400e';
+  fb.textContent = allCorrect
+    ? `🎉 כל הכבוד! ${correct}/${t1126Round.length} נכון`
+    : `✅ ${correct}/${t1126Round.length} נכון — לחצי/לחץ על התשובות באדום כדי לתקן ולנסות שוב`;
 }
 
 // ═══════════════════════════════════════════
