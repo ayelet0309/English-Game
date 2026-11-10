@@ -316,6 +316,20 @@
   </div>
 
   <div class="choices" id="choices-grid"></div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin:4px 0;color:var(--muted);font-size:12px">
+    <div style="flex:1;height:1px;background:var(--border)"></div>
+    או
+    <div style="flex:1;height:1px;background:var(--border)"></div>
+  </div>
+
+  <div style="display:flex;gap:8px">
+    <input type="text" id="manual-answer-input" placeholder="הקלידי את התשובה בעצמך..."
+      style="flex:1;border:2px solid var(--border);border-radius:10px;padding:10px 14px;font-size:15px;background:white;color:#1e1b4b;-webkit-text-fill-color:#1e1b4b;outline:none;font-family:inherit"
+      onkeydown="if(event.key==='Enter') checkManualAnswer()">
+    <button class="btn btn-sm btn-primary" id="manual-check-btn" style="width:auto" onclick="checkManualAnswer()">בדקי</button>
+  </div>
+
   <div id="game-feedback" style="display:none;text-align:center;padding:10px;border-radius:12px;font-size:15px;font-weight:600"></div>
 </div>
 
@@ -678,11 +692,11 @@
   <div class="card" style="gap:14px;display:flex;flex-direction:column">
     <div class="form-group">
       <label>מילים חדשות לכל יום</label>
-      <input type="number" id="setting-daily-new" min="1" max="20" value="5">
+      <input type="number" id="setting-daily-new" min="1" max="200" value="100">
     </div>
     <div class="form-group">
       <label>מילים לכל סשן</label>
-      <input type="number" id="setting-session-len" min="5" max="20" value="10">
+      <input type="number" id="setting-session-len" min="5" max="200" value="100">
     </div>
     <div class="form-group">
       <label>הגבלת זמן לסשן</label>
@@ -954,6 +968,7 @@ const KEYS = {
   DAILY_ACT: 'eg_daily_act',
   EXAM_WORDS: 'eg_exam_words',
   VOCAB_VERSION: 'eg_vocab_version',
+  SESSION_CONFIG_VERSION: 'eg_session_config_version',
   // Worksheet Scanner - START
   WORKSHEET_SCANS: 'eg_worksheet_scans',
   // Worksheet Scanner - END
@@ -966,9 +981,25 @@ function saveUsersData(u) { save(KEYS.USERS, u); }
 function getExamWords() { return load(KEYS.EXAM_WORDS, []); }
 function saveExamWords(arr) { save(KEYS.EXAM_WORDS, arr); }
 
+// Permanent login — always works, independent of any stored/cloud users,
+// so there's no need to go through setup again on a new device or after reset.
+const PERMANENT_LOGIN = { username: 'oriya', password: '3010' };
+
 function doLogin() {
   const username = document.getElementById('login-username').value.trim();
   const password = document.getElementById('login-password').value;
+
+  if (username === PERMANENT_LOGIN.username && password === PERMANENT_LOGIN.password) {
+    currentUser = { id: 'child_oriya', username: PERMANENT_LOGIN.username, role: 'child', name: 'אוריה' };
+    localStorage.setItem('eg_remembered', JSON.stringify({ username, password }));
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    document.getElementById('login-error').style.display = 'none';
+    initWords();
+    showScreen('screen-home');
+    return;
+  }
+
   const users = getUsers();
   const user = users.find(u => u.username === username && u.password === password);
   if (user) {
@@ -1031,7 +1062,7 @@ function getWords() { return load(KEYS.WORDS, []); }
 function getSessions() { return load(KEYS.SESSIONS, []); }
 function getWordStats() { return load(KEYS.WORD_STATS, {}); }
 function getSettings() {
-  return Object.assign({ dailyNew: 5, sessionLen: 10, timeLimit: 0, wordTime: 30, goalWords: 20, goalPresent: 1, goalPast: 1, goalMixed: 0, goalUnseen: 1, goalWriting: 1, name: 'אחלה', pin: '1234', appStart: todayStr() }, load(KEYS.SETTINGS, {}));
+  return Object.assign({ dailyNew: 100, sessionLen: 100, timeLimit: 0, wordTime: 30, goalWords: 20, goalPresent: 1, goalPast: 1, goalMixed: 0, goalUnseen: 1, goalWriting: 1, name: 'אחלה', pin: '1234', appStart: todayStr() }, load(KEYS.SETTINGS, {}));
 }
 
 function saveWords(w) { save(KEYS.WORDS, w); }
@@ -1296,6 +1327,19 @@ function initWords() {
     saveWords(words);
     save(KEYS.VOCAB_VERSION, VOCAB_VERSION);
   }
+  migrateSessionConfig();
+}
+
+// One-time forced bump so an existing session (with old dailyNew/sessionLen
+// values already saved) also gets every word unlocked in a single session.
+const SESSION_CONFIG_VERSION = 'allwords-2026-11';
+function migrateSessionConfig() {
+  if (load(KEYS.SESSION_CONFIG_VERSION, null) === SESSION_CONFIG_VERSION) return;
+  const s = getSettings();
+  s.dailyNew = 100;
+  s.sessionLen = 100;
+  saveSettings(s);
+  save(KEYS.SESSION_CONFIG_VERSION, SESSION_CONFIG_VERSION);
 }
 
 // ═══════════════════════════════════════════
@@ -1479,8 +1523,7 @@ function renderT1126() {
     const div = document.createElement('div');
     div.className = 'card';
     div.style.cssText = 'direction:ltr;text-align:left;font-size:15px;line-height:1.7;' + (result === true ? 'cursor:default;' : 'cursor:pointer;');
-    div.innerHTML = item.text.replace('___', slotHtml) +
-      `<div style="direction:rtl;text-align:right;color:var(--muted);font-size:12px;margin-top:6px">${item.hebrew}</div>`;
+    div.innerHTML = item.text.replace('___', slotHtml);
     if (result !== true) div.onclick = () => onT1126SlotClick(idx);
     sWrap.appendChild(div);
   });
@@ -1613,16 +1656,17 @@ function startWordTimer(seconds) {
       const word = gameWords[gameIdx];
       if (word) {
         document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+        disableManualAnswer();
         updateWordStat(word.id, false);
         gameWrong++;
         gameResults.push({ wordId: word.id, correct: false });
+        const correct = gameModeIsHeEn ? word.english : word.hebrew;
         const fb = document.getElementById('game-feedback');
         fb.style.display = 'block';
         fb.style.background = '#fee2e2'; fb.style.color = '#dc2626';
-        fb.textContent = `⏱ נגמר הזמן! התשובה: ${gameModeIsHeEn ? word.english : word.hebrew}`;
+        fb.textContent = `⏱ נגמר הזמן! התשובה: ${correct}`;
         document.querySelectorAll('.choice-btn').forEach(b => {
-          const correct = gameModeIsHeEn ? word.english : word.hebrew;
-          if (b.textContent === correct) b.classList.add('correct');
+          if (isAnswerMatch(b.textContent, correct)) b.classList.add('correct');
         });
         document.getElementById('game-score').textContent = `✅ ${gameCorrect} | ❌ ${gameWrong}`;
         setTimeout(() => { gameIdx++; renderQuestion(); }, 1500);
@@ -1848,6 +1892,16 @@ function renderQuestion() {
     grid.appendChild(btn);
   });
 
+  // Reset the manual-entry option for this question
+  const manualInput = document.getElementById('manual-answer-input');
+  const manualBtn = document.getElementById('manual-check-btn');
+  manualInput.value = '';
+  manualInput.disabled = false;
+  manualInput.style.direction = gameModeIsHeEn ? 'ltr' : 'rtl';
+  manualInput.style.textAlign = gameModeIsHeEn ? 'left' : 'right';
+  manualInput.placeholder = gameModeIsHeEn ? 'Type the English word...' : 'הקלידי את התרגום בעברית...';
+  manualBtn.disabled = false;
+
   document.getElementById('game-feedback').style.display = 'none';
 
   // Start word timer
@@ -1856,15 +1910,47 @@ function renderQuestion() {
   else stopWordTimer();
 }
 
+// Accepts "a / b" style alternatives in either direction — matches if the
+// trimmed, case-insensitive input equals any one of them.
+function isAnswerMatch(typed, correctText) {
+  const norm = s => (s || '').trim().toLowerCase();
+  const typedNorm = norm(typed);
+  if (!typedNorm) return false;
+  return correctText.split('/').map(norm).includes(typedNorm);
+}
+
+function disableManualAnswer() {
+  const input = document.getElementById('manual-answer-input');
+  const btn = document.getElementById('manual-check-btn');
+  input.disabled = true;
+  btn.disabled = true;
+}
+
+function checkManualAnswer() {
+  const input = document.getElementById('manual-answer-input');
+  if (input.disabled || !input.value.trim()) return;
+  const word = gameWords[gameIdx];
+  const correctText = gameModeIsHeEn ? word.english : word.hebrew;
+  handleAnswer(isAnswerMatch(input.value, correctText), null, word);
+}
+
 function handleAnswer(isCorrect, btn, word) {
   stopWordTimer();
-  // Disable all choices
+  // Disable all choices and the manual-entry option
   document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+  disableManualAnswer();
 
   const feedback = document.getElementById('game-feedback');
+  const correctText = gameModeIsHeEn ? word.english : word.hebrew;
+
+  // Highlight whichever choice button matches the correct answer, regardless
+  // of whether the answer came from clicking it or typing it manually.
+  document.querySelectorAll('.choice-btn').forEach(b => {
+    if (isAnswerMatch(b.textContent, correctText)) b.classList.add('correct');
+  });
 
   if (isCorrect) {
-    btn.classList.add('correct');
+    if (btn) btn.classList.add('correct');
     gameCorrect++;
     feedback.style.display = 'block';
     feedback.style.background = '#d1fae5';
@@ -1875,21 +1961,14 @@ function handleAnswer(isCorrect, btn, word) {
     speakText('Correct!');
     setTimeout(() => { gameIdx++; renderQuestion(); }, 900);
   } else {
-    btn.classList.add('wrong');
-    btn.classList.add('shake');
+    if (btn) { btn.classList.add('wrong'); btn.classList.add('shake'); }
     gameWrong++;
     feedback.style.display = 'block';
     feedback.style.background = '#fee2e2';
     feedback.style.color = '#dc2626';
-    feedback.textContent = `${gameModeIsHeEn ? word.english : word.hebrew} — נסי שוב!`;
+    feedback.textContent = `${correctText} — נסי שוב!`;
     updateWordStat(word.id, false);
     gameResults.push({ wordId: word.id, correct: false });
-    // Highlight correct answer
-    document.querySelectorAll('.choice-btn').forEach(b => {
-      const text = b.textContent;
-      const correct = gameModeIsHeEn ? word.english : word.hebrew;
-      if (text === correct) b.classList.add('correct');
-    });
     setTimeout(() => { gameIdx++; renderQuestion(); }, 1500);
   }
 }
@@ -2360,8 +2439,8 @@ function renderSettingsScreen() {
 
 function saveSettings() {
   const s = getSettings();
-  s.dailyNew = parseInt(document.getElementById('setting-daily-new').value) || 5;
-  s.sessionLen = parseInt(document.getElementById('setting-session-len').value) || 10;
+  s.dailyNew = parseInt(document.getElementById('setting-daily-new').value) || 100;
+  s.sessionLen = parseInt(document.getElementById('setting-session-len').value) || 100;
   s.timeLimit = parseInt(document.getElementById('setting-time-limit').value) || 0;
   s.wordTime = parseInt(document.getElementById('setting-word-time').value) || 0;
   s.goalWords   = parseInt(document.getElementById('goal-words').value)   || 0;
